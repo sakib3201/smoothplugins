@@ -1,0 +1,103 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Card from '../../components/Card.astro';
+import BackgroundCanvas from '../../components/BackgroundCanvas';
+
+const posts = [
+    {
+        title: "Why WASM is the future of WordPress Search",
+        excerpt: "Exploring the technical advantages of moving search logic from PHP to the client side.",
+        date: "Jan 15, 2026",
+        variant: "white",
+        span: 8
+    },
+    {
+        title: "Performance First",
+        excerpt: "Why we choose Rust over Go for critical plugin infrastructure.",
+        date: "Jan 10, 2026",
+        variant: "lavender",
+        span: 4
+    },
+    {
+        title: "Scaling WooCommerce to 1M+ Products",
+        excerpt: "Lessons learned building Smooth Search for high-traffic enterprise stores.",
+        date: "Jan 05, 2026",
+        variant: "blue",
+        span: 6
+    },
+    {
+        title: "Developer Experience",
+        excerpt: "Building a headless-friendly search engine with local indexing.",
+        date: "Jan 01, 2026",
+        variant: "peach",
+        span: 6
+    }
+];
+---
+
+<Layout title="Blog">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Blog" />
+        
+        <div class="blog-header">
+            <h1>Engineering Blog</h1>
+            <p>Deep dives into performance, Rust, and the future of the web.</p>
+        </div>
+
+        {posts.map((post) => (
+            <Card 
+                title={post.title} 
+                kicker={post.date}
+                variant={post.variant as any}
+                span={post.span}
+            >
+                <p class="post-excerpt">{post.excerpt}</p>
+                <a href="#" class="read-more">Read Entry →</a>
+            </Card>
+        ))}
+
+        <footer class="footer-strip">
+            © 2026 Smooth Plugins Inc.
+        </footer>
+    </div>
+</Layout>
+
+<style>
+    .blog-header {
+        grid-column: 1 / -1;
+        padding: 40px 0;
+    }
+
+    .blog-header h1 {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+
+    .blog-header p {
+        font-size: 20px;
+        opacity: 0.7;
+        margin-top: 8px;
+    }
+
+    .post-excerpt {
+        margin-top: 16px;
+        font-size: 16px;
+        line-height: 1.5;
+        opacity: 0.8;
+    }
+
+    .read-more {
+        display: inline-block;
+        margin-top: 24px;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .read-more:hover {
+        text-decoration: underline;
+    }
+</style>

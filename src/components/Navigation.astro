@@ -1,0 +1,100 @@
+---
+const { active = "Home" } = Astro.props;
+
+const items = [
+    { name: "Catalog", href: "/products" },
+    { name: "Smooth Search", href: "/products/smooth-search" },
+    { name: "Documentation", href: "#" },
+    { name: "Blog", href: "/blog" },
+];
+---
+
+<nav class="nav-island">
+    <a href="/" class="logo">
+        <div class="logo-dot"></div>
+        Smooth Plugins
+    </a>
+    <div class="nav-links">
+        {items.map((item) => (
+            <a 
+                href={item.href} 
+                class={`nav-item ${active === item.name ? 'active' : ''}`}
+            >
+                {item.name}
+            </a>
+        ))}
+    </div>
+</nav>
+
+<style>
+    .nav-island {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .logo-dot {
+        width: 12px;
+        height: 12px;
+        background-color: var(--c-black);
+        border-radius: 50%;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 8px;
+        background: var(--c-white);
+        padding: 6px;
+        border-radius: var(--radius-pill);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .nav-item {
+        padding: 12px 24px;
+        text-decoration: none;
+        color: var(--c-black);
+        font-weight: 500;
+        border-radius: var(--radius-pill);
+        transition: all 0.3s var(--ease-smooth);
+        font-size: 14px;
+    }
+
+    .nav-item:hover {
+        background-color: var(--c-bg);
+    }
+
+    .nav-item.active {
+        background-color: var(--c-black);
+        color: var(--c-white);
+    }
+
+    @media (max-width: 768px) {
+        .nav-island {
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-links {
+            width: 100%;
+            overflow-x: auto;
+            justify-content: center;
+        }
+        .nav-item {
+            padding: 10px 16px;
+            white-space: nowrap;
+        }
+    }
+</style>

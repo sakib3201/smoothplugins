@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Card from '../../components/Card.astro';
+import BackgroundCanvas from '../../components/BackgroundCanvas';
+
+---
+
+<Layout title="Smooth Search">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Smooth Search" />
+
+        <Card 
+            title="Smooth Search" 
+            kicker="The Rust-Powered WordPress Plugin"
+            variant="peach"
+            span={12}
+        >
+            <div class="product-hero">
+                <p class="card-desc">Experience lightning-fast searching for WooCommerce. Smooth Search moves the heavy lifting from your PHP server to the visitor's browser using WebAssembly and Rust.</p>
+                <div class="product-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">🦀</span>
+                        <div>
+                            <strong>Rust Core</strong>
+                            <p>Safety and speed at the engine level.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">⚡</span>
+                        <div>
+                            <strong>WASM Execution</strong>
+                            <p>Runs directly in the browser for instant results.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📦</span>
+                        <div>
+                            <strong>SoA Indexing</strong>
+                            <p>Optimized data structures for massive scale.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="How it works" kicker="Technical Depth" variant="white" span={6}>
+            <p>Smooth Search works by pre-compiling your product database into an optimized binary blob. This blob is then served via CDN. When a user visits your site, the Rust engine loads this blob into memory, allowing for millisecond search times without a single database query.</p>
+        </Card>
+
+        <Card title="Performance at Scale" kicker="The Numbers" variant="lavender" span={6}>
+            <ul class="stats-list">
+                <li><strong>100,000+</strong> Products Supported</li>
+                <li><strong>&lt; 10ms</strong> Query Speed</li>
+                <li><strong>80%</strong> Reduction in Server Load</li>
+            </ul>
+        </Card>
+
+        <Card title="Get Started" kicker="Download" variant="black" span={12}>
+            <div class="cta-section">
+                <p>Ready to level up your store's performance?</p>
+                <div class="cta-buttons">
+                    <a href="#" class="cta-button primary">Download Now</a>
+                    <a href="#" class="cta-button secondary">Read Documentation</a>
+                </div>
+            </div>
+        </Card>
+
+        <footer class="footer-strip">
+            © 2026 Smooth Plugins Inc.
+        </footer>
+    </div>
+</Layout>
+
+<style>
+    .product-hero {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .product-features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 20px;
+    }
+
+    .feature-item {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .feature-icon {
+        font-size: 24px;
+    }
+
+    .stats-list {
+        list-style: none;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .stats-list li {
+        font-size: 18px;
+    }
+
+    .cta-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 16px;
+    }
+
+    .cta-button {
+        padding: 14px 28px;
+        border-radius: var(--radius-pill);
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .cta-button.primary {
+        background: var(--c-white);
+        color: var(--c-black);
+    }
+
+    .cta-button.secondary {
+        border: 1px solid rgba(255,255,255,0.3);
+        color: var(--c-white);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 768px) {
+        .product-features {
+            grid-template-columns: 1fr;
+        }
+        .cta-section {
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
+        }
+    }
+</style>

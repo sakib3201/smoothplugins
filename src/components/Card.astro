@@ -1,0 +1,93 @@
+---
+interface Props {
+    title: string;
+    description?: string;
+    kicker?: string;
+    variant?: 'white' | 'black' | 'blue' | 'peach' | 'lavender';
+    class?: string;
+    span?: number;
+}
+
+const { 
+    title, 
+    description, 
+    kicker, 
+    variant = 'white', 
+    class: className = '',
+    span = 4
+} = Astro.props;
+
+const bgClasses = {
+    white: 'card-bg-white',
+    black: 'card-bg-black',
+    blue: 'card-bg-blue',
+    peach: 'card-bg-peach',
+    lavender: 'card-bg-lavender',
+};
+---
+
+<div class={`card ${bgClasses[variant]} ${className}`} style={`grid-column: span ${span};`}>
+    <div class="card-content">
+        {kicker && <div class="card-kicker">{kicker}</div>}
+        <h2 class="card-title">{title}</h2>
+        {description && <p class="card-desc">{description}</p>}
+        <slot />
+    </div>
+    <slot name="footer" />
+</div>
+
+<style>
+    .card {
+        border-radius: var(--radius-lg);
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+        transition: transform var(--trans-speed) var(--ease-smooth), box-shadow var(--trans-speed) var(--ease-smooth);
+        cursor: default;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 240px;
+    }
+
+    .card:hover {
+        transform: translateY(-4px) scale(1.005);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .card-bg-white { background-color: var(--c-white); color: var(--c-black); }
+    .card-bg-black { background-color: var(--c-black); color: var(--c-white); }
+    .card-bg-blue { background-color: var(--c-blue); color: var(--c-black); }
+    .card-bg-peach { background-color: var(--c-peach); color: var(--c-black); }
+    .card-bg-lavender { background-color: var(--c-lavender); color: var(--c-black); }
+
+    .card-kicker {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.7;
+        margin-bottom: 16px;
+    }
+
+    .card-title {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -1px;
+    }
+
+    .card-desc {
+        margin-top: 16px;
+        font-size: 18px;
+        opacity: 0.8;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 1024px) {
+        .card {
+            grid-column: span 1 !important;
+            padding: 30px;
+        }
+    }
+</style>

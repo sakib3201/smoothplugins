@@ -1,0 +1,410 @@
+<html lang="en" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Smooth Search | Powered by Rust &amp; WASM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" vid="5">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" vid="6">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet" vid="7">
+    <style vid="8">
+        :root {
+            --c-lavender: #9D8DF1;
+            --c-peach: #FFC062;
+            --c-blue: #AEE2FF;
+            --c-pink: #FFB8D2;
+            --c-rust: #E76F51;
+            --c-black: #111111;
+            --c-white: #FFFFFF;
+            --c-bg: #F4F4F6;
+            --c-text-sub: #666666;
+            
+            --radius-lg: 32px;
+            --radius-md: 24px;
+            --radius-pill: 999px;
+            --gap: 24px;
+            
+            --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+            --trans-speed: 0.6s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--c-bg);
+            color: var(--c-black);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .layout-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: var(--gap);
+            width: 100%;
+        }
+
+        .nav-island {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--c-black);
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            background: var(--c-white);
+            padding: 6px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            text-decoration: none;
+            color: var(--c-black);
+            font-weight: 500;
+            border-radius: var(--radius-pill);
+            transition: all 0.3s var(--ease-smooth);
+            font-size: 14px;
+        }
+
+        .nav-item:hover {
+            background-color: var(--c-bg);
+        }
+
+        .nav-item.active {
+            background-color: var(--c-black);
+            color: var(--c-white);
+        }
+
+        .card {
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--trans-speed) var(--ease-smooth), box-shadow var(--trans-speed) var(--ease-smooth);
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px) scale(1.005);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .card-bg-white { background-color: var(--c-white); color: var(--c-black); }
+        .card-bg-black { background-color: var(--c-black); color: var(--c-white); }
+        .card-bg-blue { background-color: var(--c-blue); color: var(--c-black); }
+
+        .card-kicker {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .card-title-lg {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: -2px;
+        }
+
+        .card-desc {
+            margin-top: 16px;
+            font-size: 18px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .hero-card {
+            grid-column: span 8;
+            grid-row: span 2;
+            background-color: var(--c-peach);
+            min-height: 500px;
+        }
+
+        .wasm-orb {
+            position: absolute;
+            right: -80px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle at 30% 30%, #FFF5E1, #FFC062 60%, #E76F51);
+            border-radius: 50%;
+            box-shadow: 
+                30px 30px 80px rgba(231, 111, 81, 0.2),
+                inset -20px -20px 40px rgba(0,0,0,0.1),
+                inset 20px 20px 40px rgba(255,255,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .wasm-label {
+            font-weight: 800;
+            font-size: 80px;
+            color: rgba(0,0,0,0.05);
+            letter-spacing: -4px;
+        }
+
+        .stat-card {
+            grid-column: span 4;
+            grid-row: span 1;
+            background-color: var(--c-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: -3px;
+            background: linear-gradient(45deg, var(--c-black), #555);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-weight: 500;
+            color: var(--c-text-sub);
+        }
+
+        .feature-card-rust {
+            grid-column: span 4;
+            grid-row: span 2;
+            background-color: var(--c-lavender);
+        }
+
+        .search-demo-box {
+            margin-top: auto;
+            background: rgba(255,255,255,0.3);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input-fake {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search-results-fake {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .result-bar {
+            height: 8px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
+            width: 80%;
+        }
+
+        .cta-button {
+            margin-top: auto;
+            background: var(--c-black);
+            color: var(--c-white);
+            padding: 16px 32px;
+            border-radius: var(--radius-pill);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .cta-button svg {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover svg {
+            transform: translateX(4px);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .badge-dark { background: rgba(0,0,0,0.08); color: var(--c-black); }
+
+        .footer-strip {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
+            color: var(--c-text-sub);
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .layout-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            .hero-card, .stat-card, .feature-card-rust {
+                grid-column: span 1;
+                grid-row: auto;
+            }
+            .wasm-orb {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body vid="9">
+
+    <div class="layout-container" vid="10">
+        
+        <nav class="nav-island" vid="11">
+            <a href="#" class="logo" vid="12">
+                <div class="logo-dot" vid="13"></div>
+                Smooth Plugins
+            </a>
+            <div class="nav-links" vid="14">
+                <a href="#" class="nav-item" vid="15">Catalog</a>
+                <a href="#" class="nav-item active" vid="16">Smooth Search</a>
+                <a href="#" class="nav-item" vid="17">Documentation</a>
+                <a href="#" class="nav-item" vid="18">Account</a>
+            </div>
+        </nav>
+
+        <div class="card hero-card" vid="19">
+            <div class="badge badge-dark" vid="20">New Release: Smooth Search</div>
+            <h1 class="card-title-lg" vid="21">Search at the<br vid="22">speed of Rust.</h1>
+            <p class="card-desc" vid="23">The first WooCommerce search engine powered by WebAssembly. Blazing fast indexing and retrieval directly in the browser.</p>
+            <a href="#" class="cta-button" style="margin-top: 32px;" vid="24">
+                Add to WordPress
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="25"><line x1="5" y1="12" x2="19" y2="12" vid="26"></line><polyline points="12 5 19 12 12 19" vid="27"></polyline></svg>
+            </a>
+            
+            <div class="wasm-orb" vid="28">
+                <span class="wasm-label" vid="29">WASM</span>
+            </div>
+        </div>
+
+        <div class="card stat-card" vid="30">
+            <div vid="31">
+                <div class="stat-number" vid="32">200ms</div>
+                <div class="stat-label" vid="33">Avg. Response Time</div>
+            </div>
+        </div>
+
+        <div class="card feature-card-rust" vid="34">
+            <div vid="35">
+                <div class="card-kicker" vid="36">Performance</div>
+                <h2 class="card-title" vid="37">10,000+ Products? No Problem.</h2>
+                <p class="card-desc" style="font-size: 16px;" vid="38">While PHP struggles with large SQL queries, our Rust core processes your entire catalogue in milliseconds using client-side memory.</p>
+            </div>
+            
+            <div class="search-demo-box" vid="39">
+                <div class="search-input-fake" vid="40">
+                    <span vid="41">Searching for 'Modern Sofa'...</span>
+                    <span vid="42">200ms</span>
+                </div>
+                <div class="search-results-fake" vid="43">
+                    <div class="result-bar" style="width: 90%;" vid="44"></div>
+                    <div class="result-bar" style="width: 70%;" vid="45"></div>
+                    <div class="result-bar" style="width: 85%;" vid="46"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card stat-card" vid="47">
+            <div vid="48">
+                <div class="stat-number" vid="49">0.0s</div>
+                <div class="stat-label" vid="50">Server Database Load</div>
+            </div>
+        </div>
+
+        <div class="card card-bg-blue" style="grid-column: span 4;" vid="51">
+            <div class="card-kicker" vid="52">Compatibility</div>
+            <h2 class="card-title" vid="53">Native Woo Support</h2>
+            <p class="card-desc" style="font-size: 16px;" vid="54">Works with your existing theme, filters, and attributes. No complex setup required.</p>
+        </div>
+
+        <div class="card card-bg-black" style="grid-column: span 8;" vid="55">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; height: 100%;" vid="56">
+                <div vid="57">
+                    <div class="card-kicker" style="opacity: 0.5;" vid="58">Developer First</div>
+                    <h2 class="card-title" style="color: white; margin-bottom: 12px;" vid="59">Pre-compiled Efficiency</h2>
+                    <p class="card-desc" style="max-width: 60%;" vid="60">Smooth Search compiles your product index into a lightweight binary file, served via CDN for instant global availability.</p>
+                </div>
+                <div style="text-align: right;" vid="61">
+                    <div style="font-size: 12px; font-family: monospace; opacity: 0.6; margin-bottom: 8px;" vid="62">TARGET: WASM32-UNKNOWN</div>
+                    <div style="width: 100px; height: 100px; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);" vid="63"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-strip" vid="64">
+            © 2023 Smooth Plugins Inc. Built with Rust for the Modern Web.
+        </div>
+    </div>
+
+</body></html>

@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import SmoothSearchDemo from '../components/SmoothSearchDemo';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+
+---
+
+<Layout title="Home">
+    <BackgroundCanvas client:only="react" />
+	<div class="layout-container">
+		<Navigation active="Home" />
+
+		<Card 
+            title="Search at the speed of Rust." 
+            kicker="New Release: Smooth Search"
+            description="The first WooCommerce search engine powered by WebAssembly. Blazing fast indexing and retrieval directly in the browser."
+            variant="peach"
+            span={8}
+            class="hero-card"
+        >
+            <a href="/products/smooth-search" class="cta-button">
+                Explore Smooth Search
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <div class="wasm-orb">
+                <span class="wasm-label">WASM</span>
+            </div>
+        </Card>
+
+        <Card title="200ms" kicker="Performance" variant="white" span={4} class="stat-card">
+            <p class="stat-label">Avg. Response Time</p>
+        </Card>
+
+        <Card 
+            title="10,000+ Products? No Problem." 
+            kicker="Engineered for Scale" 
+            variant="lavender" 
+            span={4}
+            class="feature-card"
+        >
+            <p class="feature-desc">While PHP struggles with large SQL queries, our Rust core processes your entire catalogue in milliseconds.</p>
+            <SmoothSearchDemo client:visible />
+        </Card>
+
+        <Card title="0.0s" kicker="Efficiency" variant="white" span={4} class="stat-card">
+            <p class="stat-label">Server Database Load</p>
+        </Card>
+
+        <Card 
+            title="Native Woo Support" 
+            kicker="Compatibility" 
+            variant="blue" 
+            span={4}
+        >
+            <p class="feature-desc">Works with your existing theme, filters, and attributes. No complex setup required.</p>
+        </Card>
+
+        <Card 
+            title="Pre-compiled Efficiency" 
+            kicker="Developer First" 
+            variant="black" 
+            span={12}
+            class="footer-card"
+        >
+            <div class="footer-card-inner">
+                <p class="feature-desc">Smooth Search compiles your product index into a lightweight binary file, served via CDN for instant global availability.</p>
+                <div class="tech-badge">TARGET: WASM32-UNKNOWN</div>
+            </div>
+        </Card>
+
+        <footer class="footer-strip">
+            © 2026 Smooth Plugins Inc. Built with Rust for the Modern Web.
+        </footer>
+	</div>
+</Layout>
+
+<style>
+    .hero-card {
+        min-height: 500px;
+    }
+
+    .card-title-lg {
+        font-size: 64px;
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: -2px;
+    }
+
+    .cta-button {
+        margin-top: 32px;
+        background: var(--c-black);
+        color: var(--c-white);
+        padding: 16px 32px;
+        border-radius: var(--radius-pill);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        align-self: flex-start;
+    }
+    
+    .cta-button:hover {
+        transform: scale(1.05);
+    }
+
+    .cta-button svg {
+        transition: transform 0.3s ease;
+    }
+
+    .cta-button:hover svg {
+        transform: translateX(4px);
+    }
+
+    .wasm-orb {
+        position: absolute;
+        right: -80px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(circle at 30% 30%, #FFF5E1, #FFC062 60%, #E76F51);
+        border-radius: 50%;
+        box-shadow: 
+            30px 30px 80px rgba(231, 111, 81, 0.2),
+            inset -20px -20px 40px rgba(0,0,0,0.1),
+            inset 20px 20px 40px rgba(255,255,255,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+    }
+
+    .wasm-label {
+        font-weight: 800;
+        font-size: 80px;
+        color: rgba(0,0,0,0.05);
+        letter-spacing: -4px;
+    }
+
+    .stat-label {
+        font-weight: 500;
+        color: var(--c-text-sub);
+        margin-top: 8px;
+    }
+
+    .feature-desc {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-top: 12px;
+    }
+
+    .footer-card-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .tech-badge {
+        font-size: 12px;
+        font-family: monospace;
+        opacity: 0.6;
+        padding: 8px 16px;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 12px;
+    }
+
+    .footer-strip {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: center;
+        padding: 40px 0;
+        color: var(--c-text-sub);
+        font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+        .wasm-orb {
+            display: none;
+        }
+        .footer-card-inner {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+    }
+</style>
