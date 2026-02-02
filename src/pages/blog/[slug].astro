@@ -1,0 +1,165 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import BackgroundCanvas from '../../components/BackgroundCanvas';
+
+export async function getStaticPaths() {
+    const blogPosts = await getCollection('blog');
+    return blogPosts.map(post => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={post.data.title}>
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Blog" />
+
+        <article class="blog-post">
+            <header class="post-header">
+                <div class="post-meta">{post.data.date}</div>
+                <h1>{post.data.title}</h1>
+                <p class="post-description">{post.data.description}</p>
+            </header>
+
+            <div class="post-content">
+                <Content />
+            </div>
+
+            <footer class="post-footer">
+                <a href="/blog" class="back-link">← Back to Blog</a>
+            </footer>
+        </article>
+
+        <footer class="footer-strip">
+            © 2026 Smooth Plugins Inc.
+        </footer>
+    </div>
+</Layout>
+
+<style>
+    .blog-post {
+        grid-column: 1 / -1;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .post-header {
+        margin-bottom: 48px;
+    }
+
+    .post-meta {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.6;
+        margin-bottom: 16px;
+    }
+
+    .post-header h1 {
+        font-size: 48px;
+        letter-spacing: -2px;
+        line-height: 1.1;
+        margin-bottom: 16px;
+    }
+
+    .post-description {
+        font-size: 20px;
+        opacity: 0.7;
+        line-height: 1.5;
+    }
+
+    .post-content {
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .post-content :global(h2) {
+        font-size: 32px;
+        letter-spacing: -1px;
+        margin-top: 48px;
+        margin-bottom: 24px;
+    }
+
+    .post-content :global(h3) {
+        font-size: 24px;
+        margin-top: 32px;
+        margin-bottom: 16px;
+    }
+
+    .post-content :global(p) {
+        margin-bottom: 24px;
+    }
+
+    .post-content :global(ul) {
+        margin: 24px 0;
+        padding-left: 24px;
+    }
+
+    .post-content :global(li) {
+        margin-bottom: 12px;
+    }
+
+    .post-content :global(strong) {
+        font-weight: 600;
+    }
+
+    .post-content :global(code) {
+        background: rgba(0, 0, 0, 0.05);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .post-content :global(pre) {
+        background: rgba(0, 0, 0, 0.05);
+        padding: 24px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 32px 0;
+    }
+
+    .post-content :global(pre code) {
+        background: none;
+        padding: 0;
+    }
+
+    .post-footer {
+        margin-top: 64px;
+        padding-top: 32px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link {
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .post-header h1 {
+            font-size: 36px;
+        }
+
+        .post-content {
+            font-size: 16px;
+        }
+
+        .post-content :global(h2) {
+            font-size: 28px;
+        }
+    }
+</style>
