@@ -3,10 +3,10 @@ import ThemeToggle from './ThemeToggle';
 const { active = "Home" } = Astro.props;
 
 const items = [
-    { name: "Catalog", href: "/products" },
-    { name: "Smooth Search", href: "/products/smooth-search" },
-    { name: "Documentation", href: "#" },
-    { name: "Blog", href: "/blog" },
+    { name: "Catalog", href: "/products", tooltip: "Where the magic happens" },
+    { name: "Smooth Search", href: "/products/smooth-search", tooltip: "Speed of Rust, comfort of your couch" },
+    { name: "Documentation", href: "#", tooltip: "Read the manual (yes, really)" },
+    { name: "Blog", href: "/blog", tooltip: "We write, you procrastinate" },
 ];
 ---
 
@@ -21,6 +21,7 @@ const items = [
             <a
                 href={item.href}
                 class={`nav-item ${active === item.name ? 'active' : ''}`}
+                data-tooltip={item.tooltip}
             >
                 {item.name}
             </a>
@@ -82,6 +83,36 @@ const items = [
 
     .nav-item:hover {
         background-color: var(--c-bg);
+        position: relative;
+    }
+
+    .nav-item[data-tooltip]:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--c-primary);
+        color: var(--c-primary-inverse);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        z-index: 1000;
+        pointer-events: none;
+        animation: tooltipFadeIn 0.2s ease-out;
+    }
+
+    @keyframes tooltipFadeIn {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     }
 
     .nav-item.active {
