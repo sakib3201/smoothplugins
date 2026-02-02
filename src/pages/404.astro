@@ -1,0 +1,317 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="404 - Page Not Found">
+    <BackgroundCanvas client:load />
+    <div class="layout-container">
+        <Navigation />
+
+        <div class="error-container">
+            <div class="error-content">
+                <div class="error-code">404</div>
+                <h1 class="error-title">Oops! This Page Went on Vacation</h1>
+                <p class="error-description">
+                    Looks like this page decided to take a break. It's probably sipping
+                    a piña colada somewhere in the cloud... or maybe it never existed at all.
+                    Who's to say, really? 🏖️
+                </p>
+                <p class="error-hint">
+                    Unlike our missing page, our plugins are <em>always</em> where they should be.
+                    Maybe you'd like to check those out instead?
+                </p>
+                <div class="error-actions">
+                    <a href="/" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        Back to Home
+                    </a>
+                    <a href="/products" class="btn btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        Browse Plugins
+                    </a>
+                </div>
+
+                <div class="error-easter-egg">
+                    <details>
+                        <summary>🕵️ Developer Mode</summary>
+                        <div class="easter-egg-content">
+                            <pre><code>{`// Error Log
+if (page.exists()) {
+    render(page);
+} else {
+    throw new Error("Page.exe has stopped working");
+    // Have you tried turning it off and on again?
+}
+
+// Fun fact: This 404 page is built with Astro
+// and loads faster than the page you were looking for! 🚀`}</code></pre>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div class="floating-404">
+                <div class="float-number">4</div>
+                <div class="float-number">0</div>
+                <div class="float-number">4</div>
+            </div>
+        </div>
+
+        <Footer />
+    </div>
+</Layout>
+
+<style>
+    .error-container {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        min-height: 70vh;
+        padding: 40px 0;
+    }
+
+    .error-content {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .error-code {
+        font-size: 120px;
+        font-weight: 700;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--c-lavender), var(--c-peach), var(--c-blue));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -4px;
+        animation: gradient-shift 3s ease infinite;
+        background-size: 200% 200%;
+    }
+
+    @keyframes gradient-shift {
+        0%, 100% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+    }
+
+    .error-title {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--c-text-primary);
+        letter-spacing: -1px;
+    }
+
+    .error-description {
+        font-size: 18px;
+        line-height: 1.6;
+        color: var(--c-text-secondary);
+    }
+
+    .error-hint {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--c-text-secondary);
+        padding: 20px;
+        background: var(--c-surface);
+        border-radius: var(--radius-md);
+        border-left: 4px solid var(--c-lavender);
+    }
+
+    .error-hint em {
+        font-style: italic;
+        color: var(--c-lavender);
+        font-weight: 600;
+    }
+
+    .error-actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 32px;
+        border-radius: var(--radius-pill);
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        transition: all 0.3s var(--ease-smooth);
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: var(--c-primary);
+        color: var(--c-primary-inverse);
+        box-shadow: 0 10px 30px var(--c-shadow);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 40px var(--c-shadow);
+    }
+
+    .btn-secondary {
+        background: var(--c-surface);
+        color: var(--c-text-primary);
+        border: 2px solid var(--c-border);
+    }
+
+    .btn-secondary:hover {
+        background: var(--c-bg);
+        transform: translateY(-2px);
+    }
+
+    .error-easter-egg {
+        margin-top: 40px;
+    }
+
+    .error-easter-egg details {
+        background: var(--c-surface);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        cursor: pointer;
+        border: 1px solid var(--c-border);
+    }
+
+    .error-easter-egg summary {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--c-text-secondary);
+        user-select: none;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .error-easter-egg summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .easter-egg-content {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--c-border);
+    }
+
+    .easter-egg-content pre {
+        background: var(--c-bg);
+        padding: 16px;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--c-text-secondary);
+        font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .floating-404 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        perspective: 1000px;
+    }
+
+    .float-number {
+        font-size: 180px;
+        font-weight: 700;
+        color: var(--c-text-primary);
+        opacity: 0.1;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .float-number:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .float-number:nth-child(2) {
+        animation-delay: 0.3s;
+    }
+
+    .float-number:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotateX(0deg);
+        }
+        50% {
+            transform: translateY(-30px) rotateX(10deg);
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .error-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: 80px;
+        }
+
+        .error-title {
+            font-size: 32px;
+        }
+
+        .error-description,
+        .error-hint {
+            text-align: left;
+        }
+
+        .error-actions {
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .floating-404 {
+            order: -1;
+        }
+
+        .float-number {
+            font-size: 100px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .error-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .error-code {
+            font-size: 60px;
+        }
+
+        .error-title {
+            font-size: 24px;
+        }
+    }
+</style>

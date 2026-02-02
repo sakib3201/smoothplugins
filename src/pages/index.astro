@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import Card from '../components/Card.astro';
 import SmoothSearchDemo from '../components/SmoothSearchDemo';
 import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
 
 ---
 
@@ -12,8 +13,19 @@ import BackgroundCanvas from '../components/BackgroundCanvas';
 	<div class="layout-container">
 		<Navigation active="Home" />
 
-		<Card 
-            title="Search at the speed of Rust." 
+		<section class="hero">
+			<div class="hero-content">
+				<h1 class="hero-title">
+					Performance<br/>
+					<span class="hero-title-accent">Without</span><br/>
+					Friction
+				</h1>
+				<p class="hero-subtitle">Smooth Plugins builds performance-first WordPress solutions powered by modern web technologies.</p>
+			</div>
+		</section>
+
+		<Card
+            title="Search at the speed of Rust."
             kicker="New Release: Smooth Search"
             description="The first WooCommerce search engine powered by WebAssembly. Blazing fast indexing and retrieval directly in the browser."
             variant="peach"
@@ -57,10 +69,10 @@ import BackgroundCanvas from '../components/BackgroundCanvas';
             <p class="feature-desc">Works with your existing theme, filters, and attributes. No complex setup required.</p>
         </Card>
 
-        <Card 
-            title="Pre-compiled Efficiency" 
-            kicker="Developer First" 
-            variant="black" 
+        <Card
+            title="Pre-compiled Efficiency"
+            kicker="Developer First"
+            variant="black"
             span={12}
             class="footer-card"
         >
@@ -70,13 +82,70 @@ import BackgroundCanvas from '../components/BackgroundCanvas';
             </div>
         </Card>
 
-        <footer class="footer-strip">
-            © 2026 Smooth Plugins Inc. Built with Rust for the Modern Web.
-        </footer>
+        <Footer />
 	</div>
 </Layout>
 
 <style>
+    .hero {
+        grid-column: span 12;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 180px);
+        height: calc(100vh - 180px);
+        position: relative;
+        padding: 40px;
+    }
+
+    .hero-content {
+        text-align: center;
+        max-width: 900px;
+        animation: heroFadeIn 1s ease-out;
+    }
+
+    @keyframes heroFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero-title {
+        font-size: clamp(64px, 10vw, 120px);
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: -4px;
+        margin-bottom: 32px;
+        color: var(--c-text-primary);
+    }
+
+    .hero-title-accent {
+        background: linear-gradient(135deg, var(--c-lavender), var(--c-peach), var(--c-blue));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% 200%;
+        animation: gradientShift 8s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .hero-subtitle {
+        font-size: clamp(18px, 2vw, 24px);
+        line-height: 1.6;
+        color: var(--c-text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
     .hero-card {
         min-height: 500px;
     }
@@ -90,8 +159,8 @@ import BackgroundCanvas from '../components/BackgroundCanvas';
 
     .cta-button {
         margin-top: 32px;
-        background: var(--c-black);
-        color: var(--c-white);
+        background: var(--c-primary);
+        color: var(--c-primary-inverse);
         padding: 16px 32px;
         border-radius: var(--radius-pill);
         text-decoration: none;
@@ -143,7 +212,7 @@ import BackgroundCanvas from '../components/BackgroundCanvas';
 
     .stat-label {
         font-weight: 500;
-        color: var(--c-text-sub);
+        color: var(--c-text-secondary);
         margin-top: 8px;
     }
 
@@ -169,16 +238,21 @@ import BackgroundCanvas from '../components/BackgroundCanvas';
         border-radius: 12px;
     }
 
-    .footer-strip {
-        grid-column: 1 / -1;
-        display: flex;
-        justify-content: center;
-        padding: 40px 0;
-        color: var(--c-text-sub);
-        font-size: 14px;
-    }
-
     @media (max-width: 1024px) {
+        .hero {
+            min-height: calc(100vh - 200px);
+            height: calc(100vh - 200px);
+            padding: 40px 20px;
+        }
+
+        .hero-title {
+            letter-spacing: -2px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+        }
+
         .wasm-orb {
             display: none;
         }

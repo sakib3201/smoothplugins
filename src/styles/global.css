@@ -1,21 +1,71 @@
 :root {
+    /* Existing accent colors */
     --c-lavender: #9D8DF1;
     --c-peach: #FFC062;
     --c-blue: #AEE2FF;
     --c-pink: #FFB8D2;
     --c-rust: #E76F51;
+
+    /* Semantic tokens - Light theme */
+    --c-primary: #111111;
+    --c-primary-inverse: #FFFFFF;
+    --c-bg: #F4F4F6;
+    --c-surface: #FFFFFF;
+    --c-text-primary: #111111;
+    --c-text-secondary: #666666;
+    --c-text-inverse: #FFFFFF;
+    --c-border: rgba(0, 0, 0, 0.1);
+    --c-shadow: rgba(0, 0, 0, 0.08);
+
+    /* Keep backward compatibility */
     --c-black: #111111;
     --c-white: #FFFFFF;
-    --c-bg: #F4F4F6;
     --c-text-sub: #666666;
-    
+
     --radius-lg: 32px;
     --radius-md: 24px;
     --radius-pill: 999px;
     --gap: 24px;
-    
+
     --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
     --trans-speed: 0.6s;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+    --c-primary: #FFFFFF;
+    --c-primary-inverse: #111111;
+    --c-bg: #0A0A0B;
+    --c-surface: #1A1A1D;
+    --c-text-primary: #FFFFFF;
+    --c-text-secondary: #A0A0A0;
+    --c-text-inverse: #111111;
+    --c-border: rgba(255, 255, 255, 0.15);
+    --c-shadow: rgba(0, 0, 0, 0.3);
+
+    /* Lighter accent colors for dark mode */
+    --c-lavender: #B8A9FF;
+    --c-peach: #FFD699;
+    --c-blue: #C4E8FF;
+}
+
+/* Smooth theme transitions */
+html {
+    transition: background-color 0.6s var(--ease-smooth);
+}
+
+body {
+    background-color: var(--c-bg);
+    color: var(--c-text-primary);
+    transition: color 0.6s var(--ease-smooth),
+                background-color 0.6s var(--ease-smooth);
+}
+
+/* Apply transition to all theme-dependent properties */
+*, *::before, *::after {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 0.6s;
+    transition-timing-function: var(--ease-smooth);
 }
 
 * {
@@ -23,16 +73,6 @@
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
-}
-
-body {
-    font-family: 'Outfit', sans-serif;
-    background-color: var(--c-bg);
-    color: var(--c-black);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
 }
 
 img {
@@ -63,4 +103,28 @@ a {
         display: flex;
         flex-direction: column;
     }
+}
+
+/* Theme Toggle Styles */
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-pill);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    transition: background-color 0.3s var(--ease-smooth);
+    color: var(--c-text-primary);
+}
+
+.theme-toggle:hover {
+    background-color: var(--c-bg);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--c-primary);
+    outline-offset: 2px;
 }

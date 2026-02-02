@@ -6,7 +6,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.string(),
-    variant: z.enum(['white', 'lavender', 'blue', 'peach']),
+    variant: z.enum(['white', 'black', 'lavender', 'blue', 'peach']),
     span: z.number(),
   }),
 });

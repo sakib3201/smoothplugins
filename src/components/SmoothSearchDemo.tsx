@@ -66,6 +66,11 @@ const SmoothSearchDemo: React.FC = () => {
                     border: 1px solid rgba(255, 255, 255, 0.4);
                 }
 
+                [data-theme="dark"] .search-demo-box {
+                    background: rgba(26, 26, 29, 0.5);
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                }
+
                 .search-input-fake {
                     background: white;
                     padding: 12px 16px;
@@ -79,9 +84,14 @@ const SmoothSearchDemo: React.FC = () => {
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 }
 
+                [data-theme="dark"] .search-input-fake {
+                    background: #2A2A2D;
+                    color: #A0A0A0;
+                }
+
                 .time-badge {
-                    background: var(--c-black);
-                    color: white;
+                    background: var(--c-primary);
+                    color: var(--c-primary-inverse);
                     padding: 2px 8px;
                     border-radius: 6px;
                     font-weight: 600;
@@ -98,6 +108,10 @@ const SmoothSearchDemo: React.FC = () => {
                     height: 8px;
                     background: rgba(0, 0, 0, 0.1);
                     border-radius: 4px;
+                }
+
+                [data-theme="dark"] .result-bar {
+                    background: rgba(255, 255, 255, 0.1);
                 }
             `}</style>
         </div>

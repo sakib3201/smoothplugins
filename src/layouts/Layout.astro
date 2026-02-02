@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ThemeScript from '../components/ThemeScript.astro';
 
 interface Props {
 	title: string;
@@ -13,6 +14,7 @@ const { title, description = "Smooth Plugins - High performance WordPress plugin
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<ThemeScript />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />

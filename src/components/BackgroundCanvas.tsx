@@ -1,8 +1,30 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 const BackgroundCanvas: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+    // Listen for theme changes
+    useEffect(() => {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-theme') {
+                    const newTheme = document.documentElement.getAttribute('data-theme');
+                    setTheme(newTheme as 'light' | 'dark');
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
+
+        setTheme(document.documentElement.getAttribute('data-theme') as 'light' | 'dark' || 'light');
+
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -25,11 +47,15 @@ const BackgroundCanvas: React.FC = () => {
 
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
+        // Theme-aware color
+        const particleColor = theme === 'dark' ? '#B8A9FF' : '#9D8DF1';
+        const particleOpacity = theme === 'dark' ? 0.3 : 0.5;
+
         const material = new THREE.PointsMaterial({
             size: 0.02,
-            color: '#9D8DF1',
+            color: particleColor,
             transparent: true,
-            opacity: 0.5,
+            opacity: particleOpacity,
         });
 
         const points = new THREE.Points(geometry, material);
@@ -56,13 +82,28 @@ const BackgroundCanvas: React.FC = () => {
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            containerRef.current?.removeChild(renderer.domElement);
+            if (containerRef.current) {
+                containerRef.current.removeChild(renderer.domElement);
+            }
             geometry.dispose();
             material.dispose();
         };
-    }, []);
+    }, [theme]);
 
-    return <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, pointerEvents: 'none' }} />;
+    return (
+        <div
+            ref={containerRef}
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: -1,
+                pointerEvents: 'none'
+            }}
+        />
+    );
 };
 
 export default BackgroundCanvas;

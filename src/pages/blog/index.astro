@@ -1,43 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Card from '../../components/Card.astro';
 import BackgroundCanvas from '../../components/BackgroundCanvas';
+import Footer from '../../components/Footer.astro';
 
-const posts = [
-    {
-        slug: "wasm-wordpress-search",
-        title: "Why WASM is the future of WordPress Search",
-        excerpt: "Exploring the technical advantages of moving search logic from PHP to the client side.",
-        date: "Jan 15, 2026",
-        variant: "white",
-        span: 8
-    },
-    {
-        slug: "performance-first",
-        title: "Performance First",
-        excerpt: "Why we choose Rust over Go for critical plugin infrastructure.",
-        date: "Jan 10, 2026",
-        variant: "lavender",
-        span: 4
-    },
-    {
-        slug: "scaling-woocommerce",
-        title: "Scaling WooCommerce to 1M+ Products",
-        excerpt: "Lessons learned building Smooth Search for high-traffic enterprise stores.",
-        date: "Jan 05, 2026",
-        variant: "blue",
-        span: 6
-    },
-    {
-        slug: "developer-experience",
-        title: "Developer Experience",
-        excerpt: "Building a headless-friendly search engine with local indexing.",
-        date: "Jan 01, 2026",
-        variant: "peach",
-        span: 6
-    }
-];
+// Get all blog posts from content collection
+const posts = await getCollection('blog');
+
+// Sort by date, newest first
+posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
 <Layout title="Blog">
@@ -51,20 +24,18 @@ const posts = [
         </div>
 
         {posts.map((post) => (
-            <Card 
-                title={post.title} 
-                kicker={post.date}
-                variant={post.variant as any}
-                span={post.span}
+            <Card
+                title={post.data.title}
+                kicker={post.data.date}
+                variant={post.data.variant}
+                span={post.data.span}
             >
-                <p class="post-excerpt">{post.excerpt}</p>
+                <p class="post-excerpt">{post.data.description}</p>
                 <a href={`/blog/${post.slug}`} class="read-more">Read Entry →</a>
             </Card>
         ))}
 
-        <footer class="footer-strip">
-            © 2026 Smooth Plugins Inc.
-        </footer>
+        <Footer />
     </div>
 </Layout>
 

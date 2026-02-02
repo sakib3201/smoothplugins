@@ -52,14 +52,33 @@ const bgClasses = {
 
     .card:hover {
         transform: translateY(-4px) scale(1.005);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        box-shadow: 0 20px 40px var(--c-shadow);
     }
 
-    .card-bg-white { background-color: var(--c-white); color: var(--c-black); }
-    .card-bg-black { background-color: var(--c-black); color: var(--c-white); }
-    .card-bg-blue { background-color: var(--c-blue); color: var(--c-black); }
-    .card-bg-peach { background-color: var(--c-peach); color: var(--c-black); }
-    .card-bg-lavender { background-color: var(--c-lavender); color: var(--c-black); }
+    .card-bg-white {
+        background-color: var(--c-surface);
+        color: var(--c-text-primary);
+    }
+
+    .card-bg-black {
+        background-color: var(--c-primary);
+        color: var(--c-primary-inverse);
+    }
+
+    .card-bg-blue {
+        background-color: var(--c-blue);
+        color: var(--c-black);
+    }
+
+    .card-bg-peach {
+        background-color: var(--c-peach);
+        color: var(--c-black);
+    }
+
+    .card-bg-lavender {
+        background-color: var(--c-lavender);
+        color: var(--c-black);
+    }
 
     .card-kicker {
         font-size: 14px;
