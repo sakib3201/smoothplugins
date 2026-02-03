@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import Card from '../components/Card.astro';
 import BackgroundCanvas from '../components/BackgroundCanvas';
 import Footer from '../components/Footer.astro';
+import { Code } from 'astro:components';
 ---
 
 <Layout title="Documentation - Smooth Plugins">
@@ -49,7 +50,9 @@ import Footer from '../components/Footer.astro';
             <div class="doc-section">
                 <h3>Customization & Hooks</h3>
                 <p>Smooth Search provides several hooks and filters for developers:</p>
-                <pre class="code-block" set:html={`// Filter search results
+                <div class="code-wrapper">
+                    <Code
+                        code={`// Filter search results
 add_filter('smooth_search_results', function($results) {
     // Customize results
     return $results;
@@ -59,7 +62,14 @@ add_filter('smooth_search_results', function($results) {
 add_filter('smooth_search_indexed_fields', function($fields) {
     $fields[] = 'custom_meta_field';
     return $fields;
-});`} />
+});`}
+                        lang="php"
+                        themes={{
+                            light: 'github-light',
+                            dark: 'github-dark'
+                        }}
+                    />
+                </div>
             </div>
         </Card>
 
@@ -108,15 +118,35 @@ add_filter('smooth_search_indexed_fields', function($fields) {
         font-size: 0.9em;
     }
 
-    .code-block {
-        background: var(--c-bg);
-        padding: 20px;
+    .code-wrapper {
         border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--c-border);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .code-wrapper :global(pre) {
+        margin: 0;
+        padding: 20px;
         overflow-x: auto;
-        font-family: 'Courier New', monospace;
         font-size: 14px;
         line-height: 1.6;
-        border: 1px solid var(--c-border);
+        background: transparent !important;
+    }
+
+    .code-wrapper :global(code) {
+        font-family: 'Courier New', Consolas, Monaco, monospace;
+        background: transparent;
+        padding: 0;
+    }
+
+    /* Theme-aware code block background */
+    :global([data-theme="light"]) .code-wrapper {
+        background: #f6f8fa;
+    }
+
+    :global([data-theme="dark"]) .code-wrapper {
+        background: #0d1117;
     }
 
     .doc-link {
@@ -136,7 +166,7 @@ add_filter('smooth_search_indexed_fields', function($fields) {
             font-size: 18px;
         }
 
-        .code-block {
+        .code-wrapper :global(pre) {
             font-size: 12px;
             padding: 16px;
         }

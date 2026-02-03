@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import Card from '../components/Card.astro';
 import BackgroundCanvas from '../components/BackgroundCanvas';
 import Footer from '../components/Footer.astro';
+import { Code } from 'astro:components';
 ---
 
 <Layout title="API Reference - Smooth Plugins">
@@ -59,7 +60,9 @@ import Footer from '../components/Footer.astro';
         <Card title="JavaScript API" kicker="Client-Side" variant="peach" span={12}>
             <div class="api-section">
                 <h3>SmoothSearch Class</h3>
-                <pre class="code-block" set:html={`// Initialize search engine
+                <div class="code-wrapper">
+                    <Code
+                        code={`// Initialize search engine
 const search = new SmoothSearch({
     indexUrl: '/path/to/index.wasm',
     maxResults: 20,
@@ -79,7 +82,14 @@ search.on('indexLoaded', () => {
 
 search.on('searchComplete', (results) => {
     console.log('Found:', results.length);
-});`} />
+});`}
+                        lang="javascript"
+                        themes={{
+                            light: 'github-light',
+                            dark: 'github-dark'
+                        }}
+                    />
+                </div>
             </div>
         </Card>
 
@@ -145,15 +155,35 @@ search.on('searchComplete', (results) => {
         line-height: 1.5;
     }
 
-    .code-block {
-        background: var(--c-bg);
-        padding: 24px;
+    .code-wrapper {
         border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--c-border);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .code-wrapper :global(pre) {
+        margin: 0;
+        padding: 24px;
         overflow-x: auto;
-        font-family: 'Courier New', monospace;
         font-size: 14px;
         line-height: 1.6;
-        border: 1px solid var(--c-border);
+        background: transparent !important;
+    }
+
+    .code-wrapper :global(code) {
+        font-family: 'Courier New', Consolas, Monaco, monospace;
+        background: transparent;
+        padding: 0;
+    }
+
+    /* Theme-aware code block background */
+    :global([data-theme="light"]) .code-wrapper {
+        background: #f6f8fa;
+    }
+
+    :global([data-theme="dark"]) .code-wrapper {
+        background: #0d1117;
     }
 
     .api-link {
@@ -177,7 +207,7 @@ search.on('searchComplete', (results) => {
             font-size: 13px;
         }
 
-        .code-block {
+        .code-wrapper :global(pre) {
             font-size: 12px;
             padding: 16px;
         }

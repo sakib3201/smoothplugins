@@ -5,7 +5,9 @@ const { active = "Home" } = Astro.props;
 const items = [
     { name: "Catalog", href: "/products", tooltip: "Where the magic happens" },
     { name: "Smooth Search", href: "/products/smooth-search", tooltip: "Speed of Rust, comfort of your couch" },
-    { name: "Documentation", href: "#", tooltip: "Read the manual (yes, really)" },
+    { name: "Documentation", href: "/documentation", tooltip: "Read the manual (yes, really)" },
+    { name: "Support", href: "/support", tooltip: "Need help? We got you" },
+    { name: "About", href: "/about", tooltip: "Who we are and why we care" },
     { name: "Blog", href: "/blog", tooltip: "We write, you procrastinate" },
 ];
 ---
@@ -289,6 +291,14 @@ const items = [
             transition-delay: 0.25s;
         }
 
+        .nav-links.active .nav-item:nth-child(5) {
+            transition-delay: 0.3s;
+        }
+
+        .nav-links.active .nav-item:nth-child(6) {
+            transition-delay: 0.35s;
+        }
+
         .nav-item[data-tooltip]:hover::after {
             display: none;
         }
@@ -309,6 +319,7 @@ const items = [
         .nav-links.active .theme-toggle-wrapper {
             opacity: 1;
             transform: translateX(0);
+            transition-delay: 0.4s;
         }
     }
 
