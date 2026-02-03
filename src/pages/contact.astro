@@ -1,0 +1,263 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Contact - Smooth Plugins">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Contact" />
+
+        <Card
+            title="Get in Touch"
+            kicker="Contact Us"
+            variant="blue"
+            span={12}
+        >
+            <p class="card-desc">Have questions about Smooth Plugins? Need help with integration? Want to collaborate? We'd love to hear from you.</p>
+        </Card>
+
+        <Card title="Coming Soon!" kicker="We're Almost There" variant="white" span={8}>
+            <div class="coming-soon-message">
+                <div class="emoji-hero">🚧 👷‍♂️ 🛠️</div>
+                <h3>Our Carrier Pigeons Are Still in Training</h3>
+                <p>We tried teaching them to use email, but they kept pecking at the keyboard. Who knew pigeons weren't great typists?</p>
+                <p>While we sort out our communication infrastructure (and convince our pigeons that Rust isn't just a snack), feel free to reach out through the methods below!</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> Our contact form is currently being compiled in Rust. It's so fast, it traveled back in time and isn't here yet. We're working on the physics.
+                </div>
+                <p class="coming-soon-note">Check back soon for a proper contact form that doesn't involve time travel or confused birds!</p>
+            </div>
+        </Card>
+
+        <Card title="Other Ways to Reach Us" kicker="Quick Links" variant="lavender" span={4}>
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <span class="method-icon">📧</span>
+                    <div>
+                        <strong>Email</strong>
+                        <a href="mailto:hello@smoothplugins.com">hello@smoothplugins.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-method">
+                    <span class="method-icon">💬</span>
+                    <div>
+                        <strong>Discord</strong>
+                        <a href="#">Join our community</a>
+                    </div>
+                </div>
+
+                <div class="contact-method">
+                    <span class="method-icon">🐙</span>
+                    <div>
+                        <strong>GitHub</strong>
+                        <a href="https://github.com/sakib3201/smoothplugins">View repository</a>
+                    </div>
+                </div>
+
+                <div class="contact-method">
+                    <span class="method-icon">🐦</span>
+                    <div>
+                        <strong>Twitter</strong>
+                        <a href="#">@smoothplugins</a>
+                    </div>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="Business Hours" kicker="When to Expect a Response" variant="peach" span={6}>
+            <div class="hours-info">
+                <p>We're a small but dedicated team. Here's when you can expect to hear from us:</p>
+                <div class="hours-list">
+                    <div class="hours-item">
+                        <strong>Monday - Friday</strong>
+                        <span>9:00 AM - 5:00 PM EST</span>
+                    </div>
+                    <div class="hours-item">
+                        <strong>Response Time</strong>
+                        <span>Usually within 24 hours</span>
+                    </div>
+                    <div class="hours-item">
+                        <strong>Urgent Issues</strong>
+                        <span>Check our <a href="/support">support page</a></span>
+                    </div>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="For Security Issues" kicker="Responsible Disclosure" variant="black" span={6}>
+            <div class="security-info">
+                <p>If you've discovered a security vulnerability, please report it privately to:</p>
+                <a href="mailto:security@smoothplugins.com" class="security-email">security@smoothplugins.com</a>
+                <p class="security-note">We take security seriously and will respond within 48 hours. Please do not disclose security issues publicly until we've had a chance to address them.</p>
+            </div>
+        </Card>
+
+        <Footer />
+    </div>
+</Layout>
+
+<style>
+    .coming-soon-message {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .emoji-hero {
+        font-size: 48px;
+        line-height: 1;
+    }
+
+    .coming-soon-message h3 {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--c-text-primary);
+        margin: 0;
+    }
+
+    .coming-soon-message p {
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--c-text-secondary);
+        margin: 0;
+    }
+
+    .fun-fact {
+        padding: 20px;
+        background: var(--c-bg);
+        border-radius: 12px;
+        border: 2px dashed var(--c-border);
+        margin: 8px 0;
+    }
+
+    .fun-fact strong {
+        display: block;
+        font-size: 14px;
+        color: var(--c-text-primary);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .coming-soon-note {
+        font-size: 14px;
+        font-style: italic;
+        color: var(--c-text-secondary);
+        padding-top: 12px;
+        border-top: 1px solid var(--c-border);
+    }
+
+    .contact-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .contact-method {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .method-icon {
+        font-size: 28px;
+    }
+
+    .contact-method strong {
+        display: block;
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+
+    .contact-method a {
+        color: var(--c-text-secondary);
+        font-size: 14px;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+    }
+
+    .contact-method a:hover {
+        color: var(--c-text-primary);
+    }
+
+    .hours-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .hours-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .hours-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 16px;
+        background: var(--c-bg);
+        border-radius: 8px;
+        border: 1px solid var(--c-border);
+    }
+
+    .hours-item strong {
+        font-size: 15px;
+    }
+
+    .hours-item span {
+        color: var(--c-text-secondary);
+        font-size: 14px;
+    }
+
+    .hours-item a {
+        color: var(--c-text-primary);
+        text-decoration: underline;
+    }
+
+    .security-info {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .security-email {
+        display: inline-block;
+        padding: 12px 24px;
+        background: var(--c-white);
+        color: var(--c-black);
+        font-weight: 600;
+        border-radius: var(--radius-pill);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .security-email:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+    }
+
+    .security-note {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .coming-soon-message h3 {
+            font-size: 20px;
+        }
+
+        .emoji-hero {
+            font-size: 36px;
+        }
+    }
+</style>

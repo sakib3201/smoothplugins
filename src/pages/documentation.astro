@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Documentation - Smooth Plugins">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Documentation" />
+
+        <Card
+            title="Documentation"
+            kicker="Get Started"
+            variant="blue"
+            span={12}
+        >
+            <p class="card-desc">Comprehensive guides and documentation to help you integrate and optimize Smooth Plugins for your WordPress and WooCommerce sites.</p>
+        </Card>
+
+        <Card title="Installation" kicker="Quick Start" variant="white" span={6}>
+            <div class="doc-section">
+                <h3>Installing Smooth Search</h3>
+                <ol class="doc-list">
+                    <li>Download the plugin from the WordPress repository</li>
+                    <li>Upload to your <code>/wp-content/plugins/</code> directory</li>
+                    <li>Activate through the WordPress admin panel</li>
+                    <li>Configure your search settings</li>
+                </ol>
+            </div>
+        </Card>
+
+        <Card title="Configuration" kicker="Setup Guide" variant="lavender" span={6}>
+            <div class="doc-section">
+                <h3>Basic Configuration</h3>
+                <p>After activation, navigate to <strong>Settings → Smooth Search</strong> to configure:</p>
+                <ul class="doc-list">
+                    <li>Search index generation schedule</li>
+                    <li>Searchable product fields</li>
+                    <li>CDN configuration (optional)</li>
+                    <li>Performance tuning options</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="Developer Guide" kicker="Advanced" variant="peach" span={8}>
+            <div class="doc-section">
+                <h3>Customization & Hooks</h3>
+                <p>Smooth Search provides several hooks and filters for developers:</p>
+                <pre class="code-block" set:html={`// Filter search results
+add_filter('smooth_search_results', function($results) {
+    // Customize results
+    return $results;
+});
+
+// Modify indexed fields
+add_filter('smooth_search_indexed_fields', function($fields) {
+    $fields[] = 'custom_meta_field';
+    return $fields;
+});`} />
+            </div>
+        </Card>
+
+        <Card title="Need Help?" kicker="Support" variant="black" span={4}>
+            <div class="doc-section">
+                <p>Can't find what you're looking for?</p>
+                <a href="/support" class="doc-link">Visit Support Center →</a>
+                <a href="/api-reference" class="doc-link">View API Reference →</a>
+            </div>
+        </Card>
+
+        <Footer />
+    </div>
+</Layout>
+
+<style>
+    .doc-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .doc-section h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .doc-list {
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        line-height: 1.6;
+    }
+
+    .doc-list li {
+        padding-left: 8px;
+    }
+
+    code {
+        background: var(--c-bg);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+
+    .code-block {
+        background: var(--c-bg);
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        border: 1px solid var(--c-border);
+    }
+
+    .doc-link {
+        display: inline-block;
+        color: var(--c-text-primary);
+        font-weight: 600;
+        transition: transform 0.3s ease;
+        text-decoration: underline;
+    }
+
+    .doc-link:hover {
+        transform: translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+        .doc-section h3 {
+            font-size: 18px;
+        }
+
+        .code-block {
+            font-size: 12px;
+            padding: 16px;
+        }
+    }
+</style>

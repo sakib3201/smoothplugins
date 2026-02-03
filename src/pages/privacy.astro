@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy - Smooth Plugins">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Privacy" />
+
+        <Card
+            title="Privacy Policy"
+            kicker="Last Updated: February 3, 2026"
+            variant="white"
+            span={12}
+        >
+            <p class="card-desc">At Smooth Plugins, we take your privacy seriously. This policy outlines how we collect, use, and protect your information.</p>
+        </Card>
+
+        <Card title="Information We Collect" kicker="Data Collection" variant="lavender" span={12}>
+            <div class="policy-section">
+                <h3>Website Analytics</h3>
+                <p>We use privacy-focused analytics to understand how visitors use our website. This includes:</p>
+                <ul class="policy-list">
+                    <li>Page views and navigation patterns</li>
+                    <li>General location (country/region)</li>
+                    <li>Device and browser information</li>
+                    <li>Referral sources</li>
+                </ul>
+                <p>We do not use tracking cookies or collect personally identifiable information through analytics.</p>
+
+                <h3>Plugin Usage Data</h3>
+                <p>Our WordPress plugins may collect anonymous usage data to help us improve performance and features:</p>
+                <ul class="policy-list">
+                    <li>Plugin version and configuration</li>
+                    <li>WordPress and PHP versions</li>
+                    <li>General site performance metrics</li>
+                    <li>Error logs (anonymous)</li>
+                </ul>
+                <p>This data is collected only if you opt-in during plugin installation.</p>
+
+                <h3>Contact Information</h3>
+                <p>When you contact us or sign up for updates, we collect:</p>
+                <ul class="policy-list">
+                    <li>Name and email address</li>
+                    <li>Any information you provide in your message</li>
+                    <li>Technical details if you're reporting a bug</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="How We Use Your Information" kicker="Data Usage" variant="blue" span={6}>
+            <div class="policy-section">
+                <p>We use collected information to:</p>
+                <ul class="policy-list">
+                    <li>Improve our products and services</li>
+                    <li>Provide customer support</li>
+                    <li>Send important updates about our plugins</li>
+                    <li>Respond to your inquiries</li>
+                    <li>Analyze usage patterns to enhance performance</li>
+                </ul>
+                <p><strong>We never sell your data to third parties.</strong></p>
+            </div>
+        </Card>
+
+        <Card title="Data Security" kicker="Protection" variant="peach" span={6}>
+            <div class="policy-section">
+                <p>We implement industry-standard security measures:</p>
+                <ul class="policy-list">
+                    <li>Encrypted data transmission (HTTPS/TLS)</li>
+                    <li>Secure data storage with access controls</li>
+                    <li>Regular security audits</li>
+                    <li>Limited data retention policies</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="Third-Party Services" kicker="External Services" variant="white" span={12}>
+            <div class="policy-section">
+                <p>We use select third-party services to operate our business:</p>
+
+                <div class="service-item">
+                    <strong>GitHub</strong>
+                    <p>For code hosting and issue tracking. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank">GitHub's Privacy Policy</a>.</p>
+                </div>
+
+                <div class="service-item">
+                    <strong>CDN Providers</strong>
+                    <p>For fast delivery of plugin assets. Data is anonymized and not used for tracking.</p>
+                </div>
+
+                <div class="service-item">
+                    <strong>Email Service</strong>
+                    <p>For sending transactional emails and updates you've opted into.</p>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="Your Rights" kicker="Data Control" variant="lavender" span={6}>
+            <div class="policy-section">
+                <p>You have the right to:</p>
+                <ul class="policy-list">
+                    <li>Access your personal data</li>
+                    <li>Request data correction or deletion</li>
+                    <li>Opt-out of data collection</li>
+                    <li>Export your data</li>
+                    <li>Withdraw consent at any time</li>
+                </ul>
+                <p>To exercise these rights, <a href="/contact">contact us</a>.</p>
+            </div>
+        </Card>
+
+        <Card title="Cookies" kicker="Cookie Policy" variant="blue" span={6}>
+            <div class="policy-section">
+                <p>We use minimal cookies:</p>
+                <ul class="policy-list">
+                    <li><strong>Essential:</strong> For site functionality (theme preference, etc.)</li>
+                    <li><strong>No tracking cookies:</strong> We don't use advertising or tracking cookies</li>
+                </ul>
+                <p>You can disable cookies in your browser settings, though some site features may not work properly.</p>
+            </div>
+        </Card>
+
+        <Card title="Children's Privacy" kicker="Age Requirements" variant="peach" span={4}>
+            <div class="policy-section">
+                <p>Our services are not directed to children under 13. We do not knowingly collect information from children.</p>
+            </div>
+        </Card>
+
+        <Card title="International Users" kicker="Data Transfer" variant="white" span={4}>
+            <div class="policy-section">
+                <p>We operate globally. Your data may be processed in countries with different privacy laws. We ensure appropriate safeguards are in place.</p>
+            </div>
+        </Card>
+
+        <Card title="Updates to This Policy" kicker="Changes" variant="lavender" span={4}>
+            <div class="policy-section">
+                <p>We may update this policy periodically. Significant changes will be announced on our website and via email if you're subscribed.</p>
+            </div>
+        </Card>
+
+        <Card title="Contact Us" kicker="Questions?" variant="black" span={12}>
+            <div class="contact-section">
+                <p>If you have questions about this privacy policy or how we handle your data:</p>
+                <div class="contact-options">
+                    <a href="/contact" class="contact-link">Contact Form</a>
+                    <a href="mailto:privacy@smoothplugins.com" class="contact-link">privacy@smoothplugins.com</a>
+                </div>
+            </div>
+        </Card>
+
+        <Footer />
+    </div>
+</Layout>
+
+<style>
+    .policy-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        line-height: 1.7;
+    }
+
+    .policy-section h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 12px;
+        margin-bottom: 8px;
+    }
+
+    .policy-section p {
+        font-size: 15px;
+    }
+
+    .policy-list {
+        margin-left: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .policy-list li {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .policy-section a {
+        color: var(--c-text-primary);
+        text-decoration: underline;
+        font-weight: 600;
+    }
+
+    .service-item {
+        padding: 16px;
+        background: var(--c-bg);
+        border-radius: 8px;
+        border: 1px solid var(--c-border);
+    }
+
+    .service-item strong {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .service-item p {
+        font-size: 14px;
+        color: var(--c-text-secondary);
+    }
+
+    .service-item a {
+        color: var(--c-text-primary);
+    }
+
+    .contact-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contact-options {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .contact-link {
+        display: inline-block;
+        padding: 12px 24px;
+        background: var(--c-white);
+        color: var(--c-black);
+        font-weight: 600;
+        border-radius: var(--radius-pill);
+        transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 768px) {
+        .policy-section h3 {
+            font-size: 18px;
+        }
+
+        .contact-options {
+            flex-direction: column;
+        }
+
+        .contact-link {
+            text-align: center;
+        }
+    }
+</style>

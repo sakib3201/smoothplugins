@@ -1,0 +1,265 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Support - Smooth Plugins">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Support" />
+
+        <Card
+            title="Support Center"
+            kicker="We're Here to Help"
+            variant="blue"
+            span={12}
+        >
+            <p class="card-desc">Get help with installation, troubleshooting, and optimizing your Smooth Plugins experience.</p>
+        </Card>
+
+        <Card title="Documentation" kicker="Self-Service" variant="white" span={4}>
+            <div class="support-item">
+                <span class="support-icon">📚</span>
+                <h3>Browse Docs</h3>
+                <p>Comprehensive guides and tutorials for all our plugins.</p>
+                <a href="/documentation" class="support-link">View Documentation →</a>
+            </div>
+        </Card>
+
+        <Card title="API Reference" kicker="Developers" variant="lavender" span={4}>
+            <div class="support-item">
+                <span class="support-icon">🔧</span>
+                <h3>API Docs</h3>
+                <p>Complete API reference for developers and integrations.</p>
+                <a href="/api-reference" class="support-link">View API Reference →</a>
+            </div>
+        </Card>
+
+        <Card title="Community" kicker="Connect" variant="peach" span={4}>
+            <div class="support-item">
+                <span class="support-icon">💬</span>
+                <h3>Join Discord</h3>
+                <p>Connect with other developers and get community support.</p>
+                <a href="#" class="support-link">Join Discord →</a>
+            </div>
+        </Card>
+
+        <Card title="Common Issues" kicker="FAQ" variant="white" span={8}>
+            <div class="faq-section">
+                <details class="faq-item">
+                    <summary>How do I rebuild the search index?</summary>
+                    <p>Navigate to <strong>Settings → Smooth Search → Maintenance</strong> and click "Rebuild Index". The process runs in the background and you'll be notified when complete.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Why isn't my search index updating?</summary>
+                    <p>Check your WordPress cron jobs are running properly. You can manually trigger index regeneration from the plugin settings or use WP-CLI: <code>wp smooth-search rebuild</code></p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I customize the search results display?</summary>
+                    <p>Yes! Use the <code>smooth_search_results</code> filter to modify results before display, or override the template files in your theme.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Does it work with custom product fields?</summary>
+                    <p>Absolutely. Use the <code>smooth_search_indexed_fields</code> filter to add custom fields to the search index.</p>
+                </details>
+            </div>
+        </Card>
+
+        <Card title="Contact Support" kicker="Direct Help" variant="black" span={4}>
+            <div class="contact-support">
+                <p>Need personalized assistance?</p>
+                <a href="/contact" class="cta-button">Contact Us</a>
+                <div class="support-info">
+                    <p><strong>Response Time:</strong><br>Usually within 24 hours</p>
+                    <p><strong>Business Hours:</strong><br>Mon-Fri, 9am-5pm EST</p>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="Report a Bug" kicker="Help Us Improve" variant="peach" span={12}>
+            <div class="bug-report">
+                <p>Found a bug? We appreciate detailed bug reports to help us improve.</p>
+                <div class="report-options">
+                    <a href="https://github.com/sakib3201/smoothplugins/issues" class="report-link">
+                        <span>GitHub Issues</span>
+                        <small>Public bug tracker</small>
+                    </a>
+                    <a href="/contact" class="report-link">
+                        <span>Private Report</span>
+                        <small>For security issues</small>
+                    </a>
+                </div>
+            </div>
+        </Card>
+
+        <Footer />
+    </div>
+</Layout>
+
+<style>
+    .support-item {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .support-icon {
+        font-size: 36px;
+    }
+
+    .support-item h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .support-item p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--c-text-secondary);
+    }
+
+    .support-link {
+        color: var(--c-text-primary);
+        font-weight: 600;
+        text-decoration: underline;
+        transition: transform 0.3s ease;
+    }
+
+    .support-link:hover {
+        transform: translateX(4px);
+    }
+
+    .faq-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .faq-item {
+        padding: 16px;
+        background: var(--c-bg);
+        border-radius: 8px;
+        border: 1px solid var(--c-border);
+        cursor: pointer;
+    }
+
+    .faq-item summary {
+        font-weight: 600;
+        font-size: 16px;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-item summary::after {
+        content: '+';
+        font-size: 24px;
+        font-weight: 300;
+    }
+
+    .faq-item[open] summary::after {
+        content: '−';
+    }
+
+    .faq-item p {
+        margin-top: 12px;
+        line-height: 1.6;
+        color: var(--c-text-secondary);
+    }
+
+    .faq-item code {
+        background: var(--c-surface);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+
+    .contact-support {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 14px 28px;
+        border-radius: var(--radius-pill);
+        background: var(--c-white);
+        color: var(--c-black);
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .support-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--c-border);
+    }
+
+    .support-info p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .bug-report {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .report-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .report-link {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 20px;
+        background: var(--c-bg);
+        border-radius: 8px;
+        border: 1px solid var(--c-border);
+        transition: all 0.3s ease;
+    }
+
+    .report-link:hover {
+        transform: translateY(-2px);
+        border-color: var(--c-text-primary);
+    }
+
+    .report-link span {
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .report-link small {
+        color: var(--c-text-secondary);
+        font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+        .report-options {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

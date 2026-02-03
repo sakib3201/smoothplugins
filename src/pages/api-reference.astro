@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="API Reference - Smooth Plugins">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="API Reference" />
+
+        <Card
+            title="API Reference"
+            kicker="Developer Resources"
+            variant="lavender"
+            span={12}
+        >
+            <p class="card-desc">Complete API reference for integrating Smooth Plugins into your WordPress ecosystem. Hooks, filters, and JavaScript APIs.</p>
+        </Card>
+
+        <Card title="WordPress Hooks" kicker="PHP API" variant="white" span={6}>
+            <div class="api-section">
+                <h3>Filters</h3>
+                <div class="api-item">
+                    <code>smooth_search_indexed_fields</code>
+                    <p>Modify which product fields are indexed for search.</p>
+                </div>
+                <div class="api-item">
+                    <code>smooth_search_results</code>
+                    <p>Filter and modify search results before display.</p>
+                </div>
+                <div class="api-item">
+                    <code>smooth_search_index_schedule</code>
+                    <p>Control when search indexes are regenerated.</p>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="Actions" kicker="PHP API" variant="blue" span={6}>
+            <div class="api-section">
+                <h3>Action Hooks</h3>
+                <div class="api-item">
+                    <code>smooth_search_before_index</code>
+                    <p>Runs before the search index is generated.</p>
+                </div>
+                <div class="api-item">
+                    <code>smooth_search_after_index</code>
+                    <p>Runs after successful index generation.</p>
+                </div>
+                <div class="api-item">
+                    <code>smooth_search_index_failed</code>
+                    <p>Triggered when index generation fails.</p>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="JavaScript API" kicker="Client-Side" variant="peach" span={12}>
+            <div class="api-section">
+                <h3>SmoothSearch Class</h3>
+                <pre class="code-block" set:html={`// Initialize search engine
+const search = new SmoothSearch({
+    indexUrl: '/path/to/index.wasm',
+    maxResults: 20,
+    fuzzyThreshold: 0.8
+});
+
+// Perform search
+const results = await search.query('laptop', {
+    filters: { category: 'electronics' },
+    sortBy: 'relevance'
+});
+
+// Event listeners
+search.on('indexLoaded', () => {
+    console.log('Search index ready');
+});
+
+search.on('searchComplete', (results) => {
+    console.log('Found:', results.length);
+});`} />
+            </div>
+        </Card>
+
+        <Card title="REST API" kicker="Endpoints" variant="black" span={6}>
+            <div class="api-section">
+                <h3>Available Endpoints</h3>
+                <div class="api-item">
+                    <code>GET /wp-json/smooth/v1/index</code>
+                    <p>Retrieve current search index metadata.</p>
+                </div>
+                <div class="api-item">
+                    <code>POST /wp-json/smooth/v1/rebuild</code>
+                    <p>Trigger index rebuild (admin only).</p>
+                </div>
+            </div>
+        </Card>
+
+        <Card title="Additional Resources" kicker="Learn More" variant="lavender" span={6}>
+            <div class="api-section">
+                <p>Explore more developer resources:</p>
+                <a href="/documentation" class="api-link">Full Documentation →</a>
+                <a href="/support" class="api-link">Developer Support →</a>
+                <a href="https://github.com/sakib3201/smoothplugins" class="api-link">GitHub Repository →</a>
+            </div>
+        </Card>
+
+        <Footer />
+    </div>
+</Layout>
+
+<style>
+    .api-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .api-section h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .api-item {
+        padding: 16px;
+        background: var(--c-bg);
+        border-radius: 8px;
+        border: 1px solid var(--c-border);
+    }
+
+    .api-item code {
+        display: block;
+        font-family: 'Courier New', monospace;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--c-text-primary);
+        margin-bottom: 8px;
+    }
+
+    .api-item p {
+        font-size: 14px;
+        color: var(--c-text-secondary);
+        line-height: 1.5;
+    }
+
+    .code-block {
+        background: var(--c-bg);
+        padding: 24px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        border: 1px solid var(--c-border);
+    }
+
+    .api-link {
+        display: inline-block;
+        color: var(--c-text-primary);
+        font-weight: 600;
+        transition: transform 0.3s ease;
+        text-decoration: underline;
+    }
+
+    .api-link:hover {
+        transform: translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+        .api-section h3 {
+            font-size: 18px;
+        }
+
+        .api-item code {
+            font-size: 13px;
+        }
+
+        .code-block {
+            font-size: 12px;
+            padding: 16px;
+        }
+    }
+</style>

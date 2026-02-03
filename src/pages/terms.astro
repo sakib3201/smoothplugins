@@ -1,0 +1,272 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Card from '../components/Card.astro';
+import BackgroundCanvas from '../components/BackgroundCanvas';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Terms of Service - Smooth Plugins">
+    <BackgroundCanvas client:only="react" />
+    <div class="layout-container">
+        <Navigation active="Terms" />
+
+        <Card
+            title="Terms of Service"
+            kicker="Last Updated: February 3, 2026"
+            variant="white"
+            span={12}
+        >
+            <p class="card-desc">By using Smooth Plugins' products and services, you agree to these terms. Please read them carefully.</p>
+        </Card>
+
+        <Card title="Acceptance of Terms" kicker="Agreement" variant="lavender" span={12}>
+            <div class="terms-section">
+                <p>By downloading, installing, or using any Smooth Plugins software, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use our products.</p>
+                <p>We reserve the right to modify these Terms at any time. Continued use of our products after changes constitutes acceptance of the modified Terms.</p>
+            </div>
+        </Card>
+
+        <Card title="License Grant" kicker="Software License" variant="blue" span={6}>
+            <div class="terms-section">
+                <h3>Open Source License</h3>
+                <p>Smooth Plugins software is distributed under the <strong>GNU General Public License v2.0 (GPLv2)</strong>, consistent with WordPress licensing.</p>
+                <p>You are free to:</p>
+                <ul class="terms-list">
+                    <li>Use the software for any purpose</li>
+                    <li>Modify the source code</li>
+                    <li>Distribute copies</li>
+                    <li>Distribute modified versions</li>
+                </ul>
+                <p>Subject to the terms of the GPLv2 license.</p>
+            </div>
+        </Card>
+
+        <Card title="Restrictions" kicker="Prohibited Use" variant="peach" span={6}>
+            <div class="terms-section">
+                <p>You may not:</p>
+                <ul class="terms-list">
+                    <li>Remove or alter copyright notices</li>
+                    <li>Use our trademarks without permission</li>
+                    <li>Claim our software as your own creation</li>
+                    <li>Use the software for illegal purposes</li>
+                    <li>Attempt to circumvent licensing mechanisms</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="No Warranty" kicker="Disclaimer" variant="black" span={12}>
+            <div class="terms-section">
+                <p><strong>Our software is provided "AS IS" without warranty of any kind.</strong></p>
+                <p>We make no warranties, expressed or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+                <p>We do not guarantee that:</p>
+                <ul class="terms-list">
+                    <li>The software will be error-free or uninterrupted</li>
+                    <li>Defects will be corrected</li>
+                    <li>The software is free from viruses or harmful components</li>
+                    <li>Results will meet your requirements</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="Limitation of Liability" kicker="Legal Protection" variant="white" span={12}>
+            <div class="terms-section">
+                <p>To the maximum extent permitted by law, Smooth Plugins shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from:</p>
+                <ul class="terms-list">
+                    <li>Use or inability to use the software</li>
+                    <li>Loss of data or profits</li>
+                    <li>Business interruption</li>
+                    <li>Security breaches</li>
+                    <li>Third-party actions</li>
+                </ul>
+                <p>This applies even if we have been advised of the possibility of such damages.</p>
+            </div>
+        </Card>
+
+        <Card title="Support Services" kicker="Assistance" variant="lavender" span={6}>
+            <div class="terms-section">
+                <p>While we strive to provide helpful support:</p>
+                <ul class="terms-list">
+                    <li>Support is provided on a best-effort basis</li>
+                    <li>We do not guarantee response times</li>
+                    <li>Complex customization may be outside our scope</li>
+                    <li>We reserve the right to refuse support for modified code</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="Updates and Changes" kicker="Software Updates" variant="blue" span={6}>
+            <div class="terms-section">
+                <p>We may release updates, patches, or new versions:</p>
+                <ul class="terms-list">
+                    <li>Updates are provided at our discretion</li>
+                    <li>You are not required to update</li>
+                    <li>We may discontinue support for old versions</li>
+                    <li>Breaking changes will be documented</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="Privacy and Data" kicker="Information Handling" variant="peach" span={12}>
+            <div class="terms-section">
+                <p>Our handling of your data is governed by our <a href="/privacy">Privacy Policy</a>.</p>
+                <p>By using our software, you also agree to:</p>
+                <ul class="terms-list">
+                    <li>Our optional anonymous usage data collection (opt-in)</li>
+                    <li>Error reporting to help us improve quality</li>
+                    <li>License validation checks (if applicable)</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="Third-Party Services" kicker="External Dependencies" variant="white" span={6}>
+            <div class="terms-section">
+                <p>Our software may integrate with third-party services:</p>
+                <ul class="terms-list">
+                    <li>CDN providers for asset delivery</li>
+                    <li>WordPress.org repositories</li>
+                    <li>External APIs</li>
+                </ul>
+                <p>We are not responsible for third-party service availability or terms.</p>
+            </div>
+        </Card>
+
+        <Card title="Termination" kicker="Ending Use" variant="lavender" span={6}>
+            <div class="terms-section">
+                <p>You may stop using our software at any time by:</p>
+                <ul class="terms-list">
+                    <li>Uninstalling the plugin</li>
+                    <li>Deleting all copies</li>
+                    <li>Removing related data</li>
+                </ul>
+                <p>Provisions that should survive termination (disclaimers, limitations of liability) remain in effect.</p>
+            </div>
+        </Card>
+
+        <Card title="Intellectual Property" kicker="Trademarks & Copyright" variant="blue" span={12}>
+            <div class="terms-section">
+                <p>"Smooth Plugins", "Smooth Search", and related logos are trademarks of Smooth Plugins Inc.</p>
+                <p>While our software is open source under GPLv2, our trademarks are not. You may not:</p>
+                <ul class="terms-list">
+                    <li>Use our name or logos to imply endorsement</li>
+                    <li>Register confusingly similar trademarks</li>
+                    <li>Use our branding in a way that causes confusion</li>
+                </ul>
+            </div>
+        </Card>
+
+        <Card title="Governing Law" kicker="Jurisdiction" variant="peach" span={6}>
+            <div class="terms-section">
+                <p>These Terms are governed by the laws of the United States and the State of Delaware, without regard to conflict of law principles.</p>
+            </div>
+        </Card>
+
+        <Card title="Dispute Resolution" kicker="Legal Process" variant="white" span={6}>
+            <div class="terms-section">
+                <p>Any disputes arising from these Terms will be resolved through:</p>
+                <ol class="terms-list">
+                    <li>Good faith negotiation</li>
+                    <li>Mediation (if negotiation fails)</li>
+                    <li>Binding arbitration (if mediation fails)</li>
+                </ol>
+            </div>
+        </Card>
+
+        <Card title="Entire Agreement" kicker="Complete Terms" variant="lavender" span={12}>
+            <div class="terms-section">
+                <p>These Terms, together with our <a href="/privacy">Privacy Policy</a>, constitute the entire agreement between you and Smooth Plugins regarding our software.</p>
+                <p>These Terms supersede any prior agreements or understandings, written or oral.</p>
+            </div>
+        </Card>
+
+        <Card title="Questions About These Terms?" kicker="Contact Us" variant="black" span={12}>
+            <div class="contact-section">
+                <p>If you have questions about these Terms of Service:</p>
+                <div class="contact-options">
+                    <a href="/contact" class="contact-link">Contact Form</a>
+                    <a href="mailto:legal@smoothplugins.com" class="contact-link">legal@smoothplugins.com</a>
+                </div>
+            </div>
+        </Card>
+
+        <Footer />
+    </div>
+</Layout>
+
+<style>
+    .terms-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        line-height: 1.7;
+    }
+
+    .terms-section h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .terms-section p {
+        font-size: 15px;
+    }
+
+    .terms-list {
+        margin-left: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .terms-list li {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .terms-section a {
+        color: var(--c-text-primary);
+        text-decoration: underline;
+        font-weight: 600;
+    }
+
+    .contact-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .contact-options {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .contact-link {
+        display: inline-block;
+        padding: 12px 24px;
+        background: var(--c-white);
+        color: var(--c-black);
+        font-weight: 600;
+        border-radius: var(--radius-pill);
+        transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 768px) {
+        .terms-section h3 {
+            font-size: 18px;
+        }
+
+        .contact-options {
+            flex-direction: column;
+        }
+
+        .contact-link {
+            text-align: center;
+        }
+    }
+</style>
