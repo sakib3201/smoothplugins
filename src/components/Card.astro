@@ -67,17 +67,33 @@ const bgClasses = {
 
     .card-bg-blue {
         background-color: var(--c-blue);
-        color: var(--c-black);
+        color: #111111;
     }
 
     .card-bg-peach {
         background-color: var(--c-peach);
-        color: var(--c-black);
+        color: #111111;
     }
 
     .card-bg-lavender {
         background-color: var(--c-lavender);
-        color: var(--c-black);
+        color: #111111;
+    }
+
+    /* Dark mode: Use darker backgrounds with light text for better contrast */
+    :global([data-theme="dark"]) .card-bg-blue {
+        background-color: #1a3d4d;
+        color: var(--c-blue);
+    }
+
+    :global([data-theme="dark"]) .card-bg-peach {
+        background-color: #4d3820;
+        color: var(--c-peach);
+    }
+
+    :global([data-theme="dark"]) .card-bg-lavender {
+        background-color: #2d2440;
+        color: var(--c-lavender);
     }
 
     .card-kicker {

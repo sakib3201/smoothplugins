@@ -17,14 +17,34 @@ import Footer from '../components/Footer.astro';
             variant="lavender"
             span={12}
         >
-            <p class="card-desc">We're on a mission to bring modern web technologies to WordPress, proving that performance and developer experience can coexist in the CMS ecosystem.</p>
+            <p class="card-desc">We're on a mission to build affordable software that doesn't compromise on performance or user experience. Whether it's WordPress, web apps, or beyond—if it can be faster and smoother, we're on it.</p>
+        </Card>
+
+        <Card title="Meet the Team (Spoiler: It's Just Me)" kicker="The One-Person Show" variant="blue" span={12}>
+            <div class="founder-content">
+                <div class="founder-intro">
+                    <p>Hi! I'm <strong>Sakib Ahamed Shahon</strong>, the person behind Smooth Plugins. Software engineer by trade, software artisan by choice (because "engineer" doesn't capture the existential dread of debugging CSS at 2 AM).</p>
+                    <p>Yes, this entire operation is run by one caffeinated human who thinks Rust is a love language and believes WordPress deserves better than "good enough." For now, it's a solo journey—but who knows? Maybe one day I'll have carrier pigeons who actually understand email.</p>
+                    <p>Want to chat about WebAssembly, performance optimization, or why your WooCommerce site is slower than a dial-up modem? Drop me a line!</p>
+                </div>
+                <div class="founder-links">
+                    <a href="mailto:sakib3201@gmail.com" class="founder-link email-link">
+                        <span class="link-icon">📧</span>
+                        <span>sakib3201@gmail.com</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sakib-shahon/" target="_blank" rel="noopener noreferrer" class="founder-link linkedin-link">
+                        <span class="link-icon">💼</span>
+                        <span>Connect on LinkedIn</span>
+                    </a>
+                </div>
+            </div>
         </Card>
 
         <Card title="Our Story" kicker="How We Started" variant="white" span={8}>
             <div class="about-content">
-                <p>Smooth Plugins was born from a simple frustration: WordPress doesn't have to be slow, yet so many WooCommerce stores struggle with search performance as they scale.</p>
-                <p>We asked ourselves: What if we could leverage modern technologies like Rust and WebAssembly to solve performance problems that have plagued WordPress for years?</p>
-                <p>The result is Smooth Search—the first WebAssembly-powered search engine for WooCommerce, capable of searching through 100,000+ products in milliseconds without touching your database.</p>
+                <p>Smooth Plugins was born from a simple frustration: why does software have to choose between being affordable OR performant OR having a great user experience? Spoiler: it doesn't.</p>
+                <p>While working with WooCommerce stores that struggled with search performance, I thought: What if we could leverage modern technologies like Rust and WebAssembly to solve problems that have plagued web platforms for years?</p>
+                <p>The result? Smooth Search—the first WebAssembly-powered search engine for WooCommerce. But that's just the beginning. Smooth Plugins is about bringing high-performance, frictionless experiences to any software that needs it.</p>
             </div>
         </Card>
 
@@ -35,12 +55,16 @@ import Footer from '../components/Footer.astro';
                     <p>Speed isn't a feature, it's a requirement.</p>
                 </div>
                 <div class="value-item">
-                    <strong>🔧 Developer Experience</strong>
-                    <p>Great tools for developers mean better products for users.</p>
+                    <strong>💰 Affordable Excellence</strong>
+                    <p>High-quality software shouldn't break the bank.</p>
+                </div>
+                <div class="value-item">
+                    <strong>✨ Smooth UX</strong>
+                    <p>Frictionless experiences that just work.</p>
                 </div>
                 <div class="value-item">
                     <strong>🦀 Modern Tech</strong>
-                    <p>WordPress deserves cutting-edge solutions.</p>
+                    <p>Every platform deserves cutting-edge solutions.</p>
                 </div>
             </div>
         </Card>
@@ -258,6 +282,64 @@ import Footer from '../components/Footer.astro';
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
+    .founder-content {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .founder-intro {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        line-height: 1.7;
+    }
+
+    .founder-intro p {
+        font-size: 16px;
+    }
+
+    .founder-intro strong {
+        color: var(--c-text-primary);
+        font-weight: 700;
+    }
+
+    .founder-links {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .founder-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 24px;
+        border-radius: var(--radius-pill);
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .email-link {
+        background: var(--c-black);
+        color: var(--c-white);
+    }
+
+    .linkedin-link {
+        background: #0077B5;
+        color: white;
+    }
+
+    .founder-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .link-icon {
+        font-size: 20px;
+    }
+
     @media (max-width: 768px) {
         .contact-cta {
             flex-direction: column;
@@ -275,6 +357,15 @@ import Footer from '../components/Footer.astro';
 
         .stats {
             grid-template-columns: 1fr;
+        }
+
+        .founder-links {
+            flex-direction: column;
+        }
+
+        .founder-link {
+            width: 100%;
+            justify-content: center;
         }
     }
 </style>

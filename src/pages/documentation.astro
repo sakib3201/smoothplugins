@@ -96,6 +96,12 @@ add_filter('smooth_search_indexed_fields', function($fields) {
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 8px;
+        color: inherit;
+    }
+
+    .doc-section p {
+        color: inherit;
+        opacity: 0.85;
     }
 
     .doc-list {
@@ -104,6 +110,8 @@ add_filter('smooth_search_indexed_fields', function($fields) {
         flex-direction: column;
         gap: 12px;
         line-height: 1.6;
+        color: inherit;
+        opacity: 0.85;
     }
 
     .doc-list li {
@@ -111,18 +119,27 @@ add_filter('smooth_search_indexed_fields', function($fields) {
     }
 
     code {
-        background: var(--c-bg);
+        background: rgba(0, 0, 0, 0.1);
         padding: 2px 6px;
         border-radius: 4px;
         font-family: 'Courier New', monospace;
         font-size: 0.9em;
+        color: inherit;
+    }
+
+    :global([data-theme="dark"]) code {
+        background: rgba(255, 255, 255, 0.15);
     }
 
     .code-wrapper {
         border-radius: 8px;
         overflow: hidden;
-        border: 1px solid var(--c-border);
+        border: 1px solid rgba(0, 0, 0, 0.15);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    :global([data-theme="dark"]) .code-wrapper {
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .code-wrapper :global(pre) {
@@ -151,7 +168,7 @@ add_filter('smooth_search_indexed_fields', function($fields) {
 
     .doc-link {
         display: inline-block;
-        color: var(--c-text-primary);
+        color: inherit;
         font-weight: 600;
         transition: transform 0.3s ease;
         text-decoration: underline;
