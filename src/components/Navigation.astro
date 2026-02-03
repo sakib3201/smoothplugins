@@ -95,6 +95,26 @@ const items = [
         text-decoration: none;
         color: inherit;
         z-index: 102;
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        will-change: transform;
+    }
+
+    .logo:hover {
+        transform: scale(1.05);
+        animation: logoFloat 2s ease-in-out infinite;
+    }
+
+    .logo:active {
+        transform: scale(0.98);
+    }
+
+    @keyframes logoFloat {
+        0%, 100% {
+            transform: scale(1.05) translateY(0px);
+        }
+        50% {
+            transform: scale(1.05) translateY(-3px);
+        }
     }
 
     .logo-dot {
@@ -102,6 +122,25 @@ const items = [
         height: 12px;
         background-color: var(--c-text-primary);
         border-radius: 50%;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        will-change: transform, background-color;
+    }
+
+    .logo:hover .logo-dot {
+        transform: rotate(360deg) scale(1.3);
+        background: linear-gradient(135deg, #C9AFF0, #48CAE4);
+        box-shadow: 0 0 20px rgba(201, 175, 240, 0.6),
+                    0 0 40px rgba(72, 202, 228, 0.4);
+        animation: dotPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+        0%, 100% {
+            transform: rotate(360deg) scale(1.3);
+        }
+        50% {
+            transform: rotate(360deg) scale(1.5);
+        }
     }
 
     .hamburger {
