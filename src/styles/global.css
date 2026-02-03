@@ -105,6 +105,20 @@ a {
     }
 }
 
+@media (max-width: 640px) {
+    .layout-container {
+        padding: 16px;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .layout-container {
+        padding: 12px;
+        gap: 16px;
+    }
+}
+
 /* Theme Toggle Styles */
 .theme-toggle {
     width: 40px;

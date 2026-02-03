@@ -145,10 +145,68 @@ import Footer from '../../components/Footer.astro';
         .product-features {
             grid-template-columns: 1fr;
         }
+
         .cta-section {
             flex-direction: column;
             gap: 20px;
             align-items: flex-start;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .cta-button {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .product-hero {
+            gap: 24px;
+        }
+
+        .product-features {
+            gap: 20px;
+        }
+
+        .feature-item {
+            gap: 12px;
+        }
+
+        .feature-icon {
+            font-size: 20px;
+        }
+
+        .stats-list {
+            margin-top: 16px;
+            gap: 10px;
+        }
+
+        .stats-list li {
+            font-size: 16px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+        }
+
+        .cta-button {
+            padding: 12px 20px;
+            font-size: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .feature-item {
+            font-size: 14px;
+        }
+
+        .stats-list li {
+            font-size: 15px;
         }
     }
 </style>

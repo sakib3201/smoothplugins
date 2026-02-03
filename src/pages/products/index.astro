@@ -313,8 +313,17 @@ import Footer from '../../components/Footer.astro';
     }
 
     @media (max-width: 640px) {
+        .products-header {
+            padding: 20px 0;
+        }
+
         .products-header h1 {
             font-size: 36px;
+            letter-spacing: -1px;
+        }
+
+        .products-header p {
+            font-size: 16px;
         }
 
         .product-stats {
@@ -326,9 +335,23 @@ import Footer from '../../components/Footer.astro';
             text-align: center;
         }
 
+        .stat-value {
+            font-size: 32px;
+        }
+
         .product-cta {
             width: 100%;
             justify-content: center;
+            padding: 14px 24px;
+            font-size: 15px;
+        }
+
+        .construction-emoji {
+            font-size: 48px;
+        }
+
+        .coming-soon-text {
+            font-size: 15px;
         }
 
         .support-actions {
@@ -338,10 +361,35 @@ import Footer from '../../components/Footer.astro';
         .support-link {
             width: 100%;
             justify-content: center;
+            padding: 12px 20px;
+            font-size: 14px;
         }
 
         .message-text {
             font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .products-header h1 {
+            font-size: 32px;
+        }
+
+        .products-header p {
+            font-size: 15px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+        }
+
+        .message-text {
+            font-size: 15px;
+            line-height: 1.6;
         }
     }
 </style>

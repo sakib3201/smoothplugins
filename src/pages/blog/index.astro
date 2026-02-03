@@ -75,4 +75,41 @@ posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).get
     .read-more:hover {
         text-decoration: underline;
     }
+
+    @media (max-width: 768px) {
+        .blog-header {
+            padding: 20px 0;
+        }
+
+        .blog-header h1 {
+            font-size: 36px;
+            letter-spacing: -1px;
+        }
+
+        .blog-header p {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .blog-header {
+            padding: 16px 0;
+        }
+
+        .blog-header h1 {
+            font-size: 32px;
+        }
+
+        .blog-header p {
+            font-size: 16px;
+        }
+
+        .post-excerpt {
+            font-size: 15px;
+        }
+
+        .read-more {
+            font-size: 13px;
+        }
+    }
 </style>

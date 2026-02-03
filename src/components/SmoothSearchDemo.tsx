@@ -81,7 +81,9 @@ const SmoothSearchDemo: React.FC = () => {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    gap: 12px;
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                    flex-wrap: wrap;
                 }
 
                 [data-theme="dark"] .search-input-fake {
@@ -96,6 +98,8 @@ const SmoothSearchDemo: React.FC = () => {
                     border-radius: 6px;
                     font-weight: 600;
                     font-size: 11px;
+                    white-space: nowrap;
+                    flex-shrink: 0;
                 }
 
                 .search-results-fake {
@@ -112,6 +116,28 @@ const SmoothSearchDemo: React.FC = () => {
 
                 [data-theme="dark"] .result-bar {
                     background: rgba(255, 255, 255, 0.1);
+                }
+
+                @media (max-width: 640px) {
+                    .search-demo-box {
+                        padding: 16px;
+                        margin-top: 20px;
+                    }
+
+                    .search-input-fake {
+                        padding: 10px 12px;
+                        font-size: 12px;
+                        gap: 8px;
+                    }
+
+                    .time-badge {
+                        font-size: 10px;
+                        padding: 2px 6px;
+                    }
+
+                    .result-bar {
+                        height: 6px;
+                    }
                 }
             `}</style>
         </div>
