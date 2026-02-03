@@ -182,33 +182,11 @@ const items = [
         position: relative;
     }
 
-    /* Animated underline on hover */
-    .nav-item::after {
-        content: '';
-        position: absolute;
-        bottom: 8px;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: var(--c-text-primary);
-        border-radius: 1px;
-        transition: width 0.3s var(--ease-smooth), left 0.3s var(--ease-smooth);
-    }
-
-    .nav-item:hover::after {
-        width: calc(100% - 48px);
-        left: 24px;
-    }
-
-    .nav-item.active::after {
-        display: none;
-    }
-
     .nav-item:hover {
         background-color: var(--c-bg);
     }
 
-    .nav-item[data-tooltip]:hover::after {
+    .nav-item[data-tooltip]::after {
         content: attr(data-tooltip);
         position: absolute;
         bottom: -40px;
@@ -223,23 +201,23 @@ const items = [
         white-space: nowrap;
         z-index: 1000;
         pointer-events: none;
-        animation: tooltipFadeIn 0.2s ease-out;
+        opacity: 0;
+        transition: opacity 0.2s ease-out, transform 0.2s ease-out;
     }
 
-    @keyframes tooltipFadeIn {
-        from {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-5px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+    .nav-item[data-tooltip]:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
     }
 
     .nav-item.active {
         background-color: var(--c-primary);
         color: var(--c-primary-inverse);
+    }
+
+    .nav-item.active[data-tooltip]:hover::after {
+        background-color: var(--c-text-primary);
+        color: var(--c-bg);
     }
 
     .theme-toggle-wrapper {
@@ -321,6 +299,7 @@ const items = [
             transition-delay: 0.35s;
         }
 
+        .nav-item[data-tooltip]::after,
         .nav-item[data-tooltip]:hover::after {
             display: none;
         }
