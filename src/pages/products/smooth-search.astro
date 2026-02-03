@@ -5,9 +5,32 @@ import Card from '../../components/Card.astro';
 import BackgroundCanvas from '../../components/BackgroundCanvas';
 import Footer from '../../components/Footer.astro';
 
+// Product structured data
+const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Smooth Search",
+    "applicationCategory": "WebApplication",
+    "operatingSystem": "WordPress",
+    "description": "The first WooCommerce search engine powered by WebAssembly. Blazing fast indexing and retrieval directly in the browser using Rust.",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "author": {
+        "@type": "Organization",
+        "name": "Smooth Plugins"
+    },
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "1"
+    }
+};
 ---
 
-<Layout title="Smooth Search">
+<Layout title="Smooth Search" description="The first WooCommerce search engine powered by WebAssembly. Experience sub-10ms queries, zero server load, and support for 100,000+ products.">
     <BackgroundCanvas client:only="react" />
     <div class="layout-container">
         <Navigation active="Smooth Search" />
@@ -70,6 +93,9 @@ import Footer from '../../components/Footer.astro';
 
         <Footer />
     </div>
+
+    <!-- Product Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 </Layout>
 
 <style>

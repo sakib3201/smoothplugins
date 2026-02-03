@@ -2,8 +2,11 @@
 title: "Performance First"
 description: "Why we choose Rust over Go for critical plugin infrastructure."
 date: "Jan 10, 2026"
+dateISO: "2026-01-10T00:00:00Z"
+author: "Sakib Ahamed Shahon"
 variant: "lavender"
 span: 4
+tags: ["rust", "performance", "go", "programming"]
 ---
 
 When building infrastructure for high-traffic WordPress sites, every millisecond matters. We chose Rust over Go for Smooth Search, and here's why.

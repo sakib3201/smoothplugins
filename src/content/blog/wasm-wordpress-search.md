@@ -2,8 +2,11 @@
 title: "Why WASM is the future of WordPress Search"
 description: "Exploring the technical advantages of moving search logic from PHP to the client side."
 date: "Jan 15, 2026"
+dateISO: "2026-01-15T00:00:00Z"
+author: "Sakib Ahamed Shahon"
 variant: "white"
 span: 8
+tags: ["webassembly", "wasm", "wordpress", "search", "performance"]
 ---
 
 Traditional WordPress search relies on server-side PHP queries that create database bottlenecks. Every search request hits your server, generating SQL queries and consuming resources.

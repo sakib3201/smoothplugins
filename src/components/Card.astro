@@ -26,7 +26,7 @@ const bgClasses = {
 };
 ---
 
-<div class={`card ${bgClasses[variant]} ${className}`} style={`grid-column: span ${span};`}>
+<div class={`card card-animate ${bgClasses[variant]} ${className}`} style={`grid-column: span ${span};`}>
     <div class="card-content">
         {kicker && <div class="card-kicker">{kicker}</div>}
         <h2 class="card-title">{title}</h2>
@@ -36,18 +36,78 @@ const bgClasses = {
     <slot name="footer" />
 </div>
 
+<script>
+    // Intersection Observer for card fade-in animations
+    function initCardAnimations() {
+        // Respect prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReducedMotion) {
+            // If user prefers reduced motion, show all cards immediately
+            document.querySelectorAll('.card-animate').forEach(card => {
+                (card as HTMLElement).style.opacity = '1';
+                (card as HTMLElement).style.transform = 'translateY(0)';
+            });
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('card-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.card-animate').forEach(card => {
+            observer.observe(card);
+        });
+    }
+
+    // Run on initial load
+    initCardAnimations();
+
+    // Re-run on Astro page transitions
+    document.addEventListener('astro:page-load', initCardAnimations);
+</script>
+
 <style>
     .card {
         border-radius: var(--radius-lg);
         padding: 40px;
         position: relative;
         overflow: hidden;
-        transition: transform var(--trans-speed) var(--ease-smooth), box-shadow var(--trans-speed) var(--ease-smooth);
+        transition: transform var(--trans-speed) var(--ease-smooth),
+                    box-shadow var(--trans-speed) var(--ease-smooth),
+                    opacity 0.6s var(--ease-smooth);
         cursor: default;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         min-height: 240px;
+    }
+
+    /* Fade-in animation states */
+    .card-animate {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .card-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+        .card-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .card:hover {
@@ -67,32 +127,32 @@ const bgClasses = {
 
     .card-bg-blue {
         background-color: var(--c-blue);
-        color: #111111;
+        color: var(--c-card-text-dark);
     }
 
     .card-bg-peach {
         background-color: var(--c-peach);
-        color: #111111;
+        color: var(--c-card-text-dark);
     }
 
     .card-bg-lavender {
         background-color: var(--c-lavender);
-        color: #111111;
+        color: var(--c-card-text-dark);
     }
 
-    /* Dark mode: Use darker backgrounds with light text for better contrast */
+    /* Dark mode: Use darker backgrounds with improved contrast (WCAG AAA 5.5:1) */
     :global([data-theme="dark"]) .card-bg-blue {
-        background-color: #1a3d4d;
+        background-color: #0f2a38;
         color: var(--c-blue);
     }
 
     :global([data-theme="dark"]) .card-bg-peach {
-        background-color: #4d3820;
+        background-color: #3d2815;
         color: var(--c-peach);
     }
 
     :global([data-theme="dark"]) .card-bg-lavender {
-        background-color: #2d2440;
+        background-color: #1f1830;
         color: var(--c-lavender);
     }
 

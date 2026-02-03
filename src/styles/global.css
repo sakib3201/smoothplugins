@@ -22,6 +22,16 @@
     --c-white: #FFFFFF;
     --c-text-sub: #666666;
 
+    /* Card text on colored backgrounds */
+    --c-card-text-dark: #111111;
+
+    /* Status colors */
+    --c-status-green: #4ade80;
+    --c-status-green-glow: rgba(74, 222, 128, 0.6);
+
+    /* Logo dot shadow */
+    --c-logo-dot-shadow: rgba(157, 141, 241, 0.4);
+
     --radius-lg: 32px;
     --radius-md: 24px;
     --radius-pill: 999px;
@@ -141,4 +151,28 @@ a {
 .theme-toggle:focus-visible {
     outline: 2px solid var(--c-primary);
     outline-offset: 2px;
+}
+
+/* Enhanced focus ring animation for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--c-lavender);
+    outline-offset: 3px;
+    transition: outline-offset 0.2s var(--ease-smooth);
+}
+
+a:focus-visible:not(:active),
+button:focus-visible:not(:active) {
+    outline-offset: 4px;
+}
+
+/* Global button press feedback */
+button:active,
+a[class*="btn"]:active,
+a[class*="cta"]:active,
+a[class*="link"]:active {
+    transform: translateY(1px);
 }

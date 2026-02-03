@@ -2,8 +2,11 @@
 title: "Developer Experience"
 description: "Building a headless-friendly search engine with local indexing."
 date: "Jan 01, 2026"
+dateISO: "2026-01-01T00:00:00Z"
+author: "Sakib Ahamed Shahon"
 variant: "peach"
 span: 6
+tags: ["developer-experience", "dx", "headless", "api"]
 ---
 
 WordPress plugins shouldn't force architectural decisions. Smooth Search works with traditional themes, headless setups, and everything in between.

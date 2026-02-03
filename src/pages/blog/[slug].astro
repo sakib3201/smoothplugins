@@ -14,18 +14,55 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// Generate ISO date from display date if not provided
+const displayDate = post.data.date;
+const isoDate = post.data.dateISO || new Date(displayDate).toISOString();
+
+// Article structured data
+const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.data.title,
+    "description": post.data.description,
+    "datePublished": isoDate,
+    "dateModified": isoDate,
+    "author": {
+        "@type": "Person",
+        "name": post.data.author || "Smooth Plugins Team"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Smooth Plugins",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://smoothplugins.com/logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://smoothplugins.com/blog/${post.slug}`
+    }
+};
 ---
 
-<Layout title={post.data.title}>
+<Layout
+    title={post.data.title}
+    description={post.data.description}
+    type="article"
+    publishedTime={isoDate}
+    author={post.data.author || "Smooth Plugins Team"}
+>
     <BackgroundCanvas client:only="react" />
     <div class="layout-container">
         <Navigation active="Blog" />
 
         <article class="blog-post">
             <header class="post-header">
-                <div class="post-meta">{post.data.date}</div>
+                <time class="post-meta" datetime={isoDate}>{post.data.date}</time>
                 <h1>{post.data.title}</h1>
                 <p class="post-description">{post.data.description}</p>
+                {post.data.author && <p class="post-author">By {post.data.author}</p>}
             </header>
 
             <div class="post-content">
@@ -41,6 +78,9 @@ const { Content } = await post.render();
             © 2026 Smooth Plugins Inc.
         </footer>
     </div>
+
+    <!-- Article Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </Layout>
 
 <style>
@@ -74,6 +114,13 @@ const { Content } = await post.render();
         font-size: 20px;
         opacity: 0.7;
         line-height: 1.5;
+    }
+
+    .post-author {
+        font-size: 14px;
+        margin-top: 16px;
+        opacity: 0.6;
+        font-weight: 500;
     }
 
     .post-content {

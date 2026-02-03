@@ -179,11 +179,33 @@ const items = [
         border-radius: var(--radius-pill);
         transition: all 0.3s var(--ease-smooth);
         font-size: 14px;
+        position: relative;
+    }
+
+    /* Animated underline on hover */
+    .nav-item::after {
+        content: '';
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--c-text-primary);
+        border-radius: 1px;
+        transition: width 0.3s var(--ease-smooth), left 0.3s var(--ease-smooth);
+    }
+
+    .nav-item:hover::after {
+        width: calc(100% - 48px);
+        left: 24px;
+    }
+
+    .nav-item.active::after {
+        display: none;
     }
 
     .nav-item:hover {
         background-color: var(--c-bg);
-        position: relative;
     }
 
     .nav-item[data-tooltip]:hover::after {

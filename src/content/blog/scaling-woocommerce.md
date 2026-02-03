@@ -2,8 +2,11 @@
 title: "Scaling WooCommerce to 1M+ Products"
 description: "Lessons learned building Smooth Search for high-traffic enterprise stores."
 date: "Jan 05, 2026"
+dateISO: "2026-01-05T00:00:00Z"
+author: "Sakib Ahamed Shahon"
 variant: "blue"
 span: 6
+tags: ["woocommerce", "scaling", "enterprise", "search"]
 ---
 
 Most WooCommerce search solutions break down around 10,000 products. We built Smooth Search to handle 1,000,000+.

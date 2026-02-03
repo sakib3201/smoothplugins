@@ -149,7 +149,7 @@
         height: 14px;
         background: linear-gradient(135deg, var(--c-lavender), var(--c-peach));
         border-radius: 50%;
-        box-shadow: 0 4px 12px rgba(157, 141, 241, 0.4);
+        box-shadow: 0 4px 12px var(--c-logo-dot-shadow);
     }
 
     .footer-tagline {
@@ -202,13 +202,29 @@
     .footer-section a {
         color: var(--c-text-secondary);
         font-size: 15px;
-        transition: color 0.3s var(--ease-smooth);
+        transition: color 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
         display: inline-block;
+        position: relative;
+    }
+
+    .footer-section a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--c-text-primary);
+        transition: width 0.3s var(--ease-smooth);
     }
 
     .footer-section a:hover {
         color: var(--c-text-primary);
         transform: translateX(4px);
+    }
+
+    .footer-section a:hover::after {
+        width: 100%;
     }
 
     .social-links {
@@ -228,10 +244,15 @@
         width: 24px;
         height: 24px;
         display: block;
+        transition: transform 0.3s var(--ease-smooth);
     }
 
     .social-link:hover {
         color: var(--c-text-primary);
+    }
+
+    .social-link:hover svg {
+        transform: scale(1.15) rotate(-5deg);
     }
 
     .footer-bottom {
@@ -273,9 +294,9 @@
     .status-dot {
         width: 8px;
         height: 8px;
-        background: #4ade80;
+        background: var(--c-status-green);
         border-radius: 50%;
-        box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+        box-shadow: 0 0 8px var(--c-status-green-glow);
         animation: pulse 2s ease-in-out infinite;
     }
 

@@ -5,7 +5,7 @@ import BackgroundCanvas from '../components/BackgroundCanvas';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="404 - Page Not Found">
+<Layout title="404 - Page Not Found" noindex={true}>
     <BackgroundCanvas client:load />
     <div class="layout-container">
         <Navigation />
