@@ -218,15 +218,30 @@ import Footer from '../components/Footer.astro';
         align-items: center;
         justify-content: center;
         pointer-events: none;
-        z-index: -1;
+        z-index: 1;
+        mix-blend-mode: soft-light;
     }
 
     .wasm-label {
         font-family: var(--font-display);
         font-weight: var(--weight-bold);
         font-size: 5rem;
-        color: rgba(0,0,0,0.05);
+        color: rgba(0,0,0,0.2);
         letter-spacing: var(--tracking-tight);
+        text-shadow: 0 2px 8px rgba(255,255,255,0.3);
+    }
+
+    .hero-card :global(.card-content) {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-card :global(.card-kicker),
+    .hero-card :global(.card-title),
+    .hero-card :global(.card-desc) {
+        position: relative;
+        mix-blend-mode: multiply;
+        color: #fff;
     }
 
     .stat-label {
