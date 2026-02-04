@@ -157,26 +157,29 @@ const bgClasses = {
     }
 
     .card-kicker {
-        font-size: 14px;
-        font-weight: 600;
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-semibold);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: var(--tracking-wide);
         opacity: 0.7;
         margin-bottom: 16px;
     }
 
     .card-title {
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 1.1;
-        letter-spacing: -1px;
+        font-family: var(--font-display);
+        font-size: var(--text-3xl);
+        font-weight: var(--weight-bold);
+        line-height: var(--leading-tight);
+        letter-spacing: var(--tracking-tight);
     }
 
     .card-desc {
+        font-family: var(--font-body);
         margin-top: 16px;
-        font-size: 18px;
+        font-size: var(--text-lg);
         opacity: 0.8;
-        line-height: 1.4;
+        line-height: var(--leading-relaxed);
     }
 
     @media (max-width: 1024px) {
@@ -192,18 +195,11 @@ const bgClasses = {
             min-height: 200px;
         }
 
-        .card-title {
-            font-size: 28px;
-            letter-spacing: -0.5px;
-        }
-
         .card-kicker {
-            font-size: 12px;
             margin-bottom: 12px;
         }
 
         .card-desc {
-            font-size: 16px;
             margin-top: 12px;
         }
     }
@@ -211,14 +207,6 @@ const bgClasses = {
     @media (max-width: 480px) {
         .card {
             padding: 20px;
-        }
-
-        .card-title {
-            font-size: 24px;
-        }
-
-        .card-desc {
-            font-size: 15px;
         }
     }
 </style>

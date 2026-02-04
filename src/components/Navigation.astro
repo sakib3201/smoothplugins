@@ -86,9 +86,10 @@ const items = [
     }
 
     .logo {
-        font-weight: 700;
-        font-size: 24px;
-        letter-spacing: -0.5px;
+        font-family: var(--font-display);
+        font-weight: var(--weight-bold);
+        font-size: var(--text-xl);
+        letter-spacing: var(--tracking-tight);
         display: flex;
         align-items: center;
         gap: 10px;
@@ -214,10 +215,11 @@ const items = [
         padding: 12px 24px;
         text-decoration: none;
         color: var(--c-text-primary);
-        font-weight: 500;
+        font-family: var(--font-body);
+        font-weight: var(--weight-medium);
+        font-size: var(--text-sm);
         border-radius: var(--radius-pill);
         transition: all 0.3s var(--ease-smooth);
-        font-size: 14px;
         position: relative;
     }
 
@@ -235,8 +237,9 @@ const items = [
         color: var(--c-primary-inverse);
         padding: 8px 12px;
         border-radius: 6px;
-        font-size: 12px;
-        font-weight: 500;
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-medium);
         white-space: nowrap;
         z-index: 1000;
         pointer-events: none;
@@ -301,7 +304,7 @@ const items = [
         .nav-item {
             width: 100%;
             padding: 16px 20px;
-            font-size: 18px;
+            font-size: var(--text-lg);
             border-radius: var(--radius-md);
             text-align: left;
             opacity: 0;
@@ -364,10 +367,6 @@ const items = [
     }
 
     @media (max-width: 480px) {
-        .logo {
-            font-size: 20px;
-        }
-
         .logo-dot {
             width: 10px;
             height: 10px;

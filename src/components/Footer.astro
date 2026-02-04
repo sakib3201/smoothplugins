@@ -138,9 +138,10 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        font-weight: 700;
-        font-size: 28px;
-        letter-spacing: -0.5px;
+        font-family: var(--font-display);
+        font-weight: var(--weight-bold);
+        font-size: var(--text-2xl);
+        letter-spacing: var(--tracking-tight);
         color: var(--c-text-primary);
     }
 
@@ -153,8 +154,9 @@
     }
 
     .footer-tagline {
-        font-size: 16px;
-        line-height: 1.6;
+        font-family: var(--font-body);
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
         color: var(--c-text-secondary);
         max-width: 320px;
     }
@@ -166,14 +168,14 @@
     }
 
     .tech-badge {
-        font-size: 11px;
-        font-family: monospace;
+        font-size: var(--text-xs);
+        font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
         padding: 6px 12px;
         background: var(--c-bg);
         border-radius: var(--radius-pill);
         color: var(--c-text-secondary);
-        font-weight: 600;
-        letter-spacing: 0.5px;
+        font-weight: var(--weight-semibold);
+        letter-spacing: var(--tracking-wide);
         border: 1px solid var(--c-border);
     }
 
@@ -184,12 +186,13 @@
     }
 
     .footer-section h3 {
-        font-size: 14px;
-        font-weight: 600;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-semibold);
         color: var(--c-text-primary);
         margin-bottom: 16px;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: var(--tracking-wide);
     }
 
     .footer-section ul {
@@ -200,8 +203,9 @@
     }
 
     .footer-section a {
+        font-family: var(--font-body);
         color: var(--c-text-secondary);
-        font-size: 15px;
+        font-size: var(--text-base);
         transition: color 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
         display: inline-block;
         position: relative;
@@ -264,8 +268,9 @@
     }
 
     .copyright {
+        font-family: var(--font-body);
         color: var(--c-text-secondary);
-        font-size: 14px;
+        font-size: var(--text-sm);
     }
 
     .footer-meta {
@@ -275,15 +280,17 @@
     }
 
     .built-with {
+        font-family: var(--font-body);
         color: var(--c-text-secondary);
-        font-size: 14px;
+        font-size: var(--text-sm);
     }
 
     .status-indicator {
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 13px;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
         color: var(--c-text-secondary);
         padding: 8px 16px;
         background: var(--c-bg);
@@ -346,12 +353,5 @@
             gap: 24px;
         }
 
-        .footer-logo {
-            font-size: 24px;
-        }
-
-        .footer-tagline {
-            font-size: 14px;
-        }
     }
 </style>

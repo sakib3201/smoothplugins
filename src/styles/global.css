@@ -1,4 +1,37 @@
 :root {
+    /* Typography - Variable fonts for performance */
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-hero: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+    /* Type scale - Fluid typography */
+    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);      /* 12-14px */
+    --text-sm: clamp(0.875rem, 0.825rem + 0.25vw, 1rem);       /* 14-16px */
+    --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);      /* 16-18px */
+    --text-lg: clamp(1.125rem, 1.05rem + 0.375vw, 1.25rem);    /* 18-20px */
+    --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);        /* 20-24px */
+    --text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);         /* 24-32px */
+    --text-3xl: clamp(2rem, 1.7rem + 1.5vw, 3rem);             /* 32-48px */
+    --text-4xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);             /* 40-64px */
+    --text-5xl: clamp(3rem, 2.25rem + 3.75vw, 5.5rem);         /* 48-88px */
+
+    /* Line heights */
+    --leading-tight: 1.1;
+    --leading-snug: 1.25;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.75;
+
+    /* Letter spacing */
+    --tracking-tight: -0.02em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.025em;
+
+    /* Font weights */
+    --weight-normal: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
     /* Existing accent colors */
     --c-lavender: #9D8DF1;
     --c-peach: #FFC062;
@@ -83,6 +116,95 @@ body {
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base typography */
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--weight-normal);
+    line-height: var(--leading-normal);
+    letter-spacing: var(--tracking-normal);
+}
+
+/* Headings - Space Grotesk for display */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--c-text-primary);
+}
+
+h1 {
+    font-size: var(--text-5xl);
+    font-weight: var(--weight-bold);
+}
+
+h2 {
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+}
+
+h3 {
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-semibold);
+}
+
+h4 {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-semibold);
+}
+
+h5 {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-medium);
+}
+
+h6 {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-medium);
+}
+
+/* Text utilities */
+p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+}
+
+small {
+    font-size: var(--text-sm);
+}
+
+strong, b {
+    font-weight: var(--weight-semibold);
+}
+
+/* Code and monospace */
+code, pre, kbd, samp {
+    font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+    font-size: 0.9em;
+}
+
+/* Accessibility - ensure sufficient contrast */
+@media (prefers-contrast: high) {
+    :root {
+        --c-text-secondary: #555555;
+    }
+
+    [data-theme="dark"] {
+        --c-text-secondary: #C0C0C0;
+    }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 img {
