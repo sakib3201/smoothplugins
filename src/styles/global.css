@@ -65,6 +65,12 @@
     /* Logo dot shadow */
     --c-logo-dot-shadow: rgba(157, 141, 241, 0.4);
 
+    /* Tooltip colors - Light mode */
+    --tooltip-bg: rgba(17, 17, 17, 0.95);
+    --tooltip-text: #FFFFFF;
+    --tooltip-shadow: rgba(0, 0, 0, 0.25);
+    --tooltip-border: rgba(255, 255, 255, 0.1);
+
     --radius-lg: 32px;
     --radius-md: 24px;
     --radius-pill: 999px;
@@ -90,6 +96,12 @@
     --c-lavender: #B8A9FF;
     --c-peach: #FFD699;
     --c-blue: #C4E8FF;
+
+    /* Tooltip colors - Dark mode */
+    --tooltip-bg: rgba(255, 255, 255, 0.95);
+    --tooltip-text: #111111;
+    --tooltip-shadow: rgba(0, 0, 0, 0.4);
+    --tooltip-border: rgba(0, 0, 0, 0.1);
 }
 
 /* Smooth theme transitions */
@@ -264,6 +276,7 @@ a {
     background: transparent;
     transition: background-color 0.3s var(--ease-smooth);
     color: var(--c-text-primary);
+    position: relative;
 }
 
 .theme-toggle:hover {
@@ -273,6 +286,57 @@ a {
 .theme-toggle:focus-visible {
     outline: 2px solid var(--c-primary);
     outline-offset: 2px;
+}
+
+/* Theme Toggle Tooltip */
+.theme-toggle[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background-color: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 4px 20px var(--tooltip-shadow),
+                0 0 0 1px var(--tooltip-border);
+    backdrop-filter: blur(12px);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle[data-tooltip]::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid var(--tooltip-bg);
+    z-index: 1001;
+    pointer-events: none;
+    opacity: 0;
+    filter: drop-shadow(0 -2px 4px var(--tooltip-shadow));
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle[data-tooltip]:hover::after,
+.theme-toggle[data-tooltip]:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    transition-delay: 0.15s;
 }
 
 /* Enhanced focus ring animation for all interactive elements */

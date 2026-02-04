@@ -227,16 +227,17 @@ const items = [
         background-color: var(--c-bg);
     }
 
+    /* Tooltip container */
     .nav-item[data-tooltip]::after {
         content: attr(data-tooltip);
         position: absolute;
-        bottom: -40px;
+        bottom: -50px;
         left: 50%;
-        transform: translateX(-50%);
-        background-color: var(--c-primary);
-        color: var(--c-primary-inverse);
-        padding: 8px 12px;
-        border-radius: 6px;
+        transform: translateX(-50%) translateY(-8px);
+        background-color: var(--tooltip-bg);
+        color: var(--tooltip-text);
+        padding: 10px 16px;
+        border-radius: 10px;
         font-family: var(--font-body);
         font-size: var(--text-xs);
         font-weight: var(--weight-medium);
@@ -244,22 +245,49 @@ const items = [
         z-index: 1000;
         pointer-events: none;
         opacity: 0;
-        transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        box-shadow: 0 4px 20px var(--tooltip-shadow),
+                    0 0 0 1px var(--tooltip-border);
+        backdrop-filter: blur(12px);
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .nav-item[data-tooltip]:hover::after {
+    /* Tooltip arrow */
+    .nav-item[data-tooltip]::before {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-8px);
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid var(--tooltip-bg);
+        z-index: 1001;
+        pointer-events: none;
+        opacity: 0;
+        filter: drop-shadow(0 -2px 4px var(--tooltip-shadow));
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Show tooltip on hover */
+    .nav-item[data-tooltip]:hover::after,
+    .nav-item[data-tooltip]:hover::before {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
+    }
+
+    /* Delay tooltip appearance slightly for better UX */
+    .nav-item[data-tooltip]:hover::after,
+    .nav-item[data-tooltip]:hover::before {
+        transition-delay: 0.15s;
     }
 
     .nav-item.active {
         background-color: var(--c-primary);
         color: var(--c-primary-inverse);
-    }
-
-    .nav-item.active[data-tooltip]:hover::after {
-        background-color: var(--c-text-primary);
-        color: var(--c-bg);
     }
 
     .theme-toggle-wrapper {

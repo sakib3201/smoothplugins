@@ -42,6 +42,7 @@ const ThemeToggle: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            data-tooltip={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
             <AnimatePresence mode="wait">
                 {theme === 'light' ? (
