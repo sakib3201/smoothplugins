@@ -1,0 +1,196 @@
+---
+---
+
+<footer class="lite-footer">
+    <div class="lite-footer-content">
+        <div class="lite-footer-brand">
+            <a href="/" class="footer-logo-link">
+                <div class="logo-dot"></div>
+                <span>Smooth Plugins</span>
+            </a>
+        </div>
+
+        <nav class="lite-footer-nav" aria-label="Footer navigation">
+            <a href="/blog">Blog</a>
+            <a href="/products">Products</a>
+            <a href="/documentation">Docs</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+
+        <div class="lite-footer-meta">
+            <p class="copyright">© 2026 Smooth Plugins</p>
+            <div class="social-links">
+                <a href="https://github.com/sakib3201/smoothplugins" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/smoothplugins" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .lite-footer {
+        grid-column: 1 / -1;
+        padding: 48px 0 32px;
+        margin-top: 80px;
+        border-top: 1px solid var(--c-border);
+    }
+
+    .lite-footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        text-align: center;
+    }
+
+    .lite-footer-brand {
+        display: flex;
+        justify-content: center;
+    }
+
+    .footer-logo-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-display);
+        font-weight: var(--weight-bold);
+        font-size: var(--text-lg);
+        letter-spacing: var(--tracking-tight);
+        color: var(--c-text-primary);
+        text-decoration: none;
+        transition: transform 0.3s var(--ease-smooth);
+    }
+
+    .footer-logo-link:hover {
+        transform: scale(1.05);
+    }
+
+    .logo-dot {
+        width: 10px;
+        height: 10px;
+        background: linear-gradient(135deg, var(--c-lavender), var(--c-peach));
+        border-radius: 50%;
+        box-shadow: 0 2px 8px var(--c-logo-dot-shadow);
+        transition: transform 0.3s var(--ease-smooth);
+    }
+
+    .footer-logo-link:hover .logo-dot {
+        transform: rotate(180deg) scale(1.2);
+    }
+
+    .lite-footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: center;
+    }
+
+    .lite-footer-nav a {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-medium);
+        color: var(--c-text-secondary);
+        text-decoration: none;
+        transition: color 0.3s var(--ease-smooth);
+        position: relative;
+    }
+
+    .lite-footer-nav a::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--c-text-primary);
+        transition: width 0.3s var(--ease-smooth);
+    }
+
+    .lite-footer-nav a:hover {
+        color: var(--c-text-primary);
+    }
+
+    .lite-footer-nav a:hover::after {
+        width: 100%;
+    }
+
+    .lite-footer-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .copyright {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--c-text-secondary);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .social-links a {
+        display: block;
+        color: var(--c-text-secondary);
+        transition: all 0.3s var(--ease-smooth);
+        line-height: 0;
+    }
+
+    .social-links svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+        transition: transform 0.3s var(--ease-smooth);
+    }
+
+    .social-links a:hover {
+        color: var(--c-text-primary);
+    }
+
+    .social-links a:hover svg {
+        transform: scale(1.15) rotate(-5deg);
+    }
+
+    @media (max-width: 640px) {
+        .lite-footer {
+            padding: 40px 20px 24px;
+            margin-top: 60px;
+        }
+
+        .lite-footer-content {
+            gap: 24px;
+        }
+
+        .lite-footer-nav {
+            gap: 16px;
+        }
+
+        .lite-footer-nav a {
+            font-size: var(--text-xs);
+        }
+
+        .copyright {
+            font-size: var(--text-xs);
+        }
+
+        .social-links svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+</style>
