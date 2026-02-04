@@ -98,10 +98,13 @@
     --c-blue: #C4E8FF;
 
     /* Tooltip colors - Dark mode */
-    --tooltip-bg: rgba(255, 255, 255, 0.95);
-    --tooltip-text: #111111;
-    --tooltip-shadow: rgba(0, 0, 0, 0.4);
-    --tooltip-border: rgba(0, 0, 0, 0.1);
+    --tooltip-bg: linear-gradient(135deg, rgba(157, 141, 241, 0.15), rgba(72, 202, 228, 0.15));
+    --tooltip-surface: rgba(26, 26, 29, 0.95);
+    --tooltip-text: #FFFFFF;
+    --tooltip-shadow: rgba(157, 141, 241, 0.3);
+    --tooltip-border: rgba(184, 169, 255, 0.3);
+    --tooltip-glow: 0 0 20px rgba(157, 141, 241, 0.4),
+                    0 0 40px rgba(72, 202, 228, 0.2);
 }
 
 /* Smooth theme transitions */
