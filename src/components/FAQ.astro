@@ -8,9 +8,10 @@ interface Props {
     items: FAQItem[];
     title?: string;
     description?: string;
+    hideHeader?: boolean;
 }
 
-const { items, title = "Frequently Asked Questions", description } = Astro.props;
+const { items, title = "Frequently Asked Questions", description, hideHeader = false } = Astro.props;
 
 // Generate FAQ schema for AI engines
 const faqSchema = {
@@ -28,10 +29,12 @@ const faqSchema = {
 ---
 
 <section class="faq-section">
-    <div class="faq-header">
-        <h2>{title}</h2>
-        {description && <p class="faq-description">{description}</p>}
-    </div>
+    {!hideHeader && (
+        <div class="faq-header">
+            <h2>{title}</h2>
+            {description && <p class="faq-description">{description}</p>}
+        </div>
+    )}
 
     <div class="faq-list">
         {items.map((item, index) => (
@@ -83,22 +86,42 @@ const faqSchema = {
     }
 
     .faq-item {
-        background: var(--c-surface);
-        border: 1px solid var(--c-border);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.08);
         border-radius: var(--radius-md);
         padding: 0;
         transition: all 0.3s var(--ease-smooth);
         overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+
+    :global([data-theme="dark"]) .faq-item {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .faq-item:hover {
-        border-color: var(--c-lavender);
-        box-shadow: 0 4px 20px var(--c-shadow);
+        background: rgba(255, 255, 255, 1);
+        border-color: rgba(201, 175, 240, 0.4);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    :global([data-theme="dark"]) .faq-item:hover {
+        background: rgba(0, 0, 0, 0.4);
+        border-color: rgba(201, 175, 240, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
 
     .faq-item[open] {
-        border-color: var(--c-lavender);
+        background: rgba(255, 255, 255, 1);
+        border-color: rgba(201, 175, 240, 0.5);
         box-shadow: 0 4px 20px rgba(157, 141, 241, 0.15);
+    }
+
+    :global([data-theme="dark"]) .faq-item[open] {
+        background: rgba(0, 0, 0, 0.4);
+        border-color: rgba(201, 175, 240, 0.4);
     }
 
     .faq-question {

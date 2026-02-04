@@ -121,13 +121,19 @@ const faqs = [
             </div>
         </Card>
 
-        <div class="faq-container">
+        <Card
+            title="Common Questions"
+            kicker="FAQ"
+            description="Learn more about Smooth Plugins, WebAssembly, and how we're making WordPress faster."
+            variant="lavender"
+            span={12}
+            class="faq-card"
+        >
             <FAQ
                 items={faqs}
-                title="Common Questions"
-                description="Learn more about Smooth Plugins, WebAssembly, and how we're making WordPress faster."
+                hideHeader={true}
             />
-        </div>
+        </Card>
 
         <Footer />
 	</div>
@@ -321,16 +327,15 @@ const faqs = [
         border-radius: 12px;
     }
 
-    .faq-container {
-        grid-column: 1 / -1;
-        max-width: 900px;
-        margin: 60px auto 0;
+    .faq-card {
+        margin-top: 20px;
+    }
+
+    .faq-card :global(.faq-list) {
+        margin-top: 24px;
     }
 
     @media (max-width: 1024px) {
-        .faq-container {
-            margin: 50px auto 0;
-        }
         .hero {
             min-height: calc(100vh - 200px);
             height: calc(100vh - 200px);
@@ -354,14 +359,10 @@ const faqs = [
     }
 
     @media (max-width: 640px) {
-        .faq-container {
-            margin: 40px auto 0;
-        }
-
         .hero {
             min-height: calc(100vh - 160px);
             height: auto;
-            padding: 60px 20px;
+            padding: 60px 24px;
             margin-bottom: 40px;
         }
 
@@ -370,11 +371,13 @@ const faqs = [
         }
 
         .hero-title {
+            font-size: clamp(3rem, 12vw, 5rem);
             margin-bottom: 20px;
         }
 
         .hero-subtitle {
             padding: 0 10px;
+            font-size: var(--text-lg);
         }
 
         .hero-card {
@@ -394,12 +397,17 @@ const faqs = [
 
     @media (max-width: 480px) {
         .hero {
-            padding: 40px 16px;
+            padding: 40px 20px;
             margin-bottom: 32px;
         }
 
         .hero-title {
+            font-size: clamp(2.5rem, 11vw, 4rem);
             margin-bottom: 16px;
+        }
+
+        .hero-subtitle {
+            font-size: var(--text-base);
         }
 
         .hero-card {
