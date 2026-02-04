@@ -1,0 +1,260 @@
+---
+interface Step {
+    name: string;
+    text: string;
+    image?: string;
+}
+
+interface Props {
+    name: string;
+    description: string;
+    steps: Step[];
+    estimatedTime?: string;
+    supply?: string[];
+    tool?: string[];
+}
+
+const { name, description, steps, estimatedTime = "PT10M", supply = [], tool = [] } = Astro.props;
+
+// Generate HowTo schema for AI engines
+const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": name,
+    "description": description,
+    "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": "0"
+    },
+    "totalTime": estimatedTime,
+    ...(supply.length > 0 && {
+        "supply": supply.map(item => ({
+            "@type": "HowToSupply",
+            "name": item
+        }))
+    }),
+    ...(tool.length > 0 && {
+        "tool": tool.map(item => ({
+            "@type": "HowToTool",
+            "name": item
+        }))
+    }),
+    "step": steps.map((step, index) => ({
+        "@type": "HowToStep",
+        "position": index + 1,
+        "name": step.name,
+        "text": step.text,
+        ...(step.image && { "image": step.image })
+    }))
+};
+---
+
+<section class="howto-section">
+    <div class="howto-header">
+        <h2>{name}</h2>
+        <p class="howto-description">{description}</p>
+        {estimatedTime && (
+            <div class="howto-meta">
+                <span class="meta-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>{estimatedTime.replace('PT', '').replace('M', ' minutes')}</span>
+                </span>
+            </div>
+        )}
+    </div>
+
+    <ol class="howto-steps">
+        {steps.map((step, index) => (
+            <li class="howto-step">
+                <div class="step-number">{index + 1}</div>
+                <div class="step-content">
+                    <h3 class="step-name">{step.name}</h3>
+                    <p class="step-text">{step.text}</p>
+                </div>
+            </li>
+        ))}
+    </ol>
+</section>
+
+<!-- HowTo Schema for AI engines -->
+<script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+
+<style>
+    .howto-section {
+        width: 100%;
+    }
+
+    .howto-header {
+        margin-bottom: 40px;
+    }
+
+    .howto-header h2 {
+        font-family: var(--font-display);
+        font-size: var(--text-3xl);
+        font-weight: var(--weight-bold);
+        color: var(--c-text-primary);
+        margin-bottom: 12px;
+    }
+
+    .howto-description {
+        font-size: var(--text-base);
+        color: var(--c-text-secondary);
+        line-height: var(--leading-relaxed);
+        margin-bottom: 16px;
+    }
+
+    .howto-meta {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: var(--text-sm);
+        color: var(--c-text-secondary);
+        padding: 8px 16px;
+        background: var(--c-surface);
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius-pill);
+    }
+
+    .meta-item svg {
+        flex-shrink: 0;
+        color: var(--c-lavender);
+    }
+
+    .howto-steps {
+        list-style: none;
+        counter-reset: step-counter;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .howto-step {
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+        padding: 28px;
+        background: var(--c-surface);
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius-md);
+        transition: all 0.3s var(--ease-smooth);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .howto-step::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--c-lavender), var(--c-peach));
+        opacity: 0;
+        transition: opacity 0.3s var(--ease-smooth);
+    }
+
+    .howto-step:hover {
+        border-color: var(--c-lavender);
+        box-shadow: 0 4px 20px rgba(157, 141, 241, 0.15);
+    }
+
+    .howto-step:hover::before {
+        opacity: 1;
+    }
+
+    .step-number {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--c-lavender), var(--c-peach));
+        color: white;
+        border-radius: 50%;
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: var(--weight-bold);
+        box-shadow: 0 4px 12px rgba(157, 141, 241, 0.3);
+    }
+
+    .step-content {
+        flex: 1;
+    }
+
+    .step-name {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: var(--weight-semibold);
+        color: var(--c-text-primary);
+        margin-bottom: 8px;
+    }
+
+    .step-text {
+        font-family: var(--font-body);
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+        color: var(--c-text-secondary);
+    }
+
+    @media (max-width: 768px) {
+        .howto-header h2 {
+            font-size: var(--text-2xl);
+        }
+
+        .howto-header {
+            margin-bottom: 32px;
+        }
+
+        .howto-steps {
+            gap: 20px;
+        }
+
+        .howto-step {
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            font-size: var(--text-lg);
+        }
+
+        .step-name {
+            font-size: var(--text-lg);
+        }
+
+        .step-text {
+            font-size: var(--text-sm);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .howto-step {
+            padding: 16px;
+            gap: 16px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            font-size: var(--text-base);
+        }
+
+        .step-name {
+            font-size: var(--text-base);
+            margin-bottom: 6px;
+        }
+    }
+</style>

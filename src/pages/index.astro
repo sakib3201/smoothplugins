@@ -5,6 +5,43 @@ import Card from '../components/Card.astro';
 import SmoothSearchDemo from '../components/SmoothSearchDemo';
 import BackgroundCanvas from '../components/BackgroundCanvas';
 import Footer from '../components/Footer.astro';
+import FAQ from '../components/FAQ.astro';
+
+// Homepage FAQ data for AI discoverability
+const faqs = [
+    {
+        question: "What is Smooth Plugins?",
+        answer: "Smooth Plugins builds high-performance WordPress plugins powered by Rust and WebAssembly. We focus on creating affordable software that delivers exceptional performance and frictionless user experiences for modern web platforms."
+    },
+    {
+        question: "What is WebAssembly and why does it matter for WordPress?",
+        answer: "WebAssembly (WASM) is a binary instruction format that runs at near-native speed in web browsers. For WordPress, this means moving heavy computations from your PHP server to the visitor's browser, dramatically reducing server load and improving response times. Our plugins use Rust compiled to WebAssembly for maximum performance."
+    },
+    {
+        question: "How much faster is Rust compared to PHP?",
+        answer: "Rust typically performs 10-100x faster than PHP for compute-intensive tasks like search indexing and data processing. More importantly, when compiled to WebAssembly and run in the browser, it eliminates server round-trips entirely, reducing response times from seconds to milliseconds."
+    },
+    {
+        question: "Are Smooth Plugins compatible with my WordPress theme and other plugins?",
+        answer: "Yes! Our plugins are designed as drop-in replacements that work seamlessly with existing WordPress themes and plugins. We maintain full compatibility with WordPress core functionality and WooCommerce features without requiring any code changes."
+    },
+    {
+        question: "Why should I use WebAssembly instead of traditional WordPress plugins?",
+        answer: "Traditional WordPress plugins run on your server, consuming resources and adding latency. WebAssembly plugins offload computation to the visitor's browser, resulting in: zero server database load, 200ms average response times, 80% reduction in server costs, and the ability to handle 10,000+ products effortlessly."
+    },
+    {
+        question: "Is Smooth Plugins open source?",
+        answer: "Yes! We believe in open collaboration. Our code is available on GitHub, and we welcome contributions from developers worldwide. You can view our repositories, report issues, and submit pull requests at <a href='https://github.com/sakib3201/smoothplugins'>github.com/sakib3201/smoothplugins</a>."
+    },
+    {
+        question: "Do I need technical knowledge to use Smooth Plugins?",
+        answer: "No technical expertise required! Our plugins install like any standard WordPress plugin - just upload, activate, and configure through the WordPress admin panel. The complex Rust and WebAssembly technology runs automatically in the background."
+    },
+    {
+        question: "Will Smooth Plugins work on my hosting provider?",
+        answer: "Absolutely! Since our plugins run in the visitor's browser via WebAssembly, they work on any hosting provider that supports WordPress. No special server configuration, no additional dependencies, no hosting requirements beyond basic WordPress compatibility."
+    }
+];
 
 ---
 
@@ -83,6 +120,14 @@ import Footer from '../components/Footer.astro';
                 <div class="tech-badge">TARGET: WASM32-UNKNOWN</div>
             </div>
         </Card>
+
+        <div class="faq-container">
+            <FAQ
+                items={faqs}
+                title="Common Questions"
+                description="Learn more about Smooth Plugins, WebAssembly, and how we're making WordPress faster."
+            />
+        </div>
 
         <Footer />
 	</div>
@@ -276,7 +321,16 @@ import Footer from '../components/Footer.astro';
         border-radius: 12px;
     }
 
+    .faq-container {
+        grid-column: 1 / -1;
+        max-width: 900px;
+        margin: 60px auto 0;
+    }
+
     @media (max-width: 1024px) {
+        .faq-container {
+            margin: 50px auto 0;
+        }
         .hero {
             min-height: calc(100vh - 200px);
             height: calc(100vh - 200px);
@@ -300,6 +354,10 @@ import Footer from '../components/Footer.astro';
     }
 
     @media (max-width: 640px) {
+        .faq-container {
+            margin: 40px auto 0;
+        }
+
         .hero {
             min-height: calc(100vh - 160px);
             height: auto;

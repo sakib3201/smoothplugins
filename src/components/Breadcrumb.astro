@@ -1,0 +1,136 @@
+---
+interface BreadcrumbItem {
+    name: string;
+    url: string;
+}
+
+interface Props {
+    items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// Add home as first item if not present
+const fullItems = [
+    { name: "Home", url: "/" },
+    ...items
+];
+
+// Generate BreadcrumbList schema for AI engines
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": fullItems.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.name,
+        "item": `https://smoothplugins.com${item.url}`
+    }))
+};
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb-list">
+        {fullItems.map((item, index) => (
+            <li class="breadcrumb-item">
+                {index < fullItems.length - 1 ? (
+                    <a href={item.url} class="breadcrumb-link">
+                        {item.name}
+                    </a>
+                ) : (
+                    <span class="breadcrumb-current" aria-current="page">
+                        {item.name}
+                    </span>
+                )}
+                {index < fullItems.length - 1 && (
+                    <svg class="breadcrumb-separator" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                )}
+            </li>
+        ))}
+    </ol>
+</nav>
+
+<!-- Breadcrumb Schema for AI engines -->
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<style>
+    .breadcrumb {
+        grid-column: 1 / -1;
+        padding: 16px 0;
+    }
+
+    .breadcrumb-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .breadcrumb-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .breadcrumb-link {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--c-text-secondary);
+        text-decoration: none;
+        transition: color 0.2s var(--ease-smooth);
+        position: relative;
+    }
+
+    .breadcrumb-link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--c-lavender);
+        transition: width 0.2s var(--ease-smooth);
+    }
+
+    .breadcrumb-link:hover {
+        color: var(--c-lavender);
+    }
+
+    .breadcrumb-link:hover::after {
+        width: 100%;
+    }
+
+    .breadcrumb-current {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--c-text-primary);
+        font-weight: var(--weight-medium);
+    }
+
+    .breadcrumb-separator {
+        flex-shrink: 0;
+        color: var(--c-text-secondary);
+        opacity: 0.5;
+    }
+
+    @media (max-width: 640px) {
+        .breadcrumb {
+            padding: 12px 0;
+        }
+
+        .breadcrumb-link,
+        .breadcrumb-current {
+            font-size: var(--text-xs);
+        }
+
+        .breadcrumb-separator {
+            width: 14px;
+            height: 14px;
+        }
+    }
+</style>

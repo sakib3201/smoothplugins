@@ -4,6 +4,9 @@ import Navigation from '../../components/Navigation.astro';
 import Card from '../../components/Card.astro';
 import BackgroundCanvas from '../../components/BackgroundCanvas';
 import Footer from '../../components/Footer.astro';
+import FAQ from '../../components/FAQ.astro';
+import HowTo from '../../components/HowTo.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 
 // Product structured data
 const productSchema = {
@@ -26,14 +29,96 @@ const productSchema = {
         "@type": "AggregateRating",
         "ratingValue": "5",
         "ratingCount": "1"
-    }
+    },
+    "softwareVersion": "1.0.0",
+    "softwareRequirements": "WordPress 5.8+, WooCommerce 5.0+, Modern browser with WebAssembly support",
+    "applicationSubCategory": "E-commerce Search Engine"
 };
+
+// FAQ data for AI discoverability
+const faqs = [
+    {
+        question: "What is Smooth Search?",
+        answer: "Smooth Search is the first WooCommerce search engine powered by WebAssembly and Rust. It runs entirely in the user's browser, delivering search results in under 10ms with zero server database load."
+    },
+    {
+        question: "How does WebAssembly improve WordPress search performance?",
+        answer: "WebAssembly allows Rust code to run at near-native speed directly in the browser. Instead of sending search queries to your server for database processing, Smooth Search pre-compiles your product catalog into an optimized binary that loads once and handles all searches client-side, eliminating server load and network latency."
+    },
+    {
+        question: "Does Smooth Search work with my existing WordPress theme?",
+        answer: "Yes! Smooth Search is designed as a drop-in replacement for standard WooCommerce search. It works with any WordPress theme and maintains compatibility with WooCommerce filters, attributes, and taxonomies without requiring code changes."
+    },
+    {
+        question: "How many products can Smooth Search handle?",
+        answer: "Smooth Search is built for scale. It efficiently handles <strong>100,000+ products</strong> while maintaining sub-10ms query response times. The Rust engine uses Structure-of-Arrays (SoA) indexing for optimal performance even with massive catalogs."
+    },
+    {
+        question: "What are the system requirements for Smooth Search?",
+        answer: "Smooth Search requires WordPress 5.8 or higher, WooCommerce 5.0 or higher, and runs on any modern browser that supports WebAssembly (Chrome, Firefox, Safari, Edge). No special server configuration is needed."
+    },
+    {
+        question: "Is Smooth Search free?",
+        answer: "Yes, Smooth Search is currently available as a free, open-source plugin. We believe in making high-performance tools accessible to all WooCommerce store owners."
+    },
+    {
+        question: "How do I install Smooth Search?",
+        answer: "Installation is simple: download the plugin from GitHub, upload it to your WordPress plugins directory via the admin panel, activate it, and configure your search preferences. The initial index builds automatically in the background."
+    },
+    {
+        question: "Will Smooth Search reduce my server costs?",
+        answer: "Absolutely. By moving search computation from your server to the client browser, Smooth Search eliminates database queries on every keystroke. Most stores see an <strong>80% reduction</strong> in search-related server load, which can significantly reduce hosting costs for high-traffic sites."
+    },
+    {
+        question: "How does Smooth Search compare to traditional WordPress search?",
+        answer: "Traditional WordPress search queries your MySQL database on every keystroke, creating server load and latency. Smooth Search pre-compiles your catalog once, serves it via CDN, and processes all searches in the browser using Rust/WebAssembly - resulting in 200ms average response time vs several seconds for traditional search."
+    },
+    {
+        question: "Does Smooth Search support search filters and facets?",
+        answer: "Yes! Smooth Search fully supports WooCommerce product filters, categories, tags, attributes, and custom taxonomies. You can filter by price range, categories, product attributes, and more, all processed instantly client-side."
+    }
+];
+
+// Installation guide data
+const installationSteps = [
+    {
+        name: "Download the Plugin",
+        text: "Visit the GitHub releases page and download the latest smooth-search.zip file to your computer."
+    },
+    {
+        name: "Upload to WordPress",
+        text: "In your WordPress admin panel, navigate to Plugins > Add New > Upload Plugin. Select the downloaded smooth-search.zip file and click Install Now."
+    },
+    {
+        name: "Activate the Plugin",
+        text: "After installation completes, click the Activate Plugin button. Smooth Search will appear in your WordPress admin sidebar."
+    },
+    {
+        name: "Configure Search Settings",
+        text: "Navigate to Smooth Search > Settings in your WordPress admin. Configure which product fields to index (title, description, SKU, attributes) and set your search preferences."
+    },
+    {
+        name: "Build Initial Index",
+        text: "Click the 'Build Index' button to create your first search index. This compiles your product catalog into the optimized WebAssembly binary. Depending on catalog size, this takes 1-5 minutes and runs in the background."
+    },
+    {
+        name: "Test Your Search",
+        text: "Visit your WooCommerce store and try the search bar. You should see instant results as you type, powered by the new WebAssembly engine!"
+    }
+];
 ---
 
 <Layout title="Smooth Search" description="The first WooCommerce search engine powered by WebAssembly. Experience sub-10ms queries, zero server load, and support for 100,000+ products.">
     <BackgroundCanvas client:only="react" />
     <div class="layout-container">
         <Navigation active="Smooth Search" />
+
+        <Breadcrumb
+            items={[
+                { name: "Products", url: "/products" },
+                { name: "Smooth Search", url: "/products/smooth-search" }
+            ]}
+        />
 
         <Card 
             title="Smooth Search" 
@@ -90,6 +175,24 @@ const productSchema = {
                 </div>
             </div>
         </Card>
+
+        <div class="howto-container">
+            <HowTo
+                name="How to Install Smooth Search"
+                description="Get Smooth Search up and running on your WooCommerce store in minutes. No technical expertise required."
+                estimatedTime="PT10M"
+                supply={["WordPress 5.8+", "WooCommerce 5.0+", "Modern web browser"]}
+                steps={installationSteps}
+            />
+        </div>
+
+        <div class="faq-container">
+            <FAQ
+                items={faqs}
+                title="Frequently Asked Questions"
+                description="Everything you need to know about Smooth Search, WebAssembly-powered WooCommerce search."
+            />
+        </div>
 
         <Footer />
     </div>
@@ -167,7 +270,26 @@ const productSchema = {
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
+    .howto-container {
+        grid-column: 1 / -1;
+        max-width: 900px;
+        margin: 60px auto 0;
+    }
+
+    .faq-container {
+        grid-column: 1 / -1;
+        max-width: 900px;
+        margin: 60px auto 0;
+    }
+
     @media (max-width: 768px) {
+        .howto-container {
+            margin: 40px auto 0;
+        }
+
+        .faq-container {
+            margin: 40px auto 0;
+        }
         .product-features {
             grid-template-columns: 1fr;
         }

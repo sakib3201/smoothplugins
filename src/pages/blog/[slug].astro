@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
 import BackgroundCanvas from '../../components/BackgroundCanvas';
 import LiteFooter from '../../components/LiteFooter.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 
 export async function getStaticPaths() {
     const blogPosts = await getCollection('blog');
@@ -57,6 +58,13 @@ const articleSchema = {
     <BackgroundCanvas client:only="react" />
     <div class="layout-container">
         <Navigation active="Blog" />
+
+        <Breadcrumb
+            items={[
+                { name: "Blog", url: "/blog" },
+                { name: post.data.title, url: `/blog/${post.slug}` }
+            ]}
+        />
 
         <article class="blog-post">
             <header class="post-header">
