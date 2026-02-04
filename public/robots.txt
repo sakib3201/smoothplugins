@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://smoothplugins.com/sitemap-index.xml
+
+# LLM-friendly documentation
+# For AI language models and answer engines
+LLMs: https://smoothplugins.com/llms.txt
