@@ -9,7 +9,6 @@
                     <div class="logo-dot"></div>
                     <span>Smooth Plugins</span>
                 </div>
-                <p class="footer-tagline">Affordable, high-performance software with frictionless user experiences. Powered by modern web tech.</p>
                 <div class="tech-badges">
                     <span class="tech-badge">Rust</span>
                     <span class="tech-badge">WASM</span>
@@ -75,9 +74,8 @@
         </div>
 
         <div class="footer-bottom">
-            <p class="copyright">© 2026 Smooth Plugins. Crafted with caffeine and code by Sakib Ahamed Shahon.</p>
+            <p class="copyright">© 2026 Smooth Plugins.</p>
             <div class="footer-meta">
-                <span class="built-with">Built with Rust for the Modern Web</span>
                 <div class="status-indicator">
                     <span class="status-dot"></span>
                     All Systems Operational
@@ -97,23 +95,6 @@
         box-shadow: 0 10px 40px var(--c-shadow);
         position: relative;
         overflow: hidden;
-    }
-
-    .footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg,
-            var(--c-lavender) 0%,
-            var(--c-peach) 25%,
-            var(--c-blue) 50%,
-            var(--c-pink) 75%,
-            var(--c-rust) 100%
-        );
-        opacity: 0.6;
     }
 
     .footer-content {
@@ -148,17 +129,8 @@
     .logo-dot {
         width: 14px;
         height: 14px;
-        background: linear-gradient(135deg, var(--c-lavender), var(--c-peach));
+        background: var(--c-text-primary);
         border-radius: 50%;
-        box-shadow: 0 4px 12px var(--c-logo-dot-shadow);
-    }
-
-    .footer-tagline {
-        font-family: var(--font-body);
-        font-size: var(--text-base);
-        line-height: var(--leading-relaxed);
-        color: var(--c-text-secondary);
-        max-width: 320px;
     }
 
     .tech-badges {
@@ -216,10 +188,12 @@
         position: absolute;
         bottom: -2px;
         left: 0;
-        width: 0;
+        width: 100%;
         height: 1px;
         background: var(--c-text-primary);
-        transition: width 0.3s var(--ease-smooth);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.25s var(--ease-smooth);
     }
 
     .footer-section a:hover {
@@ -228,7 +202,7 @@
     }
 
     .footer-section a:hover::after {
-        width: 100%;
+        transform: scaleX(1);
     }
 
     .social-links {
@@ -240,7 +214,7 @@
     .social-link {
         display: block;
         color: var(--c-text-secondary);
-        transition: all 0.3s var(--ease-smooth);
+        transition: color 0.2s var(--ease-smooth);
         line-height: 0;
     }
 
@@ -248,15 +222,10 @@
         width: 24px;
         height: 24px;
         display: block;
-        transition: transform 0.3s var(--ease-smooth);
     }
 
     .social-link:hover {
         color: var(--c-text-primary);
-    }
-
-    .social-link:hover svg {
-        transform: scale(1.15) rotate(-5deg);
     }
 
     .footer-bottom {
@@ -277,12 +246,6 @@
         display: flex;
         align-items: center;
         gap: 24px;
-    }
-
-    .built-with {
-        font-family: var(--font-body);
-        color: var(--c-text-secondary);
-        font-size: var(--text-sm);
     }
 
     .status-indicator {

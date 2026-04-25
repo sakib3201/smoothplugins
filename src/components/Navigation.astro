@@ -24,16 +24,25 @@ const items = [
         <span class="hamburger-line"></span>
     </button>
 
-    <div class="nav-links">
-        {items.map((item) => (
-            <a
-                href={item.href}
-                class={`nav-item ${active === item.name ? 'active' : ''}`}
-                data-tooltip={item.tooltip}
-            >
-                {item.name}
-            </a>
-        ))}
+    <div class="nav-links" id="nav-links">
+        <button class="nav-trigger" aria-label="Expand navigation">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <circle cx="10" cy="4" r="1.5"/>
+                <circle cx="10" cy="10" r="1.5"/>
+                <circle cx="10" cy="16" r="1.5"/>
+            </svg>
+        </button>
+        <div class="nav-items-wrap">
+            {items.map((item) => (
+                <a
+                    href={item.href}
+                    class={`nav-item ${active === item.name ? 'active' : ''}`}
+                    data-tooltip={item.tooltip}
+                >
+                    {item.name}
+                </a>
+            ))}
+        </div>
         <div class="theme-toggle-wrapper">
             <ThemeToggle client:load />
         </div>
@@ -48,6 +57,7 @@ const items = [
         const navLinks = document.querySelector('.nav-links');
         const overlay = document.querySelector('.mobile-menu-overlay');
         const navItems = document.querySelectorAll('.nav-item');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         function toggleMenu() {
             const isOpen = hamburger?.getAttribute('aria-expanded') === 'true';
@@ -61,13 +71,50 @@ const items = [
         hamburger?.addEventListener('click', toggleMenu);
         overlay?.addEventListener('click', toggleMenu);
 
-        // Close menu when clicking nav items
         navItems.forEach(item => {
             item.addEventListener('click', () => {
                 if (navLinks?.classList.contains('active')) {
                     toggleMenu();
                 }
             });
+        });
+
+        if (prefersReducedMotion || window.innerWidth <= 768) return;
+
+        // Desktop: initial 3s expansion
+        navLinks?.classList.add('expanded');
+        setTimeout(() => {
+            if (navLinks && !navLinks.matches(':hover')) {
+                navLinks.classList.remove('expanded');
+            }
+        }, 3000);
+
+        // Scroll behavior
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const y = window.scrollY;
+                    if (y < 10) {
+                        navLinks?.classList.add('expanded');
+                    } else if (y > lastScrollY + 5 && y > 50) {
+                        if (navLinks && !navLinks.matches(':hover')) {
+                            navLinks.classList.remove('expanded');
+                        }
+                    }
+                    lastScrollY = y;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Sync expanded class with hover
+        navLinks?.addEventListener('mouseenter', () => navLinks?.classList.add('expanded'));
+        navLinks?.addEventListener('mouseleave', () => {
+            if (window.scrollY > 50) navLinks?.classList.remove('expanded');
         });
     });
 </script>
@@ -79,10 +126,12 @@ const items = [
         justify-content: space-between;
         align-items: center;
         gap: 20px;
-        padding: 20px 0;
-        margin-bottom: 20px;
-        position: relative;
+        padding: 8px 0;
+        margin-bottom: 0;
+        position: sticky;
+        top: 0;
         z-index: 100;
+        background: transparent;
     }
 
     .logo {
@@ -94,28 +143,21 @@ const items = [
         align-items: center;
         gap: 10px;
         text-decoration: none;
-        color: inherit;
+        color: var(--c-text-primary);
+        background: var(--c-surface);
+        padding: 8px 16px 8px 12px;
+        border-radius: var(--radius-pill);
+        box-shadow: 0 10px 30px var(--c-shadow);
         z-index: 102;
-        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        will-change: transform;
+        transition: transform 0.4s var(--ease-smooth);
     }
 
     .logo:hover {
-        transform: scale(1.05);
-        animation: logoFloat 2s ease-in-out infinite;
+        transform: scale(1.04);
     }
 
     .logo:active {
         transform: scale(0.98);
-    }
-
-    @keyframes logoFloat {
-        0%, 100% {
-            transform: scale(1.05) translateY(0px);
-        }
-        50% {
-            transform: scale(1.05) translateY(-3px);
-        }
     }
 
     .logo-dot {
@@ -123,25 +165,12 @@ const items = [
         height: 12px;
         background-color: var(--c-text-primary);
         border-radius: 50%;
-        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        will-change: transform, background-color;
+        transition: transform 0.4s var(--ease-smooth), background-color 0.3s var(--ease-smooth);
     }
 
     .logo:hover .logo-dot {
-        transform: rotate(360deg) scale(1.3);
-        background: linear-gradient(135deg, #C9AFF0, #48CAE4);
-        box-shadow: 0 0 20px rgba(201, 175, 240, 0.6),
-                    0 0 40px rgba(72, 202, 228, 0.4);
-        animation: dotPulse 1s ease-in-out infinite;
-    }
-
-    @keyframes dotPulse {
-        0%, 100% {
-            transform: rotate(360deg) scale(1.3);
-        }
-        50% {
-            transform: rotate(360deg) scale(1.5);
-        }
+        transform: scale(1.3);
+        background-color: var(--c-lavender);
     }
 
     .hamburger {
@@ -203,7 +232,8 @@ const items = [
 
     .nav-links {
         display: flex;
-        gap: 8px;
+        align-items: center;
+        gap: 0;
         background: var(--c-surface);
         padding: 6px;
         border-radius: var(--radius-pill);
@@ -211,17 +241,85 @@ const items = [
         margin-left: auto;
     }
 
+    .nav-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: none;
+        background: transparent;
+        color: var(--c-text-primary);
+        border-radius: var(--radius-pill);
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background-color 0.2s var(--ease-smooth);
+    }
+
+    .nav-trigger:hover {
+        background-color: var(--c-bg);
+    }
+
+    .nav-trigger:focus-visible {
+        outline: 2px solid var(--c-lavender);
+        outline-offset: 2px;
+    }
+
+    .nav-items-wrap {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        overflow-x: clip;
+        overflow-y: visible;
+        max-width: 0;
+        opacity: 0;
+        transition: max-width 0.5s var(--ease-smooth),
+                    opacity 0.3s var(--ease-smooth);
+    }
+
+    .nav-links:hover .nav-items-wrap,
+    .nav-links.expanded .nav-items-wrap,
+    .nav-links:focus-within .nav-items-wrap {
+        max-width: 700px;
+        opacity: 1;
+    }
+
     .nav-item {
-        padding: 12px 24px;
+        padding: 10px 20px;
         text-decoration: none;
         color: var(--c-text-primary);
         font-family: var(--font-body);
         font-weight: var(--weight-medium);
         font-size: var(--text-sm);
         border-radius: var(--radius-pill);
-        transition: all 0.3s var(--ease-smooth);
+        transition: background-color 0.3s var(--ease-smooth),
+                    opacity 0.25s var(--ease-smooth),
+                    transform 0.25s var(--ease-smooth);
         position: relative;
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateX(-6px);
     }
+
+    .nav-links:hover .nav-item,
+    .nav-links.expanded .nav-item,
+    .nav-links:focus-within .nav-item {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .nav-links:hover .nav-item:nth-child(1),
+    .nav-links.expanded .nav-item:nth-child(1) { transition-delay: 0.05s; }
+    .nav-links:hover .nav-item:nth-child(2),
+    .nav-links.expanded .nav-item:nth-child(2) { transition-delay: 0.08s; }
+    .nav-links:hover .nav-item:nth-child(3),
+    .nav-links.expanded .nav-item:nth-child(3) { transition-delay: 0.11s; }
+    .nav-links:hover .nav-item:nth-child(4),
+    .nav-links.expanded .nav-item:nth-child(4) { transition-delay: 0.14s; }
+    .nav-links:hover .nav-item:nth-child(5),
+    .nav-links.expanded .nav-item:nth-child(5) { transition-delay: 0.17s; }
+    .nav-links:hover .nav-item:nth-child(6),
+    .nav-links.expanded .nav-item:nth-child(6) { transition-delay: 0.20s; }
 
     .nav-item:hover {
         background-color: var(--c-bg);
@@ -296,11 +394,26 @@ const items = [
         display: flex;
         align-items: center;
         padding-left: 8px;
-        margin-left: 8px;
+        margin-left: 4px;
         border-left: 1px solid var(--c-border);
+        flex-shrink: 0;
     }
 
     @media (max-width: 768px) {
+        .nav-trigger {
+            display: none;
+        }
+
+        .nav-items-wrap {
+            max-width: none;
+            opacity: 1;
+        }
+
+        .nav-item {
+            opacity: 1;
+            transform: none;
+        }
+
         .hamburger {
             display: flex;
         }

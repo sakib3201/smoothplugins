@@ -2,114 +2,366 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
-import Card from '../../components/Card.astro';
-import BackgroundCanvas from '../../components/BackgroundCanvas';
 import LiteFooter from '../../components/LiteFooter.astro';
 
-// Get all blog posts from content collection
 const posts = await getCollection('blog');
-
-// Sort by date, newest first
 posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const [featured, ...rest] = posts;
+
+function readingTime(body: string): number {
+    return Math.max(1, Math.ceil((body?.split(/\s+/).length ?? 0) / 200));
+}
 ---
 
-<Layout title="Blog" description="Technical insights on WordPress performance, Rust, WebAssembly, and modern web development. Deep dives from the Smooth Plugins engineering team.">
-    <BackgroundCanvas client:only="react" />
+<Layout
+    title="Blog"
+    description="Technical insights on WordPress performance, Rust, WebAssembly, and modern web development. Deep dives from the Smooth Plugins engineering team."
+>
     <div class="layout-container">
         <Navigation active="Blog" />
-        
-        <div class="blog-header">
-            <h1>Engineering Blog</h1>
-            <p>Deep dives into performance, Rust, and the future of the web.</p>
-        </div>
 
-        {posts.map((post) => (
-            <Card
-                title={post.data.title}
-                kicker={post.data.date}
-                variant={post.data.variant}
-                span={post.data.span}
-            >
-                <p class="post-excerpt">{post.data.description}</p>
-                <a href={`/blog/${post.slug}`} class="read-more">Read Entry →</a>
-            </Card>
-        ))}
+        <div class="blog-page">
+            <header class="blog-header">
+                <p class="blog-eyebrow">Engineering Blog</p>
+                <h1 class="blog-title">Performance, Rust, and the<br/>future of WordPress.</h1>
+            </header>
+
+            {featured ? (
+                <a href={`/blog/${featured.slug}`} class="featured-post" aria-label={`Read: ${featured.data.title}`}>
+                    <div class="featured-meta">
+                        <span class="featured-badge">Latest</span>
+                        <time class="featured-date" datetime={featured.data.date}>{featured.data.date}</time>
+                        <span class="featured-dot" aria-hidden="true">·</span>
+                        <span class="featured-readtime">{readingTime(featured.body)} min read</span>
+                    </div>
+                    <h2 class="featured-title">{featured.data.title}</h2>
+                    <p class="featured-desc">{featured.data.description}</p>
+                    <span class="featured-cta" aria-hidden="true">Read article →</span>
+                </a>
+            ) : (
+                <div class="empty-state">
+                    <p>No posts yet. In the meantime, <a href="/products/smooth-search">see what we're building.</a></p>
+                </div>
+            )}
+
+            {rest.length > 0 && (
+                <div class="post-list">
+                    <span class="list-eyebrow">All articles</span>
+                    <ol class="post-entries">
+                        {rest.map((post) => (
+                            <li class="post-entry">
+                                <a href={`/blog/${post.slug}`} class="post-entry-link">
+                                    <div class="entry-meta">
+                                        <time class="entry-date" datetime={post.data.date}>{post.data.date}</time>
+                                        <span class="entry-readtime">{readingTime(post.body)} min</span>
+                                    </div>
+                                    <div class="entry-content">
+                                        <h3 class="entry-title">{post.data.title}</h3>
+                                        <p class="entry-desc">{post.data.description}</p>
+                                    </div>
+                                    <span class="entry-arrow" aria-hidden="true">→</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            )}
+        </div>
 
         <LiteFooter />
     </div>
 </Layout>
 
 <style>
-    .blog-header {
+    .blog-page {
         grid-column: 1 / -1;
-        padding: 40px 0;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 0 24px;
     }
 
-    .blog-header h1 {
-        font-size: 48px;
-        letter-spacing: -2px;
+    /* ── Header ── */
+
+    .blog-header {
+        padding: 52px 0 56px;
     }
 
-    .blog-header p {
-        font-size: 20px;
-        opacity: 0.7;
-        margin-top: 8px;
-    }
-
-    .post-excerpt {
-        margin-top: 16px;
-        font-size: 16px;
-        line-height: 1.5;
-        opacity: 0.8;
-    }
-
-    .read-more {
-        display: inline-block;
-        margin-top: 24px;
-        font-weight: 600;
-        font-size: 14px;
+    .blog-eyebrow {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-semibold);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.1em;
+        color: var(--c-text-secondary);
+        margin-bottom: 16px;
     }
 
-    .read-more:hover {
-        text-decoration: underline;
+    .blog-title {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-tight);
+        line-height: var(--leading-tight);
+        color: var(--c-text-primary);
+        text-wrap: balance;
     }
+
+    /* ── Featured post ── */
+
+    .featured-post {
+        display: block;
+        padding: 44px 0 52px;
+        border-top: 1px solid var(--c-border);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .featured-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .featured-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        background: var(--c-lavender);
+        color: var(--c-card-text-dark);
+        border-radius: var(--radius-pill);
+        font-family: var(--font-body);
+        font-size: 0.65rem;
+        font-weight: var(--weight-bold);
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+    }
+
+    .featured-date,
+    .featured-readtime {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+        font-size: 0.72rem;
+        color: var(--c-text-secondary);
+    }
+
+    .featured-dot {
+        color: var(--c-text-secondary);
+        opacity: 0.4;
+        font-size: 0.8rem;
+    }
+
+    .featured-title {
+        font-family: var(--font-display);
+        font-size: var(--text-3xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-tight);
+        line-height: var(--leading-tight);
+        color: var(--c-text-primary);
+        margin-bottom: 16px;
+        text-wrap: balance;
+        transition: opacity 0.2s ease;
+    }
+
+    .featured-post:hover .featured-title {
+        opacity: 0.65;
+    }
+
+    .featured-desc {
+        font-family: var(--font-body);
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+        color: var(--c-text-secondary);
+        max-width: 64ch;
+        margin-bottom: 24px;
+    }
+
+    .featured-cta {
+        display: inline-block;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-semibold);
+        color: var(--c-text-primary);
+        transition: transform 0.2s var(--ease-smooth);
+    }
+
+    .featured-post:hover .featured-cta {
+        transform: translateX(4px);
+    }
+
+    /* ── Post list ── */
+
+    .post-list {
+        border-top: 1px solid var(--c-border);
+        padding-top: 32px;
+        padding-bottom: 80px;
+    }
+
+    .list-eyebrow {
+        display: block;
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-semibold);
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--c-text-secondary);
+        margin-bottom: 8px;
+    }
+
+    .post-entries {
+        list-style: none;
+    }
+
+    .post-entry {
+        border-top: 1px solid var(--c-border);
+    }
+
+    .post-entry:last-child {
+        border-bottom: 1px solid var(--c-border);
+    }
+
+    .post-entry-link {
+        display: grid;
+        grid-template-columns: 130px 1fr 28px;
+        align-items: start;
+        gap: 20px;
+        padding: 24px 0;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .post-entry-link:hover .entry-title {
+        opacity: 0.55;
+    }
+
+    .post-entry-link:hover .entry-arrow {
+        transform: translateX(4px);
+    }
+
+    .entry-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding-top: 2px;
+    }
+
+    .entry-date {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+        font-size: 0.68rem;
+        color: var(--c-text-secondary);
+        display: block;
+    }
+
+    .entry-readtime {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+        font-size: 0.65rem;
+        color: var(--c-text-secondary);
+        opacity: 0.65;
+    }
+
+    .entry-content {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .entry-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: var(--weight-semibold);
+        letter-spacing: -0.01em;
+        line-height: var(--leading-snug);
+        color: var(--c-text-primary);
+        text-wrap: balance;
+        transition: opacity 0.15s ease;
+    }
+
+    .entry-desc {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--c-text-secondary);
+        line-height: var(--leading-normal);
+    }
+
+    .entry-arrow {
+        font-size: var(--text-base);
+        color: var(--c-text-secondary);
+        transition: transform 0.2s var(--ease-smooth);
+        align-self: center;
+        justify-self: end;
+    }
+
+    /* ── Empty state ── */
+
+    .empty-state {
+        padding: 80px 0;
+        border-top: 1px solid var(--c-border);
+        color: var(--c-text-secondary);
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+    }
+
+    .empty-state a {
+        color: var(--c-text-primary);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    /* ── Responsive ── */
 
     @media (max-width: 768px) {
+        .blog-page {
+            padding: 0 16px;
+        }
+
         .blog-header {
-            padding: 20px 0;
+            padding: 36px 0 40px;
         }
 
-        .blog-header h1 {
-            font-size: 36px;
-            letter-spacing: -1px;
+        .post-entry-link {
+            grid-template-columns: 1fr 24px;
+            grid-template-areas:
+                "meta meta"
+                "content arrow";
+            gap: 12px;
         }
 
-        .blog-header p {
-            font-size: 18px;
+        .entry-meta {
+            grid-area: meta;
+            flex-direction: row;
+            gap: 10px;
+            padding-top: 0;
+            margin-bottom: 2px;
+        }
+
+        .entry-content {
+            grid-area: content;
+        }
+
+        .entry-arrow {
+            grid-area: arrow;
+            align-self: center;
         }
     }
 
     @media (max-width: 480px) {
-        .blog-header {
-            padding: 16px 0;
+        .blog-title {
+            font-size: var(--text-3xl);
         }
 
-        .blog-header h1 {
-            font-size: 32px;
+        .featured-title {
+            font-size: var(--text-2xl);
         }
 
-        .blog-header p {
-            font-size: 16px;
+        .entry-arrow {
+            display: none;
         }
 
-        .post-excerpt {
-            font-size: 15px;
-        }
-
-        .read-more {
-            font-size: 13px;
+        .post-entry-link {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                "meta"
+                "content";
         }
     }
 </style>

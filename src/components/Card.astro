@@ -6,15 +6,17 @@ interface Props {
     variant?: 'white' | 'black' | 'blue' | 'peach' | 'lavender';
     class?: string;
     span?: number;
+    id?: string;
 }
 
-const { 
-    title, 
-    description, 
-    kicker, 
-    variant = 'white', 
+const {
+    title,
+    description,
+    kicker,
+    variant = 'white',
     class: className = '',
-    span = 4
+    span = 4,
+    id
 } = Astro.props;
 
 const bgClasses = {
@@ -26,7 +28,7 @@ const bgClasses = {
 };
 ---
 
-<div class={`card card-animate ${bgClasses[variant]} ${className}`} style={`grid-column: span ${span};`}>
+<div class={`card card-animate ${bgClasses[variant]} ${className}`} style={`grid-column: span ${span};`} id={id}>
     <div class="card-content">
         {kicker && <div class="card-kicker">{kicker}</div>}
         <h2 class="card-title">{title}</h2>
@@ -111,7 +113,7 @@ const bgClasses = {
     }
 
     .card:hover {
-        transform: translateY(-4px) scale(1.005);
+        transform: translateY(-4px) scale(1.01);
         box-shadow: 0 20px 40px var(--c-shadow);
     }
 
@@ -164,6 +166,7 @@ const bgClasses = {
         letter-spacing: var(--tracking-wide);
         opacity: 0.7;
         margin-bottom: 16px;
+        color: inherit;
     }
 
     .card-title {
@@ -172,6 +175,7 @@ const bgClasses = {
         font-weight: var(--weight-bold);
         line-height: var(--leading-tight);
         letter-spacing: var(--tracking-tight);
+        color: inherit;
     }
 
     .card-desc {
@@ -180,6 +184,7 @@ const bgClasses = {
         font-size: var(--text-lg);
         opacity: 0.8;
         line-height: var(--leading-relaxed);
+        color: inherit;
     }
 
     @media (max-width: 1024px) {

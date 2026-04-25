@@ -17,15 +17,15 @@ import Footer from '../components/Footer.astro';
             variant="lavender"
             span={12}
         >
-            <p class="card-desc">We're on a mission to build affordable software that doesn't compromise on performance or user experience. Whether it's WordPress, web apps, or beyond—if it can be faster and smoother, we're on it.</p>
+            <p class="card-desc">We build performance-first plugins for WordPress using modern systems technology — Rust, WebAssembly, and architectures designed to take load off your server rather than add to it.</p>
         </Card>
 
-        <Card title="Meet the Team (Spoiler: It's Just Me)" kicker="The One-Person Show" variant="blue" span={12}>
+        <Card title="Meet the Founder" kicker="The Builder" variant="white" span={12}>
             <div class="founder-content">
                 <div class="founder-intro">
-                    <p>Hi! I'm <strong>Sakib Ahamed Shahon</strong>, the person behind Smooth Plugins. Software engineer by trade, software artisan by choice (because "engineer" doesn't capture the existential dread of debugging CSS at 2 AM).</p>
-                    <p>Yes, this entire operation is run by one caffeinated human who thinks Rust is a love language and believes WordPress deserves better than "good enough." For now, it's a solo journey—but who knows? Maybe one day I'll have carrier pigeons who actually understand email.</p>
-                    <p>Want to chat about WebAssembly, performance optimization, or why your WooCommerce site is slower than a dial-up modem? Drop me a line!</p>
+                    <p>I'm <strong>Sakib Ahamed Shahon</strong>, a software engineer building performance-first tools for the WordPress ecosystem. Smooth Plugins started from a specific frustration: WooCommerce search scales poorly, and the existing solutions require server-side infrastructure that most stores can't justify.</p>
+                    <p>Rust and WebAssembly solve that problem at the architectural level. Moving search computation to the client eliminates the database bottleneck entirely. That's the idea behind Smooth Search, and it's the kind of problem I want to keep working on.</p>
+                    <p>Questions about the implementation, integration, or what's next? Reach out directly.</p>
                 </div>
                 <div class="founder-links">
                     <a href="mailto:sakib3201@gmail.com" class="founder-link email-link">
@@ -40,56 +40,56 @@ import Footer from '../components/Footer.astro';
             </div>
         </Card>
 
-        <Card title="Our Story" kicker="How We Started" variant="white" span={8}>
+        <Card title="How It Started" kicker="The Problem We Solved" variant="white" span={8}>
             <div class="about-content">
-                <p>Smooth Plugins was born from a simple frustration: why does software have to choose between being affordable OR performant OR having a great user experience? Spoiler: it doesn't.</p>
-                <p>While working with WooCommerce stores that struggled with search performance, I thought: What if we could leverage modern technologies like Rust and WebAssembly to solve problems that have plagued web platforms for years?</p>
-                <p>The result? Smooth Search—the first WebAssembly-powered search engine for WooCommerce. But that's just the beginning. Smooth Plugins is about bringing high-performance, frictionless experiences to any software that needs it.</p>
+                <p>WooCommerce search runs a MySQL query on every keystroke. At 10,000 products that's manageable. At 100,000 it's slow. At scale it's expensive — every search request hits the database and the server pays for it.</p>
+                <p>Rust compiles to WebAssembly. WebAssembly runs at near-native speed in any modern browser. The product catalog loads once; every subsequent search is pure client-side computation with no network round-trip.</p>
+                <p>Smooth Search is the result: the first WooCommerce search engine that runs entirely in the browser. The server never sees a search query.</p>
             </div>
         </Card>
 
-        <Card title="Our Values" kicker="What Drives Us" variant="peach" span={4}>
+        <Card title="What We Stand For" kicker="Principles" variant="peach" span={4}>
             <div class="values-list">
                 <div class="value-item">
-                    <strong>⚡ Performance First</strong>
-                    <p>Speed isn't a feature, it's a requirement.</p>
+                    <strong>Performance as architecture</strong>
+                    <p>Speed is a structural decision, not an optimization layer applied at the end.</p>
                 </div>
                 <div class="value-item">
-                    <strong>💰 Affordable Excellence</strong>
-                    <p>High-quality software shouldn't break the bank.</p>
+                    <strong>Accessible pricing</strong>
+                    <p>High-performance tools shouldn't require enterprise budgets.</p>
                 </div>
                 <div class="value-item">
-                    <strong>✨ Smooth UX</strong>
-                    <p>Frictionless experiences that just work.</p>
-                </div>
-                <div class="value-item">
-                    <strong>🦀 Modern Tech</strong>
-                    <p>Every platform deserves cutting-edge solutions.</p>
+                    <strong>Right technology for the problem</strong>
+                    <p>Rust and WASM where they help. Not everywhere by reflex.</p>
                 </div>
             </div>
         </Card>
 
-        <Card title="Technology Stack" kicker="What We Use" variant="blue" span={6}>
+        <Card title="Technology Stack" kicker="What We Build With" variant="white" span={6}>
             <div class="tech-stack">
+                <div class="tech-badges-row">
+                    <span class="tech-badge-item">Rust</span>
+                    <span class="tech-badge-item">WebAssembly</span>
+                    <span class="tech-badge-item">WASM32-unknown-unknown</span>
+                    <span class="tech-badge-item">PHP</span>
+                    <span class="tech-badge-item">WordPress</span>
+                </div>
                 <div class="tech-item">
-                    <span class="tech-icon">🦀</span>
                     <div>
                         <strong>Rust</strong>
-                        <p>Memory safety and blazing speed for core search algorithms.</p>
+                        <p>Memory-safe, zero-cost abstractions for the search engine core. Compiled to WASM32 target.</p>
                     </div>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-icon">🕸️</span>
                     <div>
                         <strong>WebAssembly</strong>
-                        <p>Near-native performance running directly in the browser.</p>
+                        <p>Near-native execution in any modern browser. The compiled binary loads once and runs locally.</p>
                     </div>
                 </div>
                 <div class="tech-item">
-                    <span class="tech-icon">🐘</span>
                     <div>
-                        <strong>PHP</strong>
-                        <p>Native WordPress integration with zero friction.</p>
+                        <strong>PHP + WordPress</strong>
+                        <p>Native plugin architecture for index generation and WooCommerce integration.</p>
                     </div>
                 </div>
             </div>
@@ -97,22 +97,22 @@ import Footer from '../components/Footer.astro';
 
         <Card title="Why It Matters" kicker="The Impact" variant="black" span={6}>
             <div class="impact-content">
-                <p>Traditional WooCommerce search hits your database on every keystroke. At scale, this crushes performance and increases hosting costs.</p>
-                <p>By moving computation to the client with WebAssembly, we eliminate server load entirely while delivering search results faster than users can type.</p>
+                <p>Traditional WooCommerce search hits your database on every keystroke. At scale this increases hosting costs and degrades response times under traffic.</p>
+                <p>Moving computation to the client eliminates database calls per search entirely. The server handles index delivery once; the browser handles every query after that.</p>
                 <div class="stats">
                     <div class="stat">
                         <strong>80%</strong>
-                        <span>Server load reduction</span>
+                        <span>Reduction in search-related server load</span>
                     </div>
                     <div class="stat">
                         <strong>&lt;10ms</strong>
-                        <span>Average query time</span>
+                        <span>Client-side query execution time</span>
                     </div>
                 </div>
             </div>
         </Card>
 
-        <Card title="Open Source" kicker="Community Driven" variant="lavender" span={12}>
+        <Card title="Open Source" kicker="Community Driven" variant="white" span={12}>
             <div class="opensource-content">
                 <p>We believe in open collaboration. Our code is available on GitHub, and we welcome contributions from developers worldwide.</p>
                 <div class="github-links">
@@ -129,10 +129,10 @@ import Footer from '../components/Footer.astro';
             </div>
         </Card>
 
-        <Card title="Get in Touch" kicker="Let's Talk" variant="peach" span={12}>
+        <Card title="Get in Touch" kicker="Direct Line" variant="peach" span={12}>
             <div class="contact-cta">
-                <p>Have questions? Want to collaborate? We'd love to hear from you.</p>
-                <a href="/contact" class="cta-button">Contact Us</a>
+                <p>Questions about the plugin, integration specifics, or a performance problem worth solving? Send a message directly.</p>
+                <a href="/contact" class="cta-button">Contact</a>
             </div>
         </Card>
 
@@ -180,19 +180,36 @@ import Footer from '../components/Footer.astro';
         gap: 20px;
     }
 
+    .tech-badges-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 4px;
+    }
+
+    .tech-badge-item {
+        display: inline-block;
+        padding: 4px 10px;
+        background: var(--c-bg);
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius-pill);
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.025em;
+        color: var(--c-text-secondary);
+    }
+
     .tech-item {
         display: flex;
         gap: 16px;
         align-items: flex-start;
     }
 
-    .tech-icon {
-        font-size: 28px;
-    }
-
     .tech-item strong {
         display: block;
-        font-size: 16px;
+        font-size: 15px;
+        font-weight: var(--weight-semibold);
         margin-bottom: 4px;
     }
 
@@ -226,8 +243,8 @@ import Footer from '../components/Footer.astro';
     }
 
     .stat strong {
-        font-size: 32px;
-        font-weight: 700;
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-bold);
         color: var(--c-white);
     }
 
@@ -327,8 +344,15 @@ import Footer from '../components/Footer.astro';
     }
 
     .linkedin-link {
-        background: #0077B5;
-        color: white;
+        background: transparent;
+        color: var(--c-text-primary);
+        border: 1.5px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .linkedin-link:hover {
+        border-color: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.04);
+        box-shadow: none;
     }
 
     .founder-link:hover {

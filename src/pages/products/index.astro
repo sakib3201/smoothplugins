@@ -19,25 +19,18 @@ import Footer from '../../components/Footer.astro';
         <Card
             title="Smooth Search"
             kicker="Available Now"
-            description="The first WooCommerce search engine powered by WebAssembly. Blazing fast indexing and retrieval directly in the browser."
+            description="The first WooCommerce search engine powered by WebAssembly. Sub-10ms queries. Zero server database load."
             variant="peach"
             span={8}
             class="product-card"
         >
             <div class="product-card-content">
-                <div class="product-stats">
-                    <div class="stat">
-                        <span class="stat-value">200ms</span>
-                        <span class="stat-label">Response Time</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">0</span>
-                        <span class="stat-label">DB Queries</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">100K+</span>
-                        <span class="stat-label">Products Supported</span>
-                    </div>
+                <p class="product-desc">Handles <strong>100,000+ products</strong> with <strong>&lt;10ms</strong> query time and zero database calls per search. Runs entirely in the browser via Rust-compiled WebAssembly.</p>
+                <div class="product-badges">
+                    <span class="tech-badge">Rust</span>
+                    <span class="tech-badge">WASM32</span>
+                    <span class="tech-badge">&lt;10ms queries</span>
+                    <span class="tech-badge">100K+ products</span>
                 </div>
                 <a href="/products/smooth-search" class="product-cta">
                     View Details
@@ -51,7 +44,7 @@ import Footer from '../../components/Footer.astro';
 
         <Card
             title="More Amazing Plugins"
-            kicker="Coming Soon™"
+            kicker="In Development"
             variant="lavender"
             span={4}
             class="coming-soon-card"
@@ -67,34 +60,32 @@ import Footer from '../../components/Footer.astro';
         </Card>
 
         <Card
-            title="We're Just Getting Started"
-            kicker="A Note from the Team"
+            title="More Plugins in Development"
+            kicker="What's Next"
             variant="white"
             span={12}
             class="message-card"
         >
             <div class="message-content">
                 <p class="message-text">
-                    Yes, we know. One plugin does not a "catalog" make. But hey, Rome wasn't built in a day, and neither is a Rust-powered plugin empire!
-                    We're currently in our laboratory (read: frantically debugging) working on some seriously cool stuff that'll make your WordPress site go brrrr.
+                    Smooth Search is the first in a focused set of performance plugins for WordPress. The same architectural approach — moving computation off the server using Rust and WebAssembly — applies to other WooCommerce and WordPress bottlenecks we're working on.
                 </p>
                 <p class="message-text">
-                    In the meantime, why not give Smooth Search a spin? We promise it's faster than waiting for us to finish the next plugin.
-                    Your patience and support mean the world to us — and if you want to speed things up, we accept coffee donations in the form of GitHub stars. ⭐
+                    Star the repository to follow development, or use the notification link below to hear when new plugins ship. In the meantime, Smooth Search is production-ready and available now.
                 </p>
                 <div class="support-actions">
-                    <a href="#" class="support-link">
+                    <a href="https://github.com/sakib3201/smoothplugins" target="_blank" rel="noopener noreferrer" class="support-link">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                         </svg>
-                        Star us on GitHub
+                        Star on GitHub
                     </a>
-                    <a href="#" class="support-link">
+                    <a href="https://github.com/sakib3201/smoothplugins/releases" target="_blank" rel="noopener noreferrer" class="support-link">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                         </svg>
-                        Get notified of new releases
+                        View releases
                     </a>
                 </div>
             </div>
@@ -111,11 +102,12 @@ import Footer from '../../components/Footer.astro';
     }
 
     .products-header h1 {
-        font-size: 64px;
-        font-weight: 700;
-        letter-spacing: -2px;
-        line-height: 1;
+        font-size: var(--text-4xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-tight);
+        line-height: var(--leading-tight);
         margin-bottom: 16px;
+        font-family: var(--font-display);
     }
 
     .products-header p {
@@ -127,34 +119,38 @@ import Footer from '../../components/Footer.astro';
     .product-card-content {
         display: flex;
         flex-direction: column;
-        gap: 32px;
+        gap: 28px;
         margin-top: 24px;
     }
 
-    .product-stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
+    .product-desc {
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+        color: inherit;
+        max-width: 60ch;
     }
 
-    .stat {
+    .product-desc strong {
+        font-weight: var(--weight-bold);
+    }
+
+    .product-badges {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 8px;
     }
 
-    .stat-value {
-        font-size: 36px;
-        font-weight: 700;
-        letter-spacing: -1px;
+    .tech-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        background: rgba(17, 17, 17, 0.12);
+        border: 1px solid rgba(17, 17, 17, 0.15);
+        border-radius: var(--radius-pill);
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.025em;
         color: inherit;
-    }
-
-    .stat-label {
-        font-size: 14px;
-        color: inherit;
-        font-weight: 500;
-        opacity: 0.8;
     }
 
     .product-cta {
@@ -200,16 +196,12 @@ import Footer from '../../components/Footer.astro';
 
     .construction-emoji {
         font-size: 64px;
-        animation: bounce 2s ease-in-out infinite;
+        animation: presence 3s ease-in-out infinite;
     }
 
-    @keyframes bounce {
-        0%, 100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
+    @keyframes presence {
+        0%, 100% { opacity: 0.75; }
+        50% { opacity: 1; }
     }
 
     .coming-soon-text {
@@ -231,7 +223,7 @@ import Footer from '../../components/Footer.astro';
     .progress-fill {
         height: 100%;
         width: 42%;
-        background: linear-gradient(90deg, var(--c-lavender), var(--c-peach));
+        background: rgba(17, 17, 17, 0.25);
         border-radius: var(--radius-pill);
         animation: shimmer 2s ease-in-out infinite;
     }
@@ -302,21 +294,8 @@ import Footer from '../../components/Footer.astro';
     }
 
     @media (max-width: 1024px) {
-        .products-header h1 {
-            font-size: 48px;
-        }
-
         .products-header p {
             font-size: 18px;
-        }
-
-        .product-stats {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .stat-value {
-            font-size: 28px;
         }
     }
 
@@ -334,28 +313,11 @@ import Footer from '../../components/Footer.astro';
             font-size: 16px;
         }
 
-        .product-stats {
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 32px;
-        }
-
         .product-cta {
             width: 100%;
             justify-content: center;
             padding: 14px 24px;
             font-size: 15px;
-        }
-
-        .construction-emoji {
-            font-size: 48px;
         }
 
         .coming-soon-text {
@@ -385,14 +347,6 @@ import Footer from '../../components/Footer.astro';
 
         .products-header p {
             font-size: 15px;
-        }
-
-        .stat-value {
-            font-size: 28px;
-        }
-
-        .stat-label {
-            font-size: 13px;
         }
 
         .message-text {

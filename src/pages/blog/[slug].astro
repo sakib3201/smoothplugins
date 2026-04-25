@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
-import BackgroundCanvas from '../../components/BackgroundCanvas';
 import LiteFooter from '../../components/LiteFooter.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 
@@ -17,11 +16,11 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-// Generate ISO date from display date if not provided
 const displayDate = post.data.date;
 const isoDate = post.data.dateISO || new Date(displayDate).toISOString();
 
-// Article structured data
+const readingMinutes = Math.max(1, Math.ceil((post.body?.split(/\s+/).length ?? 0) / 200));
+
 const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -55,7 +54,8 @@ const articleSchema = {
     publishedTime={isoDate}
     author={post.data.author || "Smooth Plugins Team"}
 >
-    <BackgroundCanvas client:only="react" />
+    <div class="progress-bar" id="reading-progress" aria-hidden="true"></div>
+
     <div class="layout-container">
         <Navigation active="Blog" />
 
@@ -68,10 +68,20 @@ const articleSchema = {
 
         <article class="blog-post">
             <header class="post-header">
-                <time class="post-meta" datetime={isoDate}>{post.data.date}</time>
-                <h1>{post.data.title}</h1>
+                <div class="post-meta-row">
+                    <time class="post-meta-item" datetime={isoDate}>{post.data.date}</time>
+                    <span class="meta-sep" aria-hidden="true">·</span>
+                    <span class="post-meta-item">{readingMinutes} min read</span>
+                    {post.data.author && (
+                        <>
+                            <span class="meta-sep" aria-hidden="true">·</span>
+                            <span class="post-meta-item">{post.data.author}</span>
+                        </>
+                    )}
+                </div>
+
+                <h1 class="post-title">{post.data.title}</h1>
                 <p class="post-description">{post.data.description}</p>
-                {post.data.author && <p class="post-author">By {post.data.author}</p>}
             </header>
 
             <div class="post-content">
@@ -79,201 +89,306 @@ const articleSchema = {
             </div>
 
             <footer class="post-footer">
-                <a href="/blog" class="back-link">← Back to Blog</a>
+                <a href="/blog" class="back-link">← All articles</a>
             </footer>
         </article>
 
         <LiteFooter />
     </div>
 
-    <!-- Article Schema -->
     <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </Layout>
 
+<script>
+    function initProgress() {
+        const bar = document.getElementById('reading-progress');
+        if (!bar) return;
+
+        function update() {
+            const scrolled = window.scrollY;
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            (bar as HTMLElement).style.width = total > 0 ? `${(scrolled / total) * 100}%` : '0%';
+        }
+
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    }
+
+    initProgress();
+    document.addEventListener('astro:page-load', initProgress);
+</script>
+
 <style>
+    /* ── Reading progress bar ── */
+
+    .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: var(--c-lavender);
+        z-index: 9999;
+        pointer-events: none;
+        will-change: width;
+    }
+
+    /* ── Article shell ── */
+
     .blog-post {
         grid-column: 1 / -1;
-        max-width: 800px;
+        max-width: 720px;
         margin: 0 auto;
-        padding: 40px 20px;
+        padding: 40px 24px 96px;
     }
+
+    /* ── Header ── */
 
     .post-header {
-        margin-bottom: 48px;
+        margin-bottom: 52px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid var(--c-border);
     }
 
-    .post-meta {
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        opacity: 0.6;
-        margin-bottom: 16px;
+    .post-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
     }
 
-    .post-header h1 {
-        font-size: 48px;
-        letter-spacing: -2px;
-        line-height: 1.1;
-        margin-bottom: 16px;
+    .post-meta-item {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+        font-size: 0.72rem;
+        color: var(--c-text-secondary);
+    }
+
+    .meta-sep {
+        color: var(--c-text-secondary);
+        opacity: 0.35;
+        font-size: 0.8rem;
+        line-height: 1;
+    }
+
+    .post-title {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-tight);
+        line-height: var(--leading-tight);
+        color: var(--c-text-primary);
+        margin-bottom: 20px;
+        text-wrap: balance;
     }
 
     .post-description {
-        font-size: 20px;
-        opacity: 0.7;
-        line-height: 1.5;
+        font-family: var(--font-body);
+        font-size: var(--text-lg);
+        color: var(--c-text-secondary);
+        line-height: 1.65;
+        max-width: 58ch;
     }
 
-    .post-author {
-        font-size: 14px;
-        margin-top: 16px;
-        opacity: 0.6;
-        font-weight: 500;
-    }
+    /* ── Body ── */
 
     .post-content {
-        font-size: 18px;
-        line-height: 1.8;
-    }
-
-    .post-content :global(h2) {
-        font-size: 32px;
-        letter-spacing: -1px;
-        margin-top: 48px;
-        margin-bottom: 24px;
-    }
-
-    .post-content :global(h3) {
-        font-size: 24px;
-        margin-top: 32px;
-        margin-bottom: 16px;
+        font-family: var(--font-body);
+        font-size: 1.0625rem;
+        line-height: 1.85;
+        color: var(--c-text-primary);
+        font-kerning: normal;
+        font-optical-sizing: auto;
     }
 
     .post-content :global(p) {
-        margin-bottom: 24px;
+        margin-bottom: 1.5em;
+        max-width: 68ch;
+        text-wrap: pretty;
     }
 
-    .post-content :global(ul) {
-        margin: 24px 0;
-        padding-left: 24px;
+    .post-content :global(h2) {
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-tight);
+        line-height: var(--leading-tight);
+        color: var(--c-text-primary);
+        margin-top: 2.5em;
+        margin-bottom: 0.75em;
+        text-wrap: balance;
+    }
+
+    .post-content :global(h3) {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: var(--weight-semibold);
+        letter-spacing: -0.01em;
+        line-height: var(--leading-snug);
+        color: var(--c-text-primary);
+        margin-top: 2em;
+        margin-bottom: 0.6em;
+        text-wrap: balance;
+    }
+
+    .post-content :global(ul),
+    .post-content :global(ol) {
+        padding-left: 1.5em;
+        margin: 1.25em 0;
+        max-width: 66ch;
     }
 
     .post-content :global(li) {
-        margin-bottom: 12px;
+        margin-bottom: 0.5em;
+        line-height: 1.7;
     }
 
     .post-content :global(strong) {
-        font-weight: 600;
+        font-weight: var(--weight-semibold);
+    }
+
+    .post-content :global(a) {
+        color: var(--c-text-primary);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-color: rgba(0, 0, 0, 0.25);
+        transition: text-decoration-color 0.15s ease;
+    }
+
+    :global([data-theme="dark"]) .post-content :global(a) {
+        text-decoration-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .post-content :global(a:hover) {
+        text-decoration-color: var(--c-text-primary);
     }
 
     .post-content :global(code) {
-        background: rgba(0, 0, 0, 0.05);
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+        font-size: 0.875em;
+        background: var(--c-bg);
+        border: 1px solid var(--c-border);
         padding: 2px 6px;
         border-radius: 4px;
-        font-size: 0.9em;
-        font-family: 'Monaco', 'Courier New', monospace;
+        font-variant-ligatures: none;
     }
 
     .post-content :global(pre) {
-        background: rgba(0, 0, 0, 0.05);
-        padding: 24px;
-        border-radius: 8px;
+        background: var(--c-primary);
+        color: var(--c-primary-inverse);
+        padding: 24px 28px;
+        border-radius: 12px;
         overflow-x: auto;
-        margin: 32px 0;
+        margin: 2em 0;
+        font-variant-ligatures: none;
+        line-height: 1.65;
     }
 
     .post-content :global(pre code) {
         background: none;
+        border: none;
         padding: 0;
+        font-size: 0.875rem;
+        color: inherit;
     }
+
+    .post-content :global(blockquote) {
+        border-left: 2px solid var(--c-lavender);
+        padding: 4px 0 4px 24px;
+        margin: 2em 0;
+        color: var(--c-text-secondary);
+        font-style: italic;
+    }
+
+    .post-content :global(blockquote p) {
+        margin-bottom: 0;
+    }
+
+    .post-content :global(hr) {
+        border: none;
+        border-top: 1px solid var(--c-border);
+        margin: 2.5em 0;
+    }
+
+    .post-content :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 2em 0;
+    }
+
+    /* ── Footer ── */
 
     .post-footer {
         margin-top: 64px;
         padding-top: 32px;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--c-border);
     }
 
     .back-link {
-        font-weight: 600;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-semibold);
+        color: var(--c-text-primary);
+        text-decoration: none;
+        transition: opacity 0.15s ease;
     }
 
     .back-link:hover {
-        text-decoration: underline;
+        opacity: 0.55;
     }
+
+    /* ── Responsive ── */
 
     @media (max-width: 768px) {
         .blog-post {
-            padding: 20px 16px;
+            padding: 32px 16px 72px;
         }
 
         .post-header {
-            margin-bottom: 32px;
+            margin-bottom: 40px;
+            padding-bottom: 32px;
         }
 
-        .post-header h1 {
-            font-size: 36px;
+        .post-title {
+            font-size: var(--text-3xl);
         }
 
         .post-description {
-            font-size: 18px;
+            font-size: var(--text-base);
         }
 
         .post-content {
-            font-size: 16px;
+            font-size: 1rem;
         }
 
         .post-content :global(h2) {
-            font-size: 28px;
-            margin-top: 36px;
-            margin-bottom: 20px;
+            font-size: var(--text-xl);
+            margin-top: 2em;
         }
 
         .post-content :global(h3) {
-            font-size: 22px;
-            margin-top: 28px;
+            font-size: var(--text-lg);
         }
 
         .post-content :global(pre) {
-            padding: 16px;
-            margin: 24px -16px;
+            padding: 16px 20px;
+            margin: 1.5em -16px;
             border-radius: 0;
         }
     }
 
     @media (max-width: 480px) {
-        .blog-post {
-            padding: 16px 12px;
+        .post-title {
+            font-size: var(--text-2xl);
         }
 
-        .post-header h1 {
-            font-size: 32px;
-            letter-spacing: -1px;
-        }
-
-        .post-description {
-            font-size: 16px;
-        }
-
-        .post-content {
-            font-size: 15px;
-            line-height: 1.7;
+        .post-meta-row {
+            gap: 6px;
         }
 
         .post-content :global(h2) {
-            font-size: 24px;
-            margin-top: 32px;
-            margin-bottom: 16px;
-        }
-
-        .post-content :global(h3) {
-            font-size: 20px;
-        }
-
-        .post-footer {
-            margin-top: 48px;
-            padding-top: 24px;
+            font-size: var(--text-lg);
         }
     }
 </style>
