@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
 import LiteFooter from '../../components/LiteFooter.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import { readingTime } from '../../utils/readingTime';
 
 export async function getStaticPaths() {
     const blogPosts = await getCollection('blog');
@@ -19,7 +20,7 @@ const { Content } = await post.render();
 const displayDate = post.data.date;
 const isoDate = post.data.dateISO || new Date(displayDate).toISOString();
 
-const readingMinutes = Math.max(1, Math.ceil((post.body?.split(/\s+/).length ?? 0) / 200));
+const readingMinutes = readingTime(post.body ?? '');
 
 const articleSchema = {
     "@context": "https://schema.org",

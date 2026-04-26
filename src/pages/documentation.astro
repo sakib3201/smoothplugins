@@ -4,7 +4,6 @@ import Navigation from '../components/Navigation.astro';
 import Card from '../components/Card.astro';
 import BackgroundCanvas from '../components/BackgroundCanvas';
 import Footer from '../components/Footer.astro';
-import { Code } from 'astro:components';
 ---
 
 <Layout title="Documentation" description="Comprehensive guides and documentation for Smooth Plugins. Learn how to install, configure, and optimize our WordPress plugins for your site.">
@@ -51,8 +50,7 @@ import { Code } from 'astro:components';
                 <h3>Customization & Hooks</h3>
                 <p>Smooth Search provides several hooks and filters for developers:</p>
                 <div class="code-wrapper">
-                    <Code
-                        code={`// Filter search results
+                    <pre><code class="language-php">{`// Filter search results
 add_filter('smooth_search_results', function($results) {
     // Customize results
     return $results;
@@ -62,13 +60,7 @@ add_filter('smooth_search_results', function($results) {
 add_filter('smooth_search_indexed_fields', function($fields) {
     $fields[] = 'custom_meta_field';
     return $fields;
-});`}
-                        lang="php"
-                        themes={{
-                            light: 'github-light',
-                            dark: 'github-dark'
-                        }}
-                    />
+});`}</code></pre>
                 </div>
             </div>
         </Card>

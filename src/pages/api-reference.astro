@@ -4,7 +4,6 @@ import Navigation from '../components/Navigation.astro';
 import Card from '../components/Card.astro';
 import BackgroundCanvas from '../components/BackgroundCanvas';
 import Footer from '../components/Footer.astro';
-import { Code } from 'astro:components';
 ---
 
 <Layout title="API Reference" description="Complete API reference for Smooth Plugins. Explore WordPress hooks, filters, JavaScript APIs, and REST endpoints for developers.">
@@ -61,8 +60,7 @@ import { Code } from 'astro:components';
             <div class="api-section">
                 <h3>SmoothSearch Class</h3>
                 <div class="code-wrapper">
-                    <Code
-                        code={`// Initialize search engine
+                    <pre><code class="language-javascript">{`// Initialize search engine
 const search = new SmoothSearch({
     indexUrl: '/path/to/index.wasm',
     maxResults: 20,
@@ -82,13 +80,7 @@ search.on('indexLoaded', () => {
 
 search.on('searchComplete', (results) => {
     console.log('Found:', results.length);
-});`}
-                        lang="javascript"
-                        themes={{
-                            light: 'github-light',
-                            dark: 'github-dark'
-                        }}
-                    />
+});`}</code></pre>
                 </div>
             </div>
         </Card>

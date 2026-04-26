@@ -53,8 +53,8 @@ const faqs = [
 		<section class="hero" id="hero">
 			<div class="hero-content">
 				<h1 class="hero-title">
-					Performance<br/>
-					<span class="hero-title-accent">Without</span><br/>
+					<span class="hero-title-accent">Performance</span><br/>
+					Without<br/>
 					Friction
 				</h1>
 				<div class="compile-status">
@@ -117,9 +117,9 @@ const faqs = [
             </a>
         </Card>
 
-        <Card title="200ms" kicker="Response Time" variant="white" span={4} class="stat-card">
-            <p class="stat-label">Average per query</p>
-            <p class="feature-desc">Your shoppers see results as they type — no waiting, no page reloads, no visible latency.</p>
+        <Card title="Results as you type" kicker="Performance" variant="white" span={4} class="stat-card">
+            <p class="stat-proof"><code>~200ms</code> average per query</p>
+            <p class="feature-desc">Shoppers see results instantly. No waiting, no page reloads, no visible latency.</p>
         </Card>
 
         <Card
@@ -134,9 +134,9 @@ const faqs = [
             <SmoothSearchDemo client:visible />
         </Card>
 
-        <Card title="0.0s" kicker="Server Overhead" variant="white" span={4} class="stat-card">
-            <p class="stat-label">Database queries per search</p>
-            <p class="feature-desc">Search moves from your server to your customers' browsers. Your hosting costs drop; their experience improves.</p>
+        <Card title="Zero server queries" kicker="Architecture" variant="white" span={4} class="stat-card">
+            <p class="stat-proof">Every search runs in <code>WASM</code></p>
+            <p class="feature-desc">Search moves off your server entirely. Your hosting costs drop; your customers' experience improves.</p>
         </Card>
 
         <Card
@@ -191,11 +191,10 @@ const faqs = [
     .hero {
         grid-column: span 12;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - 180px);
+        flex-direction: column;
+        min-height: 100vh;
         position: relative;
-        padding: 40px;
+        padding: 10px 40px 40px;
         margin-bottom: 60px;
     }
 
@@ -225,6 +224,7 @@ const faqs = [
     .hero-content {
         text-align: center;
         max-width: 900px;
+        margin: 0 auto;
         position: relative;
         z-index: 3;
     }
@@ -238,7 +238,7 @@ const faqs = [
         margin-bottom: 20px;
         color: var(--c-text-primary);
         opacity: 0;
-        animation: revealUp 0.5s ease-out 0.55s forwards,
+        animation: revealUp 0.5s var(--ease-smooth) 0.55s forwards,
                    glowPulse 0.4s ease-out 0.95s forwards;
     }
 
@@ -265,7 +265,7 @@ const faqs = [
         gap: 10px;
         margin-bottom: 20px;
         opacity: 0;
-        animation: fadeIn 0.4s ease-out 0.95s forwards;
+        animation: fadeIn 0.4s var(--ease-smooth) 0.95s forwards;
     }
 
     @keyframes fadeIn {
@@ -296,10 +296,10 @@ const faqs = [
         font-weight: var(--weight-normal);
         line-height: var(--leading-relaxed);
         color: var(--c-text-secondary);
-        max-width: 700px;
+        max-width: 65ch;
         margin: 0 auto;
         opacity: 0;
-        animation: revealUp 0.4s ease-out 1.15s forwards;
+        animation: revealUp 0.4s var(--ease-smooth) 1.15s forwards;
     }
 
     .hero-actions {
@@ -310,7 +310,7 @@ const faqs = [
         margin-top: 40px;
         flex-wrap: wrap;
         opacity: 0;
-        animation: revealUp 0.4s ease-out 1.35s forwards;
+        animation: revealUp 0.4s var(--ease-smooth) 1.35s forwards;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -358,6 +358,11 @@ const faqs = [
         transform: scale(1.02) translateY(1px);
     }
 
+    .hero-cta:focus-visible {
+        outline: 2px solid var(--c-lavender);
+        outline-offset: 4px;
+    }
+
     .hero-secondary-cta {
         font-family: var(--font-body);
         font-size: var(--text-base);
@@ -371,16 +376,25 @@ const faqs = [
         color: var(--c-text-primary);
     }
 
-    .hero-card {
-        min-height: 500px;
+    .hero-secondary-cta:focus-visible {
+        outline: 2px solid var(--c-lavender);
+        outline-offset: 4px;
+        border-radius: var(--radius-pill);
     }
 
-    .card-title-lg {
-        font-family: var(--font-display);
-        font-size: var(--text-4xl);
-        font-weight: var(--weight-bold);
-        line-height: var(--leading-tight);
-        letter-spacing: var(--tracking-tight);
+    .stat-proof {
+        font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+        font-size: 0.85em;
+        color: var(--c-text-secondary);
+        margin-top: 8px;
+    }
+
+    .stat-proof code {
+        background: var(--c-bg);
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-weight: var(--weight-semibold);
+        color: var(--c-text-primary);
     }
 
     .cta-button {
@@ -396,7 +410,7 @@ const faqs = [
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        transition: all 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
         align-self: flex-start;
         box-shadow: 0 4px 15px var(--c-shadow);
     }
@@ -412,19 +426,16 @@ const faqs = [
     }
 
     .cta-button svg {
-        transition: transform 0.3s ease;
+        transition: transform 0.3s var(--ease-smooth);
     }
 
     .cta-button:hover svg {
         transform: translateX(4px);
     }
 
-    .stat-label {
-        font-family: var(--font-body);
-        font-size: var(--text-base);
-        font-weight: var(--weight-medium);
-        color: var(--c-text-secondary);
-        margin-top: 8px;
+    .cta-button:focus-visible {
+        outline: 2px solid var(--c-lavender);
+        outline-offset: 4px;
     }
 
     .feature-desc {
@@ -447,7 +458,7 @@ const faqs = [
         opacity: 0.6;
         padding: 8px 16px;
         border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 12px;
+        border-radius: var(--radius-sm);
     }
 
     .woo-inner {
@@ -497,8 +508,8 @@ const faqs = [
 
     @media (max-width: 1024px) {
         .hero {
-            min-height: calc(100vh - 200px);
-            padding: 40px 20px;
+            min-height: 100vh;
+            padding: 10px 20px 40px;
             margin-bottom: 50px;
         }
 
@@ -512,16 +523,12 @@ const faqs = [
             align-items: flex-start;
             gap: 20px;
         }
-
-        .hero-card {
-            min-height: 400px;
-        }
     }
 
     @media (max-width: 640px) {
         .hero {
-            min-height: calc(100vh - 160px);
-            padding: 60px 24px;
+            min-height: 100vh;
+            padding: 10px 24px 40px;
             margin-bottom: 40px;
         }
 
@@ -549,10 +556,6 @@ const faqs = [
             justify-content: center;
         }
 
-        .hero-card {
-            min-height: 360px;
-        }
-
         .cta-button {
             padding: 14px 24px;
             width: 100%;
@@ -566,7 +569,7 @@ const faqs = [
 
     @media (max-width: 480px) {
         .hero {
-            padding: 40px 20px;
+            padding: 10px 20px 40px;
             margin-bottom: 32px;
         }
 
@@ -577,10 +580,6 @@ const faqs = [
 
         .hero-subtitle {
             font-size: var(--text-base);
-        }
-
-        .hero-card {
-            min-height: 320px;
         }
     }
 </style>

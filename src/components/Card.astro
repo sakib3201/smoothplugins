@@ -112,6 +112,23 @@ const bgClasses = {
         }
     }
 
+    /* Fallback when JS is disabled */
+    .card-animate:not(.card-visible) {
+        animation: cardAppear 0.01s 2s forwards;
+    }
+
+    @keyframes cardAppear {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card-animate:hover {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     .card:hover {
         transform: translateY(-4px) scale(1.01);
         box-shadow: 0 20px 40px var(--c-shadow);

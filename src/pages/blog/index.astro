@@ -3,15 +3,12 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
 import LiteFooter from '../../components/LiteFooter.astro';
+import { readingTime } from '../../utils/readingTime';
 
 const posts = await getCollection('blog');
 posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 const [featured, ...rest] = posts;
-
-function readingTime(body: string): number {
-    return Math.max(1, Math.ceil((body?.split(/\s+/).length ?? 0) / 200));
-}
 ---
 
 <Layout
@@ -31,7 +28,7 @@ function readingTime(body: string): number {
                 <a href={`/blog/${featured.slug}`} class="featured-post" aria-label={`Read: ${featured.data.title}`}>
                     <div class="featured-meta">
                         <span class="featured-badge">Latest</span>
-                        <time class="featured-date" datetime={featured.data.date}>{featured.data.date}</time>
+                        <time class="featured-date" datetime={featured.data.dateISO || featured.data.date}>{featured.data.date}</time>
                         <span class="featured-dot" aria-hidden="true">·</span>
                         <span class="featured-readtime">{readingTime(featured.body)} min read</span>
                     </div>
@@ -53,7 +50,7 @@ function readingTime(body: string): number {
                             <li class="post-entry">
                                 <a href={`/blog/${post.slug}`} class="post-entry-link">
                                     <div class="entry-meta">
-                                        <time class="entry-date" datetime={post.data.date}>{post.data.date}</time>
+                                        <time class="entry-date" datetime={post.data.dateISO || post.data.date}>{post.data.date}</time>
                                         <span class="entry-readtime">{readingTime(post.body)} min</span>
                                     </div>
                                     <div class="entry-content">

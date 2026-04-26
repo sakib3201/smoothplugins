@@ -1,11 +1,13 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import * as THREE from 'three';
 
 const BackgroundCanvas: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+    const materialRef = useRef<THREE.PointsMaterial | null>(null);
+    const frameRef = useRef<number>(0);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-    // Listen for theme changes
     useEffect(() => {
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -26,8 +28,20 @@ const BackgroundCanvas: React.FC = () => {
         return () => observer.disconnect();
     }, []);
 
+    const updateMaterial = useCallback((t: 'light' | 'dark') => {
+        if (!materialRef.current) return;
+        materialRef.current.color.set(t === 'dark' ? '#B8A9FF' : '#9D8DF1');
+        materialRef.current.opacity = t === 'dark' ? 0.3 : 0.5;
+    }, []);
+
+    useEffect(() => {
+        if (theme) updateMaterial(theme);
+    }, [theme, updateMaterial]);
+
     useEffect(() => {
         if (!containerRef.current) return;
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -36,6 +50,7 @@ const BackgroundCanvas: React.FC = () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         containerRef.current.appendChild(renderer.domElement);
+        rendererRef.current = renderer;
 
         const geometry = new THREE.BufferGeometry();
         const count = 1000;
@@ -47,16 +62,15 @@ const BackgroundCanvas: React.FC = () => {
 
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-        // Theme-aware color
-        const particleColor = theme === 'dark' ? '#B8A9FF' : '#9D8DF1';
-        const particleOpacity = theme === 'dark' ? 0.3 : 0.5;
-
         const material = new THREE.PointsMaterial({
             size: 0.02,
-            color: particleColor,
+            color: '#9D8DF1',
             transparent: true,
-            opacity: particleOpacity,
+            opacity: 0.5,
         });
+
+        materialRef.current = material;
+        updateMaterial(theme);
 
         const points = new THREE.Points(geometry, material);
         scene.add(points);
@@ -72,23 +86,31 @@ const BackgroundCanvas: React.FC = () => {
         window.addEventListener('resize', handleResize);
 
         const animate = () => {
-            requestAnimationFrame(animate);
+            frameRef.current = requestAnimationFrame(animate);
             points.rotation.y += 0.001;
             points.rotation.x += 0.0005;
             renderer.render(scene, camera);
         };
 
-        animate();
+        if (!prefersReducedMotion) {
+            animate();
+        } else {
+            renderer.render(scene, camera);
+        }
 
         return () => {
+            cancelAnimationFrame(frameRef.current);
             window.removeEventListener('resize', handleResize);
-            if (containerRef.current) {
+            if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
                 containerRef.current.removeChild(renderer.domElement);
             }
             geometry.dispose();
             material.dispose();
+            renderer.dispose();
+            rendererRef.current = null;
+            materialRef.current = null;
         };
-    }, [theme]);
+    }, []);
 
     return (
         <div

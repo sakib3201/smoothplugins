@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="404 - Page Not Found" noindex={true}>
-    <BackgroundCanvas client:load />
+    <BackgroundCanvas client:only="react" />
     <div class="layout-container">
         <Navigation />
 
